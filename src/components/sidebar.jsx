@@ -12,6 +12,7 @@ import { NavLink } from "react-router-dom";
 import GroupsIcon from '@mui/icons-material/Groups';
 import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
+import HomeIcon from '@mui/icons-material/Home';
 
 function SideBAr(){
     //Función para ocultar sidebar
@@ -48,6 +49,13 @@ function SideBAr(){
                             <ListItemText primary="Equipos" />
                         </ListItem>
                     </NavLink>
+                    <NavLink to="/inicio">
+                        <ListItem button>
+                            <ListItemIcon><HomeIcon></HomeIcon></ListItemIcon>
+                            <ListItemText primary="Inicio" />
+                        </ListItem>
+                    </NavLink>
+                    
                 </List>
             </Drawer>
         </>    
