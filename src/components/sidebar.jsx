@@ -13,6 +13,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
 
 function SideBAr(){
     //Función para ocultar sidebar
@@ -55,7 +56,12 @@ function SideBAr(){
                             <ListItemText primary="Inicio" />
                         </ListItem>
                     </NavLink>
-                    
+                    <NavLink to="/perfil">
+                        <ListItem button>
+                            <ListItemIcon><PersonIcon></PersonIcon></ListItemIcon>
+                            <ListItemText primary="Perfil" />
+                        </ListItem>
+                    </NavLink>
                 </List>
             </Drawer>
         </>    
