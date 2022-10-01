@@ -53,19 +53,18 @@ const Areas=()=>{
                         </thead>
                         <tbody>
                             <tr>
-                            <th scope="row">1</th>
-                            <td>Equipo1</td>
-                            <td>Otto</td>
-                            <td>Otto</td>
-                            <td>
-                            <IconButton color="primary" aria-label="Editar Departamento" component="label">
-                                <EditOutlinedIcon/>
-                            </IconButton>
-                            <IconButton color="primary" aria-label="Editar Departamento" component="label">
-                                <DeleteOutlineOutlinedIcon/>
-                            </IconButton>    
-
-                            </td>
+                                <td className="g-0">1</td>
+                                <td>Equipo1</td>
+                                <td>Otto</td>
+                                <td>Otto</td>
+                                <td>
+                                    <IconButton color="primary" aria-label="Editar Departamento" component="label">
+                                        <EditOutlinedIcon/>
+                                    </IconButton>
+                                    <IconButton color="primary" aria-label="Editar Departamento" component="label">
+                                        <DeleteOutlineOutlinedIcon/>
+                                    </IconButton>    
+                                </td>
                             </tr>
                         </tbody>
                         </table>
