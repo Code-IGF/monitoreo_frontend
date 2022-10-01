@@ -1,4 +1,6 @@
 
+import LockIcon from '@mui/icons-material/Lock';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
   import React, { useState } from 'react';
   import {
@@ -14,61 +16,83 @@
     MDBInputGroup,
     MDBListGroupItem,
   } from 'mdb-react-ui-kit';
+  const styleRow = {
+    "display": "block",
+    "overflow-y": "scroll",
+    "max-height": "160px"
+}
+
 function PerfilUsuario() {
     return (
-            <div className="container">
-                <div className="row vh-100 justify-content-center align-items-center px-4">
-                    <div className="col">
-                        <div className="row shadow rounded align-items-center" id="cuadro_Datos_Usuario">
-                            {/*Datos de usuario*/}
-                            <div className='w-100 text-center py-4'>
-                                <h2 className="fw-normal text-primary">Perfil de Usuario</h2>
-                            </div>
-                            <div className="col-12 col-md-8 bg-white p-3 ">
-                                
-                                <form className="p-4">
-                                    <MDBInputGroup  wrapperClass='mb-5' textBefore='Nombre:' noBorder label='' id='formControlLg' >
-                                        <input className='form-control rounded' type='name' />
-                                    </MDBInputGroup>
-                                    
-                                    <MDBInputGroup  wrapperClass='mb-5' textBefore='Apellido:' noBorder label='' id='formControlLg' >
-                                        <input className='form-control rounded' type='name' />
-                                    </MDBInputGroup>
-                                   
-                                    <MDBInputGroup  wrapperClass='mb-5' textBefore='Fecha de nacimiento' noBorder label='' id='formControlLg' >
-                                        <input className='form-control rounded' type='date' />
-                                    </MDBInputGroup>
-                                    
-                                    Area:
-
-                                    <MDBInputGroup  wrapperClass='mb-5' textBefore='Correo' noBorder label='' id='formControlLg' >
-                                        <input className='form-control rounded' type='email' />
-                                    </MDBInputGroup>
-                                    <MDBInputGroup  wrapperClass='mb-5' textBefore='Contraseña' noBorder label='' id='formControlLg' >
-                                        <input className='form-control rounded' type='password' />
-                                    </MDBInputGroup>
-                                    <div className='w-100  py-4 ' align="right" >
-                                        
-                                        <MDBBtn type="submit" >Actualizar</MDBBtn>
-                                        
-                                    </div>    
-                                    <div className="col-12 col-md-8 bg-white p-3 ">
-                                    
-                                    <div className='w-100  py-4 ' align="right" >
-                                    <MDBBtn type="submit" >Modificar foto</MDBBtn>
-
-                                    </div>
-                                    
-                                    
-                                    </div>
-                                     
-                                </form>    
-                            </div>
+            <div className="container" style={{
+                backgroundColor: '#E3ECEE',  
+              }}>     
+                <div className="row shadow rounded align-items-center" id="cuadro_Datos_Usuario">
+                        {/*Datos de usuario*/}
+                        <div className='w-100 text-center py-4'>
+                                <h2 className="fw-normal ">Perfil de Usuario</h2>
                         </div>
-                    </div>
-                </div>
+                        <form className="p-4">  
+                            <div className="col-12 bg d-none d-md-block" >
+                                <div className="row">
+                                    <div className="col-6 bg d-none d-md-block">
+                                        <div class="m-3">
+                                            <MDBInputGroup   textBefore='Nombre:' noBorder label='' id='formControlLg' >
+                                                <input className='form-control rounded '  type='name' />
+                                            </MDBInputGroup>
+                                        </div>
+                                        <div class="m-3">
+                                            <MDBInputGroup   textBefore='Apellido:' noBorder label='' id='formControlLg'  >
+                                             <input className='form-control rounded' type='name' />
+                                            </MDBInputGroup>
+                                        </div>
+                                        <div class="m-3">
+                                            <MDBInputGroup   textBefore='Fecha de nacimiento:' noBorder label='' id='formControlLg' >
+                                                <input className='form-control rounded' type='date' />
+                                            </MDBInputGroup>
+                                        </div>
 
-
+                                        <div class="m-3">
+                                            <MDBInputGroup   textBefore='Área:' noBorder label='' id='formControlLg' >
+                                                <select className='form-select'>
+                                                <option selected>Seleccione el área de la empresa</option>
+                                                <option value={"admin"}>Administración</option>
+                                                <option value={"marketing"}>Marketing</option>
+                                            </select>
+                                            </MDBInputGroup>
+                                        </div>
+                                        
+                                        <div class="m-3">
+                                            <MDBInputGroup   textBefore='Correo:' noBorder label='' id='formControlLg' >
+                                                <span class="input-group-text bg-white rounded" id="basic-addon1">@</span>
+                                                <input className='form-control rounded' type='email' />
+                                            </MDBInputGroup>
+                                        </div>
+                                        <div class="m-3">
+                                            <MDBInputGroup   textBefore='Contraseña:' noBorder label='' id='formControlLg' >
+                                                
+                                                <span class="input-group-text bg-white rounded" id="key"><LockIcon></LockIcon></span>
+                                                <input className='form-control rounded' type='password' />
+                                            </MDBInputGroup>
+                                        </div>
+                                        <div className='w-100  py-3 ' align="right" >
+                                            <MDBBtn type="submit"  >Actualizar</MDBBtn>
+                                        </div>  
+                                        
+                                    </div> 
+                                    <div className="col-6 bg d-none d-md-block" >
+                                    
+                                        <div className='w-100  py-4 ' align="center" >
+                                        <button type="button" class="btn btn-outline-primary bg-white">Modificar Foto</button>
+                                        </div>
+                                    </div>  
+                                </div>
+                            </div>  
+                        </form>
+                                  
+                </div>           
+                    
+                
             </div>
 
         
