@@ -10,10 +10,10 @@ const Dashboard = ()=>{
     return(
         <div>
             <div className="container">
-                <h2>Administracion</h2>
+                <h2>Supervisión</h2>
                 <div className="row">
                     <div className="col-3 ">
-                    <MDBCard>
+                   {/*  <MDBCard>
       <MDBCardBody>
         <MDBCardTitle>Card title</MDBCardTitle>
         <MDBCardText>
@@ -21,16 +21,22 @@ const Dashboard = ()=>{
         </MDBCardText>
         <MDBBtn>Button</MDBBtn>
       </MDBCardBody>
-    </MDBCard>
+    </MDBCard> */} 
                     </div>
-                    <div className="col-3">
-                        <p>5 Columnas</p>
+                    <div className="col-4">
+                        <p> Sala de trabajo</p>
                     </div>
-                    <div className="col-3 ">
-                        <p>2 columnas</p>
+                    <div className="col-4 ">
+                        <p> Equipo Asignados</p>
                     </div>
-                    <div className="col-3 ">
-                        <p>6 columnas </p>
+                    <div className="col-4 ">
+                        <p> Columnas </p>
+                    </div>
+                    <div className="col-4 ">
+                        <p> Fecha </p>
+                    </div>
+                    <div className="col-4 ">
+                        <p> Empleados en linea </p>
                     </div>
                 </div>
             </div>
