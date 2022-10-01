@@ -9,13 +9,14 @@ const Login=()=> {
     //Variables
     const [email, setEmail]=useState();
     const [password, setPassword]=useState();
-    const {http}=AuthUser();
+    const {http, setToken}=AuthUser();
 
     //Eviar datos
     const submitForm=()=>{
         http.post('/login', {email:email, password: password}).then(
             (respuesta)=>{
                 console.log(respuesta.data);
+                setToken(respuesta.data.user, respuesta.data.access_token);
             }
 
         );
