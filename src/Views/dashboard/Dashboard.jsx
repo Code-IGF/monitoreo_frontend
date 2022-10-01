@@ -1,3 +1,4 @@
+import { color } from '@mui/system';
 import {
     MDBCard,
     MDBCardBody,
@@ -5,14 +6,14 @@ import {
     MDBCardText,
     MDBBtn
   } from 'mdb-react-ui-kit';
-
-const Dashboard = ()=>{
+  
+  const Dashboard = ()=>{
     return(
         <div>
-            <div className="container">
+            <div className="container text center">
                 <h2>Supervisión</h2>
-                <div className="row">
-                    <div className="col-3 ">
+                <div className="row align-items-center">
+                    <div className="col">
                    {/*  <MDBCard>
       <MDBCardBody>
         <MDBCardTitle>Card title</MDBCardTitle>
@@ -23,19 +24,19 @@ const Dashboard = ()=>{
       </MDBCardBody>
     </MDBCard> */} 
                     </div>
-                    <div className="col-4">
+                    <div className="col">
                         <p> Sala de trabajo</p>
                     </div>
-                    <div className="col-4 ">
+                    <div className="col">
                         <p> Equipo Asignados</p>
                     </div>
-                    <div className="col-4 ">
+                    <div className="col">
                         <p> Columnas </p>
                     </div>
-                    <div className="col-4 ">
+                    <div className="col">
                         <p> Fecha </p>
                     </div>
-                    <div className="col-4 ">
+                    <div className="col">
                         <p> Empleados en linea </p>
                     </div>
                 </div>
