@@ -1,6 +1,7 @@
 
 import LockIcon from '@mui/icons-material/Lock';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import img from '../../img/profile.png';
 
   import React, { useState } from 'react';
   import {
@@ -16,6 +17,8 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
     MDBInputGroup,
     MDBListGroupItem,
   } from 'mdb-react-ui-kit';
+import { border, margin } from '@mui/system';
+import { AlignHorizontalCenterOutlined } from '@mui/icons-material';
   const styleRow = {
     "display": "block",
     "overflow-y": "scroll",
@@ -24,9 +27,13 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 function PerfilUsuario() {
     return (
-            <div className="container" style={{
-                backgroundColor: '#E3ECEE',  
-              }}>     
+        
+            <div className="container " style={{
+                backgroundColor: '#E3ECEE'
+                
+                 ,  
+              }}>  
+              
                 <div className="row shadow rounded align-items-center" id="cuadro_Datos_Usuario">
                         {/*Datos de usuario*/}
                         <div className='w-100 text-center py-4'>
@@ -35,7 +42,7 @@ function PerfilUsuario() {
                         <form className="p-4">  
                             <div className="col-12 bg d-none d-md-block" >
                                 <div className="row">
-                                    <div className="col-6 bg d-none d-md-block">
+                                    <div className="col-8 bg d-none d-md-block">
                                         <div class="m-3">
                                             <MDBInputGroup   textBefore='Nombre:' noBorder label='' id='formControlLg' >
                                                 <input className='form-control rounded '  type='name' />
@@ -80,10 +87,14 @@ function PerfilUsuario() {
                                         </div>  
                                         
                                     </div> 
-                                    <div className="col-6 bg d-none d-md-block" >
+                                    <div className="col-4 bg d-none d-md-block" >
+                                        <div className='img-holder'align="center">
+                                            <img src={img} width="150" height="150"/>
+                                        </div>
                                     
                                         <div className='w-100  py-4 ' align="center" >
-                                        <button type="button" class="btn btn-outline-primary bg-white">Modificar Foto</button>
+                                        <button type="button" class="btn btn-outline-primary bg-white">Modificar Foto   <PhotoCameraIcon></PhotoCameraIcon></button>
+
                                         </div>
                                     </div>  
                                 </div>
@@ -92,7 +103,7 @@ function PerfilUsuario() {
                                   
                 </div>           
                     
-                
+                 
             </div>
 
         
