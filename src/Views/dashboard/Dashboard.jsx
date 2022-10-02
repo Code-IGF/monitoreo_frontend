@@ -12,6 +12,9 @@ import IconButton from '@mui/material/IconButton'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ImageIcon from '@mui/icons-material/Image';
+import { CheckBox } from '@mui/icons-material';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 <link rel="stylesheet" href="index.css"></link>
 
   
@@ -80,29 +83,56 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
                      
             </div>
             {/* Tabla  */}
+            
           <div className="pt-5">
+          <h5><p>Empleados Activos</p></h5>
             <table class="table table-hover table-bordered">
               <thead className='table-primary'>
-                <p>Empleados Activos</p>
+                
                 <tr>
-                  <th scope="col">#</th>
+                  <th scope="col"></th>
                   <th scope="col">Foto</th>
-                  <th scope="col">Area</th>
-                  <th scope="col">Supervisor</th>
-                  <th scope="col">Fecha</th>
-                  <th scope="col">Accion</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Apellido</th>
+                  <th scope="col">Equipo</th>
+                  <th scope="col">Acciones</th>
                 </tr>
               </thead>
               <tbody>
+                {/* primer persona */}
                 <tr>
-                  <th scope="row">1</th>
-                  <td>Equipo1</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>Otto</td>
+                  <th scope="row"><CheckBoxOutlineBlankIcon></CheckBoxOutlineBlankIcon></th>
+                  <td><ImageIcon></ImageIcon></td>
+                  <td>Francisco Alfredo</td>
+                  <td>Castaneda Zepeda</td>
+                  <td>Equipo 1</td>
                   <td><MoreVertIcon></MoreVertIcon></td>
                 </tr>
               </tbody>
+             
+              <tbody>
+                <tr>
+                    {/* segunda persona */}
+                  <th scope="row"><CheckBoxOutlineBlankIcon></CheckBoxOutlineBlankIcon></th>
+                  <td><ImageIcon></ImageIcon></td>
+                  <td>Rosa Amalia </td>
+                  <td>Roldan Castillo</td>
+                  <td>Equipo 2</td>
+                  <td><MoreVertIcon></MoreVertIcon></td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                    {/* tercera persona */}
+                  <th scope="row"><CheckBoxOutlineBlankIcon></CheckBoxOutlineBlankIcon></th>
+                  <td><ImageIcon></ImageIcon></td>
+                  <td>Kevin Daniel</td>
+                  <td>Monge Orellana</td>
+                  <td>Equipo 3</td>
+                  <td><MoreVertIcon></MoreVertIcon></td>
+                </tr>
+              </tbody>
+              
             </table>
           
         {/* grafico de pastel */}
