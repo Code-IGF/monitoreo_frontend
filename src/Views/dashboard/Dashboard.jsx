@@ -11,6 +11,8 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import VideocamIcon from '@mui/icons-material/Videocam';
+import GroupIcon from '@mui/icons-material/Group';
+import PersonIcon from '@mui/icons-material/Person';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ImageIcon from '@mui/icons-material/Image';
 import { CheckBox } from '@mui/icons-material';
@@ -45,6 +47,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
                     </Button>
                     <Button variant="outlined" color="primary">
                         Equipos asignados
+                        <td><GroupIcon color = "info"></GroupIcon></td>
                     </Button>
                     <Button variant="outlined" color="primary">
                         Fecha
@@ -55,6 +58,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
                     </Button>
                     <Button variant="outlined" color="primary">
                         Empleados en Linea
+                        <td><PersonIcon></PersonIcon></td>
                     </Button>
                    
                       
