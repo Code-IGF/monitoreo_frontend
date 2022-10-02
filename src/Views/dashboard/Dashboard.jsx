@@ -5,12 +5,22 @@ import {
     MDBCardTitle,
     MDBCardText,
     MDBBtn
+    
   } from 'mdb-react-ui-kit';
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import VideocamIcon from '@mui/icons-material/Videocam';
+<link rel="stylesheet" href="index.css"></link>
+
+  
+
   
   const Dashboard = ()=>{
     return(
         <div>
-            <div className="container text center">
+            <div className="container text center" >
+            
                 <h2>Supervisión</h2>
                 <div className="row align-items-center">
                     <div className="col">
@@ -23,8 +33,32 @@ import {
         <MDBBtn>Button</MDBBtn>
       </MDBCardBody>
     </MDBCard> */} 
-                    </div>
-                    <div className="col">
+                    <Button variant="outlined" color="primary">
+                        Sala de trabajo
+                        <VideocamIcon color = "info">
+
+                        </VideocamIcon>
+                    </Button>
+                    <Button variant="outlined" color="primary">
+                        Equipos asignados
+                    </Button>
+                    <Button variant="outlined" color="primary">
+                        Fecha
+                        <CalendarMonthIcon color = "info">
+                            
+                        </CalendarMonthIcon>
+                       
+                    </Button>
+                    <Button variant="outlined" color="primary">
+                        Empleados en Linea
+                    </Button>
+                   
+                      
+                    
+                   </div>
+                  
+
+                 {/*    <div className="col" >
                         <p> Sala de trabajo</p>
                     </div>
                     <div className="col">
@@ -35,13 +69,36 @@ import {
                     </div>
                     <div className="col">
                         <p> Fecha </p>
+                        
                     </div>
                     <div className="col">
                         <p> Empleados en linea </p>
-                    </div>
-                </div>
+                    </div> */}
+                 
+                     </div>
             </div>
-            
+            <h6 class = "title_grafico">Distribucion de equipos</h6>
+            <section class = "container_grafico">
+                <div class = "grafico"></div>
+                <div class ="container_leyenda">
+                    <span class = "leyenda_all">
+                        <span class = "color_A"></span>
+                        <p class="equipo">A</p>
+                    </span>
+                    <span class = "leyenda_all">
+                        <span class = "color_B"></span>
+                        <p class="equipo">B</p>
+                    </span>
+                    <span class = "leyenda_all">
+                        <span class = "color_C"></span>
+                        <p class="equipo">C</p>
+                    </span>
+
+                </div>
+
+
+            </section>
+
         </div>
     );
 }
