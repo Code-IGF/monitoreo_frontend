@@ -28,8 +28,9 @@ const Areas = ()=>{
     const [departamentos, setDepartamentos]=useState();
     const [nombreDepartamento, setNombreDepartamento]=useState();
     const [descripcionDepartamento, setDescripcionDepartamento]=useState();
+    const [deleteDatos, setDeleteDatos]=useState(false);
 
-    const [basicModal, setBasicModal] = useState(false);
+    const [basicModal, setBasicModal] = useState();
     const toggleShow = () => {
         setBasicModal(!basicModal);}
     
@@ -70,8 +71,16 @@ const Areas = ()=>{
 
     //Función para eliminar
     const setDeleteId = (id)=>{
-        handleClickOpen();
-        console.log(id);
+        if(deleteDatos){
+            handleClose()
+            console.log("funciona")
+            setDeleteDatos(false)
+        }
+        else{
+            handleClickOpen();
+            console.log(id);
+        {}
+        }
     }
 
     //Ejecutando Funciones
@@ -79,6 +88,11 @@ const Areas = ()=>{
         consultarDepartamentos();
         // eslint-disable-next-line 
     },[]);
+
+    //Si se apruebea la eliminación
+    useEffect(()=>{
+        setDeleteId()
+    },[deleteDatos])
     
 
     return(
@@ -124,6 +138,7 @@ const Areas = ()=>{
         <AlertDialogSlide
             open={open}
             handleClose={handleClose}
+            setDeleteDatos={setDeleteDatos}
             tipoElemento={"Departamento"}
         >
         </AlertDialogSlide>
