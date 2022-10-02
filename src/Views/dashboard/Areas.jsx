@@ -77,9 +77,10 @@ const Areas = ()=>{
             setDeleteDatos(false)
         }
         else{
+            
             handleClickOpen();
             console.log(id);
-        {}
+
         }
     }
 
@@ -90,9 +91,7 @@ const Areas = ()=>{
     },[]);
 
     //Si se apruebea la eliminación
-    useEffect(()=>{
-        setDeleteId()
-    },[deleteDatos])
+    
     
 
     return(

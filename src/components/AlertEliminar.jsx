@@ -16,11 +16,12 @@ export default function AlertDialogSlide({open, handleClose, tipoElemento, setDe
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
+  };*/
+  const cerrarDialog = () => {
+    setDeleteDatos(true)
+    handleClose()
   }; 
-  */
+  
 
   return (
     <div>
@@ -39,7 +40,7 @@ export default function AlertDialogSlide({open, handleClose, tipoElemento, setDe
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
-          <Button onClick={setDeleteDatos}>Continuar</Button>
+          <Button onClick={cerrarDialog}>Continuar</Button>
         </DialogActions>
       </Dialog>
     </div>
