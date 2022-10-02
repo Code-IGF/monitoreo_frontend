@@ -28,7 +28,7 @@ const Areas = ()=>{
     const [departamentos, setDepartamentos]=useState();
     const [nombreDepartamento, setNombreDepartamento]=useState();
     const [descripcionDepartamento, setDescripcionDepartamento]=useState();
-    const [deleteDatos, setDeleteDatos]=useState(false);
+    const [acceptDelete, setAcceptDelete]=useState(false);
 
     const [basicModal, setBasicModal] = useState();
     const toggleShow = () => {
@@ -68,21 +68,30 @@ const Areas = ()=>{
             console.log(nuevoDepartamento);
         });
     }
-
-    //Función para eliminar
-    const setDeleteId = (id)=>{
-        if(deleteDatos){
-            handleClose()
-            console.log("funciona")
-            setDeleteDatos(false)
-        }
-        else{
-            
-            handleClickOpen();
-            console.log(id);
-
-        }
+    //-----------------------------------------------------------------------------------------
+    //Funciones para eliminar
+    const [idDelete, setIdDelete]=useState(); //alamcena el id a eliminar
+    //Si se preciona un boton de eliminar se recibe su id y asigna a idDelete
+    const setDeleteId = (dato)=>{
+        setIdDelete(dato);
+        handleClickOpen();//Se abre el modal de confirmación
     }
+    const eliminarData=()=>{
+        http.delete(`/areas/${idDelete.id}`).then(
+            ()=>{
+                console.log("se elimino"+idDelete)
+              handleClose()//Cerrar modal
+              setAcceptDelete(false)//Desactivar funcion de eliminacion
+              const nuevoDepartamento=departamentos;
+              nuevoDepartamento.pop(idDelete)//Eliminando el objeto del useState
+
+            }
+          )
+    }
+
+    useEffect(()=>{
+        acceptDelete? eliminarData(): console.log("efect")
+    },[acceptDelete]);
 
     //Ejecutando Funciones
     useEffect(()=>{
@@ -137,8 +146,8 @@ const Areas = ()=>{
         <AlertDialogSlide
             open={open}
             handleClose={handleClose}
-            setDeleteDatos={setDeleteDatos}
             tipoElemento={"Departamento"}
+            setAcceptDelete={setAcceptDelete}
         >
         </AlertDialogSlide>
 

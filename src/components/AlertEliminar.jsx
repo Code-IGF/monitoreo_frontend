@@ -11,15 +11,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AlertDialogSlide({open, handleClose, tipoElemento, setDeleteDatos}) {
+export default function AlertDialogSlide({open, handleClose, tipoElemento, setAcceptDelete}) {
   /* 
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };*/
   const cerrarDialog = () => {
-    setDeleteDatos(true)
-    handleClose()
+    setAcceptDelete(true)
+    console.log("Eliminando");
   }; 
   
 

@@ -15,7 +15,7 @@ const RowAreas=({dato, setDeleteId})=>{
                     <EditOutlinedIcon/>
                 </IconButton>
                 <IconButton
-                    onClick={()=>setDeleteId(id)}
+                    onClick={()=>setDeleteId(dato)}
                 >
                     <DeleteOutlineOutlinedIcon/>
                 </IconButton>
