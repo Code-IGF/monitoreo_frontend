@@ -11,6 +11,7 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import VideocamIcon from '@mui/icons-material/Videocam';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 <link rel="stylesheet" href="index.css"></link>
 
   
@@ -44,9 +45,9 @@ import VideocamIcon from '@mui/icons-material/Videocam';
                     </Button>
                     <Button variant="outlined" color="primary">
                         Fecha
-                        <CalendarMonthIcon color = "info">
+                       <td> <CalendarMonthIcon color = "info">
                             
-                        </CalendarMonthIcon>
+                        </CalendarMonthIcon></td>
                        
                     </Button>
                     <Button variant="outlined" color="primary">
@@ -76,7 +77,35 @@ import VideocamIcon from '@mui/icons-material/Videocam';
                     </div> */}
                  
                      </div>
+                     
             </div>
+            {/* Tabla  */}
+          <div className="pt-5">
+            <table class="table table-hover table-bordered">
+              <thead className='table-primary'>
+                <p>Empleados Activos</p>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Foto</th>
+                  <th scope="col">Area</th>
+                  <th scope="col">Supervisor</th>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Accion</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Equipo1</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                  <td>Otto</td>
+                  <td><MoreVertIcon></MoreVertIcon></td>
+                </tr>
+              </tbody>
+            </table>
+          
+        {/* grafico de pastel */}
             <h6 class = "title_grafico">Distribucion de equipos</h6>
             <section class = "container_grafico">
                 <div class = "grafico"></div>
@@ -98,7 +127,8 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 
 
             </section>
-
+      
+        </div>
         </div>
     );
 }
