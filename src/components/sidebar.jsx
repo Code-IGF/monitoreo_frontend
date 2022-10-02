@@ -15,6 +15,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import HomeIcon from '@mui/icons-material/Home';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import BadgeIcon from '@mui/icons-material/Badge';
 
 function SideBAr(){
     //Función para ocultar sidebar
@@ -76,6 +77,12 @@ function SideBAr(){
                         <ListItem button>
                             <ListItemIcon><BusinessCenterIcon color="primary" ></BusinessCenterIcon></ListItemIcon>
                             <ListItemText primary="Areas" />
+                        </ListItem>
+                    </NavLink>
+                    <NavLink to="/usuarios" className="text-body">
+                        <ListItem button>
+                            <ListItemIcon><BadgeIcon color="primary" ></BadgeIcon></ListItemIcon>
+                            <ListItemText primary="Usuarios" />
                         </ListItem>
                     </NavLink>
                     
