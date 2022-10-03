@@ -71,20 +71,20 @@ const Areas = ()=>{
     }
     //-----------------------------------------------------------------------------------------
     //Funciones para eliminar
-    const [idDelete, setIdDelete]=useState(); //alamcena el id a eliminar
+    const [seletDato, setSeletDato]=useState(); //alamcena el id a eliminar
     //Si se preciona un boton de eliminar se recibe su id y asigna a idDelete
     const setDeleteId = (dato)=>{
-        setIdDelete(dato);
+        setSeletDato(dato);
         handleClickOpen();//Se abre el modal de confirmación
     }
     const eliminarData=()=>{
-        http.delete(`/areas/${idDelete.id}`).then(
+        http.delete(`/areas/${seletDato.id}`).then(
             ()=>{
-                console.log("se elimino "+idDelete.id)
+                console.log("se elimino "+seletDato.id)
                 handleClose()//Cerrar modal
                 setAcceptDelete(false)//Desactivar funcion de eliminacion
                 const nuevoDepartamento=departamentos;
-                nuevoDepartamento.pop(idDelete)//Eliminando el objeto del useState
+                nuevoDepartamento.pop(seletDato)//Eliminando el objeto del useState
 
             }
           )
