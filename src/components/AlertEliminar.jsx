@@ -40,7 +40,7 @@ export default function AlertDialogSlide({open, handleClose, tipoElemento, setAc
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
-          <Button onClick={cerrarDialog}>Continuar</Button>
+          <Button onClick={cerrarDialog}>Eliminar</Button>
         </DialogActions>
       </Dialog>
     </div>

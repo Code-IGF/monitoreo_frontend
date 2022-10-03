@@ -28,6 +28,7 @@ const Areas = ()=>{
     const [departamentos, setDepartamentos]=useState();
     const [nombreDepartamento, setNombreDepartamento]=useState();
     const [descripcionDepartamento, setDescripcionDepartamento]=useState();
+    //Use state para confirmar eliminacion
     const [acceptDelete, setAcceptDelete]=useState(false);
 
     const [basicModal, setBasicModal] = useState();
@@ -79,18 +80,18 @@ const Areas = ()=>{
     const eliminarData=()=>{
         http.delete(`/areas/${idDelete.id}`).then(
             ()=>{
-                console.log("se elimino"+idDelete)
-              handleClose()//Cerrar modal
-              setAcceptDelete(false)//Desactivar funcion de eliminacion
-              const nuevoDepartamento=departamentos;
-              nuevoDepartamento.pop(idDelete)//Eliminando el objeto del useState
+                console.log("se elimino "+idDelete.id)
+                handleClose()//Cerrar modal
+                setAcceptDelete(false)//Desactivar funcion de eliminacion
+                const nuevoDepartamento=departamentos;
+                nuevoDepartamento.pop(idDelete)//Eliminando el objeto del useState
 
             }
           )
     }
 
     useEffect(()=>{
-        acceptDelete? eliminarData(): console.log("efect")
+        acceptDelete? eliminarData(): console.log("accept (false)")
     },[acceptDelete]);
 
     //Ejecutando Funciones
