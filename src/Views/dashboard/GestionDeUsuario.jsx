@@ -7,6 +7,7 @@ import AuthUser from "../../components/AuthUser";
 //Icono
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import CloseIcon from '@mui/icons-material/Close';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 //
 import { Button,TextField } from '@mui/material';
@@ -30,11 +31,12 @@ function GestionDeUsuario(){
 
     //http
     const {http}=AuthUser();
-
+ 
     //Funcion para consultar usuario
     const consultarUsuarios=()=>{
         http.get('/usuarios').then(
             (res)=>{
+                console.log(res.data);
                 setUsuarios(res.data);
             }
         );
@@ -43,6 +45,39 @@ function GestionDeUsuario(){
     useEffect(()=>{
         consultarUsuarios();
     },[]);
+
+    //Renderizar elementos iniciales
+    function renderizarTabla(){
+        if(usuarios){
+            return(
+            <tbody>
+                {usuarios.map(x=>(
+                    <tr>
+                        <td>{x.id}</td>
+                        <td>{x.nombre}</td>
+                        <td>{x.created_at}</td>
+                        <td>
+                            <EditOutlinedIcon>
+                            </EditOutlinedIcon>
+                        </td>
+                    </tr>
+                ))}        
+            </tbody>
+            )
+        }else{
+            return(
+            <tbody>
+                <tr>
+                    <td colSpan={7}>
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            )
+        }
+    }
 
     return (
         <div>
@@ -70,30 +105,39 @@ function GestionDeUsuario(){
                     <thead className='table-primary'>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Nombre  Apellido</th>
+                            <th scope="col"> Nombre &nbsp; &nbsp; &nbsp; &nbsp; Apellido</th>
                             <th scope="col">Area</th>
-                            <th scope="col">equipo</th>
+                            <th scope="col">Equipo</th>
                             <th scope="col">Supervisor</th>
                             <th scope="col">Fecha de Registro</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
+                    {/* invacando función */
+                        renderizarTabla()
+                    }
 
-                    {/* Llenado de la Tabla */} 
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Katya Raymundo</td>
-                            <td>Desarrollo</td>
-                            <td> - </td>
-                            <td>Isai Ronaldo</td>
-                            <td>1/10/2022</td>
-                            <td><MoreVertIcon></MoreVertIcon></td>
-                        </tr>
-                    </tbody>
-                    
+
                 </table>
-            
+                {/*Paginacion*/}
+                
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&lt; Prev</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1 - 10</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true"> Next &gt;</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">of 233</a></li>
+                        </ul>
+                    </nav>
+                
             </div>
             {/* Modal */}
             <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
