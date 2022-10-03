@@ -1,6 +1,6 @@
 import RowAreas from "./RowAreas";
 
-const TablaAreas=({departamentos, setDeleteId})=>{
+const TablaAreas=({departamentos, setDeleteId, selectEditData})=>{
     if(departamentos){
         return(
         <tbody>
@@ -8,6 +8,7 @@ const TablaAreas=({departamentos, setDeleteId})=>{
                 <RowAreas key={dato.id}
                     setDeleteId={setDeleteId}
                     dato={dato}
+                    selectEditData={selectEditData}
                 >
                 </RowAreas>
             ))}
