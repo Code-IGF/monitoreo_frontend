@@ -98,9 +98,8 @@ const Areas = ()=>{
                 console.log("se elimino "+seletDato.id)
                 handleClose()//Cerrar modal
                 setAcceptDelete(false)//Desactivar funcion de eliminacion
-                const nuevoDepartamento=departamentos;
-                nuevoDepartamento.pop(seletDato)//Eliminando el objeto del useState
-
+                const nuevoDepartamento=departamentos.filter((item) => item !== seletDato);
+                setDepartamentos(nuevoDepartamento);
             }
           )
     }
