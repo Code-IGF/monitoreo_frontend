@@ -1,9 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import AuthUser from "../../components/AuthUser";
-import TablaRoles from "./roles/TablaRoles";
-import AlertDialogSlide from "../../components/AlertEliminar";
+import AuthUser from "../../../components/AuthUser";
+import TablaRoles from "./TablaRoles";
+import AlertDialogSlide from "../../../components/AlertEliminar";
 //
 import { Button, 
     TextField
