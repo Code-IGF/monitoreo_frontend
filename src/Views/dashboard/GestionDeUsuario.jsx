@@ -21,6 +21,8 @@ import {
     MDBModalFooter,
   } from 'mdb-react-ui-kit';
 
+
+ {/*_______________________________________________________________________________________________*/}
 function GestionDeUsuario(){
     //Variable
     const [usuarios, setUsuarios] =useState();
@@ -46,6 +48,8 @@ function GestionDeUsuario(){
         consultarUsuarios();
     },[]);
 
+
+ {/*_______________________________________________________________________________________________*/}
     //Renderizar elementos iniciales
     function renderizarTabla(){
         if(usuarios){
@@ -79,6 +83,8 @@ function GestionDeUsuario(){
         }
     }
 
+
+ {/*_______________________________________________________________________________________________*/}
     return (
         <div>
             <div className="container pt-5" >
@@ -99,6 +105,8 @@ function GestionDeUsuario(){
                 </div>
             </div>
             
+
+ {/*_______________________________________________________________________________________________*/}
             {/* Tabla  */}
             <div className="container pt-5">
                 <table class="table table-hover table-bordered">
@@ -116,29 +124,56 @@ function GestionDeUsuario(){
                     {/* invacando función */
                         renderizarTabla()
                     }
-
-
                 </table>
-                {/*Paginacion*/}
-                
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&lt; Prev</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1 - 10</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true"> Next &gt;</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">of 233</a></li>
-                        </ul>
-                    </nav>
-                
             </div>
+
+ {/*_______________________________________________________________________________________________*/}
+               {/*
+                //Prueba de paginación 
+                <div className ="row">
+                    <dv className="col text-end">
+                        <Button
+                            variant="outlined"
+                            onClick={toggleShow}
+                        >
+                            <span aria-hidden="true">&lt; Prev</span>
+                        </Button>
+                       
+                        <Button
+                            variant="outlined"
+                            onClick={toggleShow}
+                        >
+                            <span aria-hidden="true"> Next &gt;</span>
+                        </Button>
+                        
+                    </dv>
+                </div>
+            */}
+            
+ {/*_______________________________________________________________________________________________*/}
+                {/*Paginacion*/}
+                <div className="container pt-5" >
+                    <div className ="row">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&lt; Prev</span>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1 - 10</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true"> Next &gt;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">of 233</a></li>
+                            </ul>
+                        </nav>
+                   </div>
+                </div>
+            
+ {/*_______________________________________________________________________________________________*/}
             {/* Modal */}
             <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
                 {/*Atributo size indica el tamaño del modal opciones:
@@ -174,7 +209,9 @@ function GestionDeUsuario(){
                                 rows={3}
                                 />
                         </MDBModalBody>
-{/* 
+
+
+    {/* 
                         <MDBModalFooter>
                         <Button 
                             variant="text" 
@@ -188,7 +225,9 @@ function GestionDeUsuario(){
                         >Enviar
                         </Button>
                         </MDBModalFooter>
-*/}
+    */}
+
+
                     </MDBModalContent>
                 </MDBModalDialog>
             </MDBModal>
