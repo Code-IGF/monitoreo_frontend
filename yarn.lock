@@ -1671,10 +1671,17 @@
   dependencies:
     "@babel/runtime" "^7.19.0"
 
+<<<<<<< HEAD
+"@mui/material@^5.0.0", "@mui/material@^5.10.7", "@mui/material@^5.4.1":
+  "integrity" "sha512-o1jcQGii+q7ORrXhBiMmGzFDaboc1qTgOOC3zDW+NR9ryVzWzL7qEeqoORbgDB5zk9OBsXCjB91fUH/ls5xMwg=="
+  "resolved" "https://registry.npmjs.org/@mui/material/-/material-5.10.7.tgz"
+  "version" "5.10.7"
+=======
 "@mui/material@^5.10.7":
   version "5.10.7"
   resolved "https://registry.npmjs.org/@mui/material/-/material-5.10.7.tgz"
   integrity sha512-o1jcQGii+q7ORrXhBiMmGzFDaboc1qTgOOC3zDW+NR9ryVzWzL7qEeqoORbgDB5zk9OBsXCjB91fUH/ls5xMwg==
+>>>>>>> c7ae6ea8d7608dd13aa2f2ea6ed6337c4da9bf66
   dependencies:
     "@babel/runtime" "^7.19.0"
     "@mui/base" "5.0.0-alpha.99"
@@ -1708,10 +1715,17 @@
     csstype "^3.1.1"
     prop-types "^15.8.1"
 
+<<<<<<< HEAD
+"@mui/system@^5.10.7", "@mui/system@^5.4.1":
+  "integrity" "sha512-kwyhjjKGsgtBRFl6vSqidDZcNKU5S1juTgm4Xi2fyWxaEbIQb9Sh9y0iVP2bNCJzgDr0alLaENOZOEaDWHISAQ=="
+  "resolved" "https://registry.npmjs.org/@mui/system/-/system-5.10.7.tgz"
+  "version" "5.10.7"
+=======
 "@mui/system@^5.10.7":
   version "5.10.7"
   resolved "https://registry.npmjs.org/@mui/system/-/system-5.10.7.tgz"
   integrity sha512-kwyhjjKGsgtBRFl6vSqidDZcNKU5S1juTgm4Xi2fyWxaEbIQb9Sh9y0iVP2bNCJzgDr0alLaENOZOEaDWHISAQ==
+>>>>>>> c7ae6ea8d7608dd13aa2f2ea6ed6337c4da9bf66
   dependencies:
     "@babel/runtime" "^7.19.0"
     "@mui/private-theming" "^5.10.6"
@@ -1728,9 +1742,15 @@
   integrity sha512-lGXtFKe5lp3UxTBGqKI1l7G8sE2xBik8qCfrLHD5olwP/YU0/ReWoWT7Lp1//ri32dK39oPMrJN8TgbkCSbsNA==
 
 "@mui/utils@^5.10.3", "@mui/utils@^5.10.6":
+<<<<<<< HEAD
+  "integrity" "sha512-g0Qs8xN/MW2M3fLL8197h5J2VB9U+49fLlnKKqC6zy/yus5cZwdT+Gwec+wUMxgwQoxMDn+J8oDWAn28kEOR/Q=="
+  "resolved" "https://registry.npmjs.org/@mui/utils/-/utils-5.10.6.tgz"
+  "version" "5.10.6"
+=======
   version "5.10.6"
   resolved "https://registry.npmjs.org/@mui/utils/-/utils-5.10.6.tgz"
   integrity sha512-g0Qs8xN/MW2M3fLL8197h5J2VB9U+49fLlnKKqC6zy/yus5cZwdT+Gwec+wUMxgwQoxMDn+J8oDWAn28kEOR/Q==
+>>>>>>> c7ae6ea8d7608dd13aa2f2ea6ed6337c4da9bf66
   dependencies:
     "@babel/runtime" "^7.19.0"
     "@types/prop-types" "^15.7.5"
@@ -1739,15 +1759,15 @@
     react-is "^18.2.0"
 
 "@mui/x-data-grid@^5.17.5":
-  version "5.17.5"
-  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-5.17.5.tgz#1fc5d01a15cca2ac44fe6993ea13b936b8b167aa"
-  integrity sha512-rMSy2G/qFtvD3DQTBJ9d90VJfhCG/yEWsT0+m1CRybyS4O9u1hFjKOTr4FtTcjqu4qt7Nbrb/eLaQZVerN5P1Q==
+  "integrity" "sha512-rMSy2G/qFtvD3DQTBJ9d90VJfhCG/yEWsT0+m1CRybyS4O9u1hFjKOTr4FtTcjqu4qt7Nbrb/eLaQZVerN5P1Q=="
+  "resolved" "https://registry.npmjs.org/@mui/x-data-grid/-/x-data-grid-5.17.5.tgz"
+  "version" "5.17.5"
   dependencies:
     "@babel/runtime" "^7.18.9"
     "@mui/utils" "^5.10.3"
-    clsx "^1.2.1"
-    prop-types "^15.8.1"
-    reselect "^4.1.6"
+    "clsx" "^1.2.1"
+    "prop-types" "^15.8.1"
+    "reselect" "^4.1.6"
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
@@ -7590,10 +7610,17 @@ react-dev-utils@^12.0.1:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
+<<<<<<< HEAD
+"react-dom@^16.8.0 || ^17 || ^18", "react-dom@^17.0.0 || ^18.0.0", "react-dom@^17.0.2 || ^18.0.0", "react-dom@^18.0.0", "react-dom@^18.1.0", "react-dom@^18.2.0", "react-dom@>=16.6.0", "react-dom@>=16.8":
+  "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
+  "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
+  "version" "18.2.0"
+=======
 react-dom@^18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
+>>>>>>> c7ae6ea8d7608dd13aa2f2ea6ed6337c4da9bf66
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
@@ -7716,10 +7743,17 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
+<<<<<<< HEAD
+"react@^16.8.0 || ^17 || ^18", "react@^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18.0.0", "react@^18.0.0", "react@^18.1.0", "react@^18.2.0", "react@>= 16", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0":
+  "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
+  "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
+  "version" "18.2.0"
+=======
 react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
+>>>>>>> c7ae6ea8d7608dd13aa2f2ea6ed6337c4da9bf66
   dependencies:
     loose-envify "^1.1.0"
 
@@ -7872,6 +7906,17 @@ requires-port@^1.0.0:
   resolved "https://registry.npmjs.org/requires-port/-/requires-port-1.0.0.tgz"
   integrity sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==
 
+<<<<<<< HEAD
+"reselect@^4.1.6":
+  "integrity" "sha512-ZovIuXqto7elwnxyXbBtCPo9YFEr3uJqj2rRbcOOog1bmu2Ag85M4hixSwFWyaBMKXNgvPaJ9OSu9SkBPIeJHQ=="
+  "resolved" "https://registry.npmjs.org/reselect/-/reselect-4.1.6.tgz"
+  "version" "4.1.6"
+
+"resolve-cwd@^3.0.0":
+  "integrity" "sha512-OrZaX2Mb+rJCpH/6CpSqt9xFVpN++x01XnN2ie9g6P5/3xelLAkXWVADpdz1IHD/KFfEXyE6V0U01OQ3UO2rEg=="
+  "resolved" "https://registry.npmjs.org/resolve-cwd/-/resolve-cwd-3.0.0.tgz"
+  "version" "3.0.0"
+=======
 reselect@^4.1.6:
   version "4.1.6"
   resolved "https://registry.yarnpkg.com/reselect/-/reselect-4.1.6.tgz#19ca2d3d0b35373a74dc1c98692cdaffb6602656"
@@ -7881,6 +7926,7 @@ resolve-cwd@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/resolve-cwd/-/resolve-cwd-3.0.0.tgz"
   integrity sha512-OrZaX2Mb+rJCpH/6CpSqt9xFVpN++x01XnN2ie9g6P5/3xelLAkXWVADpdz1IHD/KFfEXyE6V0U01OQ3UO2rEg==
+>>>>>>> c7ae6ea8d7608dd13aa2f2ea6ed6337c4da9bf66
   dependencies:
     resolve-from "^5.0.0"
 

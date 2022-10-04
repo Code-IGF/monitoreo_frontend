@@ -38,7 +38,7 @@ function Equipos(){
               <thead className='table-primary'>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Nombre Equiipo</th>
+                  <th scope="col">Nombre Equipo</th>
                   <th scope="col">Area</th>
                   <th scope="col">Supervisor</th>
                   <th scope="col">Fecha</th>
