@@ -9,7 +9,7 @@ import Equipos from './Views/dashboard/Equipos';
 import Dashboard from './Views/dashboard/Dashboard';
 import Areas from './Views/dashboard/Areas';
 import GestionDeUsuario from './Views/dashboard/GestionDeUsuario';
-import GestionDeEquipo from './Views/dashboard/GestionDeEquipo';
+import GestionDeEquipo from './Views/dashboard/roles/GestionDeEquipo';
 
 function App() {
   return (
