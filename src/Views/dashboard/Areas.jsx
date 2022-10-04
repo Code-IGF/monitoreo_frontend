@@ -58,7 +58,7 @@ const Areas = ()=>{
         );
     }
 
-    //Función para enviar datos
+    //Función para crear datos
     const almacenarDepartamento=()=>{    
         console.log(nombreDepartamento);
         console.log(descripcionDepartamento);
@@ -71,17 +71,18 @@ const Areas = ()=>{
             console.log(nuevoDepartamento);
         });
     }
-    //Función para enviar datos
+    //Función editar datos
     const editarDepartamento=()=>{    
         console.log(nombreDepartamento);
         console.log(descripcionDepartamento);
         console.log("editar")
-        http.put(`/areas/${seletDato.id}`).then((data)=>{
+        http.put(`/areas/${seletDato.id}`, {nombre: nombreDepartamento, descripcion:descripcionDepartamento}).then((data)=>{
             console.log(data.data)
             setBasicModal(false);
             setAcceptEdit(false);
-            /* const nuevoDepartamento=departamentos;
-            nuevoDepartamento.push(data.data); */
+            const nuevoDepartamento=departamentos.filter((item) => item !== seletDato);
+            nuevoDepartamento.unshift(data.data);
+            setDepartamentos(nuevoDepartamento);
         });
     }
     //-----------------------------------------------------------------------------------------
@@ -98,9 +99,8 @@ const Areas = ()=>{
                 console.log("se elimino "+seletDato.id)
                 handleClose()//Cerrar modal
                 setAcceptDelete(false)//Desactivar funcion de eliminacion
-                const nuevoDepartamento=departamentos;
-                nuevoDepartamento.pop(seletDato)//Eliminando el objeto del useState
-
+                const nuevoDepartamento=departamentos.filter((item) => item !== seletDato);
+                setDepartamentos(nuevoDepartamento);
             }
           )
     }
