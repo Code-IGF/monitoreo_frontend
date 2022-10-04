@@ -81,7 +81,7 @@ const Areas = ()=>{
             setBasicModal(false);
             setAcceptEdit(false);
             const nuevoDepartamento=departamentos;
-            nuevoDepartamento.push(data.data);
+            nuevoDepartamento.filter((item) => item !== data.data)
         });
     }
     //-----------------------------------------------------------------------------------------
