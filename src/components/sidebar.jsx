@@ -85,6 +85,12 @@ function SideBAr(){
                             <ListItemText primary="Usuarios" />
                         </ListItem>
                     </NavLink>
+                    <NavLink to="/gestionDeEquipo" className="text-body">
+                        <ListItem button>
+                            <ListItemIcon><GroupsIcon color="primary" ></GroupsIcon></ListItemIcon>
+                            <ListItemText primary="GestionDeEquipo" />
+                        </ListItem>
+                    </NavLink>
                     
                 </List>
             </Drawer>
