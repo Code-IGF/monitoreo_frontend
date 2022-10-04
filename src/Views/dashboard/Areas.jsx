@@ -80,8 +80,9 @@ const Areas = ()=>{
             console.log(data.data)
             setBasicModal(false);
             setAcceptEdit(false);
-            const nuevoDepartamento=departamentos;
-            nuevoDepartamento.filter((item) => item !== data.data)
+            const nuevoDepartamento=departamentos.filter((item) => item !== seletDato);
+            nuevoDepartamento.unshift(data.data);
+            setDepartamentos(nuevoDepartamento);
         });
     }
     //-----------------------------------------------------------------------------------------
