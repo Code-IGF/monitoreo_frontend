@@ -58,7 +58,7 @@ const Areas = ()=>{
         );
     }
 
-    //Función para enviar datos
+    //Función para crear datos
     const almacenarDepartamento=()=>{    
         console.log(nombreDepartamento);
         console.log(descripcionDepartamento);
@@ -71,17 +71,17 @@ const Areas = ()=>{
             console.log(nuevoDepartamento);
         });
     }
-    //Función para enviar datos
+    //Función editar datos
     const editarDepartamento=()=>{    
         console.log(nombreDepartamento);
         console.log(descripcionDepartamento);
         console.log("editar")
-        http.put(`/areas/${seletDato.id}`).then((data)=>{
+        http.put(`/areas/${seletDato.id}`, {nombre: nombreDepartamento, descripcion:descripcionDepartamento}).then((data)=>{
             console.log(data.data)
             setBasicModal(false);
             setAcceptEdit(false);
-            /* const nuevoDepartamento=departamentos;
-            nuevoDepartamento.push(data.data); */
+            const nuevoDepartamento=departamentos;
+            nuevoDepartamento.push(data.data);
         });
     }
     //-----------------------------------------------------------------------------------------
