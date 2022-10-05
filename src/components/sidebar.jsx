@@ -66,9 +66,14 @@ function SideBAr({logoutUser}){
                 <Divider />
                 <List>
                     <NavLink to="/" className="text-body">
-                        <ListItem button>
+                        <ListItem 
+                            button
+                            onClick={()=>{
+                                logoutUser();
+                            }}
+                            >
                             <ListItemIcon><LoginIcon color="primary"></LoginIcon></ListItemIcon>
-                            <ListItemText primary="Login" />
+                            <ListItemText primary="Cerrar Sesión" />
                         </ListItem>
                     </NavLink>
                     <NavLink to="/equipos" className="text-body">

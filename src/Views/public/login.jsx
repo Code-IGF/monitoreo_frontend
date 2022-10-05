@@ -2,10 +2,11 @@ import img from '../../img/work.svg';
 import { useState } from 'react';
 import AuthUser from '../../components/AuthUser';
 
-import{MDBCheckbox} from 'mdb-react-ui-kit'
+//import{MDBCheckbox} from 'mdb-react-ui-kit'
 import { Button, 
     TextField
 } from "@mui/material";
+import Alert from '@mui/material/Alert';
 
 const Login=()=> {
     
@@ -13,6 +14,8 @@ const Login=()=> {
     const [email, setEmail]=useState();
     const [password, setPassword]=useState();
     const {http, setToken}=AuthUser();
+    //Si hay datos errones
+    const [invalidData, setInvalidData]=useState(false);
 
     //Eviar datos
     const submitForm=()=>{
@@ -22,6 +25,10 @@ const Login=()=> {
                 setToken(respuesta.data.user, respuesta.data.access_token);
             }
 
+        ).catch(
+            (response)=>{
+                setInvalidData(true);
+            }
         );
         console.log(email);
         console.log(password);
@@ -61,10 +68,13 @@ const Login=()=> {
                             className='pb-5'
                             onChange={e=>setPassword(e.target.value)}
                         />
+                        {invalidData? <div className='pb-5'>
+                            <Alert severity="error">Correo o contraseña invalidos</Alert>
+                        </div>:""}
 
-                            <div className="d-flex justify-content-between mx-3 mb-4">
+                            {/* <div className="d-flex justify-content-between mx-3 mb-4">
                                 <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Recuérdame' />
-                            </div>
+                            </div> */}
 
                             <div className="d-grid">
                                 <Button 
