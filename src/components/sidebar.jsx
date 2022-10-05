@@ -14,8 +14,12 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import HomeIcon from '@mui/icons-material/Home';
+
+import PersonIcon from '@mui/icons-material/Person';
+
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import BadgeIcon from '@mui/icons-material/Badge';
+
 
 function SideBAr(){
     //Función para ocultar sidebar
@@ -73,6 +77,14 @@ function SideBAr(){
                             <ListItemText primary="Inicio" />
                         </ListItem>
                     </NavLink>
+
+                    <NavLink to="/perfil">
+                        <ListItem button>
+                            <ListItemIcon><PersonIcon></PersonIcon></ListItemIcon>
+                            <ListItemText primary="Perfil" />
+                        </ListItem>
+                    </NavLink>
+
                     <NavLink to="/areas" className="text-body">
                         <ListItem button>
                             <ListItemIcon><BusinessCenterIcon color="primary" ></BusinessCenterIcon></ListItemIcon>
@@ -92,6 +104,7 @@ function SideBAr(){
                         </ListItem>
                     </NavLink>
                     
+
                 </List>
             </Drawer>
         </>    
