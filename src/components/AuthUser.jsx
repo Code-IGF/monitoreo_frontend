@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthUser=()=>{
 
     const [token, setToken]= useState();
     const [user, setUser]=useState();
+    ///Se ocupa para redirigir 
+    const navigate = useNavigate();
 
 
     const getToken=()=>{
@@ -24,6 +27,7 @@ const AuthUser=()=>{
         sessionStorage.setItem('user', JSON.stringify(user));
         setToken(token);
         setUser(user);
+        navigate('/inicio');//Para redirigir al inicio
     }
 
     const http = axios.create({
