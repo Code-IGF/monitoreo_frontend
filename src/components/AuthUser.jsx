@@ -2,12 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const AuthUser=()=>{
-
-    const [token, setToken]= useState();
-    const [user, setUser]=useState();
-    ///Se ocupa para redirigir 
-    const navigate = useNavigate();
+export default function AuthUser(){
 
 
     const getToken=()=>{
@@ -15,12 +10,17 @@ const AuthUser=()=>{
         const userToken = JSON.parse(tokenString);
         return userToken;
     }
-
     const getUser=()=>{
         const userString=sessionStorage.getItem('user');
-        const user = JSON.parse(userString);
-        return user;
+        const user_details = JSON.parse(userString);
+        return user_details;
     }
+
+    //Se debe inicializar con los metodos getToken y getUser
+    const [token, setToken]= useState(getToken);
+    const [user, setUser]=useState(getUser);
+    ///Se ocupa para redirigir 
+    const navigate = useNavigate();
 
     const saveToken=(user, token)=>{
         sessionStorage.setItem('token', JSON.stringify(token));
@@ -38,6 +38,12 @@ const AuthUser=()=>{
         }
     });
 
+    //Función para cerrar sesión, solo borra el token y el user
+    const logout = () =>{
+        sessionStorage.clear();
+        navigate('/');
+    }
+
     return{
         setToken:saveToken,
         http,
@@ -45,6 +51,7 @@ const AuthUser=()=>{
         user,
         getToken,
         getUser,
+        logout
     }
 }
-export default AuthUser;
+

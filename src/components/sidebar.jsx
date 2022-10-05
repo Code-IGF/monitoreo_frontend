@@ -21,7 +21,7 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import BadgeIcon from '@mui/icons-material/Badge';
 
 
-function SideBAr(){
+function SideBAr({logoutUser}){
     //Función para ocultar sidebar
     const [isOpen, setIsOpern]=useState(false);
 
@@ -44,7 +44,13 @@ function SideBAr(){
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button 
+                        color="inherit"
+                        onClick={()=>{
+                            logoutUser();
+                        }}
+                    >Cerrar Sesión
+                    </Button>
                 </Toolbar>
             </AppBar>
             {/*SideBar*/}
