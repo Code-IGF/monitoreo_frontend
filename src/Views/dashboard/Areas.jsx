@@ -137,7 +137,11 @@ const Areas = ()=>{
                 <Button 
                     variant="outlined" 
                     startIcon={<BusinessCenterIcon />}
-                    onClick={toggleShow}
+                    //Para asegurarme que no edite si presiona en crear nuevo departamento
+                    onClick={()=>{
+                        setAcceptEdit(false)
+                        toggleShow()
+                    }}
                     >
                     Registrar Departamento
                 </Button>
