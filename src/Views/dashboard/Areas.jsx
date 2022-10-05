@@ -73,9 +73,7 @@ const Areas = ()=>{
     }
     //Función editar datos
     const editarDepartamento=()=>{    
-        console.log(nombreDepartamento);
-        console.log(descripcionDepartamento);
-        console.log("editar")
+
         http.put(`/areas/${seletDato.id}`, {nombre: nombreDepartamento, descripcion:descripcionDepartamento}).then((data)=>{
             console.log(data.data)
             setBasicModal(false);
@@ -106,7 +104,8 @@ const Areas = ()=>{
     }
 
     useEffect(()=>{
-        acceptDelete? eliminarData(): console.log("accept (false)")
+        acceptDelete? eliminarData(): console.log("accept (false)");
+        // eslint-disable-next-line
     },[acceptDelete]);
 
     //Ejecutando Funciones

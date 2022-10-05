@@ -14,8 +14,8 @@ import AuthUser from "../components/AuthUser";
 const DashboardNavigate = ()=>{
     const {token, logout}=AuthUser();
     const logoutUser = ()=>{
-        console.log("Cerrando");
-        console.log(token)
+        /* console.log("Cerrando");
+        console.log(token) */
         if(token !== undefined){
             logout();
         }

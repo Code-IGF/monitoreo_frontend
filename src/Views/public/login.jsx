@@ -21,7 +21,7 @@ const Login=()=> {
     const submitForm=()=>{
         http.post('/login', {email:email, password: password}).then(
             (respuesta)=>{
-                console.log(respuesta.data);
+                /* console.log(respuesta.data); */
                 setToken(respuesta.data.user, respuesta.data.access_token);
             }
 
