@@ -1,8 +1,29 @@
 import img from '../../img/work.svg';
+import { useState } from 'react';
+import AuthUser from '../../components/AuthUser';
 
 import{MDBInput, MDBCheckbox, MDBBtn} from 'mdb-react-ui-kit'
 
-function Login() {
+const Login=()=> {
+    
+    //Variables
+    const [email, setEmail]=useState();
+    const [password, setPassword]=useState();
+    const {http, setToken}=AuthUser();
+
+    //Eviar datos
+    const submitForm=()=>{
+        http.post('/login', {email:email, password: password}).then(
+            (respuesta)=>{
+                console.log(respuesta.data);
+                setToken(respuesta.data.user, respuesta.data.access_token);
+            }
+
+        );
+        console.log(email);
+        console.log(password);
+    }
+
     return (
 
     <div className="container">
@@ -21,24 +42,36 @@ function Login() {
                             <h2 className="fw-bold text-primary">Iniciar Sesión</h2>
                         </div>
 
-                        <form className="p-4">
+                       
 
-                            <MDBInput wrapperClass='mb-5' label='Correo Electronico' id='formControlLg' type='email' size="lg"/>
-                            <MDBInput wrapperClass='mb-5' label='Contraseña' id='formControlLg' type='password' size="lg"/>
+                            <MDBInput 
+                                wrapperClass='mb-5' 
+                                label='Correo Electronico' 
+                                id='formControlLg' 
+                                type='email' 
+                                size="lg"
+                                onChange={e=>setEmail(e.target.value)}
+                            />
+                            <MDBInput 
+                            wrapperClass='mb-5' label='Contraseña' id='formControlLg' type='password' size="lg"
+                            onChange={e=>setPassword(e.target.value)}
+                            />
 
                             <div className="d-flex justify-content-between mx-3 mb-4">
                                 <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Recuérdame' />
                             </div>
 
                             <div className="d-grid"> 
-                                <MDBBtn type="submit">Iniciar Sesión</MDBBtn>
+                                <MDBBtn type="submit"
+                                    onClick={submitForm}
+                                >Iniciar Sesión</MDBBtn>
                                 <a className='pt-4 text-center' href="!#">¿Recuperar Contraseña?</a>
                             </div>
                             <div className='pt-5 d-flex flex-row justify-content-center'>
                                 <a href="#!" className="small text-muted me-1">Condiciones de Uso.</a>
                                 <a href="#!" className="small text-muted">Politíca de Privacidad</a>
                             </div>
-                        </form>
+                
                     </div>
                 </div>
             </div>

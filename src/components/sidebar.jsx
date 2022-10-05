@@ -3,7 +3,8 @@ import { Drawer,
     Typography,
     IconButton,
     List,
-    ListItem, ListItemText, ListItemIcon 
+    ListItem, ListItemText, ListItemIcon,
+    AppBar, Toolbar, Button, Divider 
 } from "@mui/material";
 
 import { useState } from "react";
@@ -13,7 +14,12 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import HomeIcon from '@mui/icons-material/Home';
+
 import PersonIcon from '@mui/icons-material/Person';
+
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import BadgeIcon from '@mui/icons-material/Badge';
+
 
 function SideBAr(){
     //Función para ocultar sidebar
@@ -21,47 +27,84 @@ function SideBAr(){
 
     return(
         <>
-            {/*Boton Hamburguesa*/}
-            <IconButton
-                size="large" edge='start'
-                color="inherit" aria-label="logo" 
-                onClick={()=> setIsOpern(true)}
-            >
-                <MenuIcon></MenuIcon>
-            </IconButton>
+            {/*NavBar*/}           
+            <AppBar position="static">
+                <Toolbar> 
+                    {/*Boton Hamburguesa*/}
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        onClick={()=> setIsOpern(true)}
+                        sx={{ mr: 2 }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        
+                    </Typography>
+                    <Button color="inherit">Login</Button>
+                </Toolbar>
+            </AppBar>
             {/*SideBar*/}
-            <Drawer anchor="left" open={isOpen} onClose={()=> setIsOpern(false)}>
-                <Box p={2} width="250px" textAlign='center' role='presentation'>
+            <Drawer 
+                anchor="left" 
+                open={isOpen} onClose={()=> setIsOpern(false)}>
+                <Box p={2} width="220px" textAlign='center' role='presentation'>
                     <Typography variant="h6" component='div'>
                         SGP
                     </Typography>
                 </Box>
                 {/*Links*/}
+                <Divider />
                 <List>
-                    <NavLink to="/">
+                    <NavLink to="/" className="text-body">
                         <ListItem button>
-                            <ListItemIcon><LoginIcon></LoginIcon></ListItemIcon>
+                            <ListItemIcon><LoginIcon color="primary"></LoginIcon></ListItemIcon>
                             <ListItemText primary="Login" />
                         </ListItem>
                     </NavLink>
-                    <NavLink to="/equipos">
+                    <NavLink to="/equipos" className="text-body">
                         <ListItem button>
-                            <ListItemIcon><GroupsIcon></GroupsIcon></ListItemIcon>
+                            <ListItemIcon><GroupsIcon color="primary" ></GroupsIcon></ListItemIcon>
                             <ListItemText primary="Equipos" />
                         </ListItem>
                     </NavLink>
-                    <NavLink to="/inicio">
+                    <NavLink to="/inicio" className="text-body">
                         <ListItem button>
-                            <ListItemIcon><HomeIcon></HomeIcon></ListItemIcon>
+                            <ListItemIcon><HomeIcon color="primary" ></HomeIcon></ListItemIcon>
                             <ListItemText primary="Inicio" />
                         </ListItem>
                     </NavLink>
+
                     <NavLink to="/perfil">
                         <ListItem button>
                             <ListItemIcon><PersonIcon></PersonIcon></ListItemIcon>
                             <ListItemText primary="Perfil" />
                         </ListItem>
                     </NavLink>
+
+                    <NavLink to="/areas" className="text-body">
+                        <ListItem button>
+                            <ListItemIcon><BusinessCenterIcon color="primary" ></BusinessCenterIcon></ListItemIcon>
+                            <ListItemText primary="Areas" />
+                        </ListItem>
+                    </NavLink>
+                    <NavLink to="/usuarios" className="text-body">
+                        <ListItem button>
+                            <ListItemIcon><BadgeIcon color="primary" ></BadgeIcon></ListItemIcon>
+                            <ListItemText primary="Usuarios" />
+                        </ListItem>
+                    </NavLink>
+                    <NavLink to="/gestionDeEquipo" className="text-body">
+                        <ListItem button>
+                            <ListItemIcon><GroupsIcon color="primary" ></GroupsIcon></ListItemIcon>
+                            <ListItemText primary="GestionDeEquipo" />
+                        </ListItem>
+                    </NavLink>
+                    
+
                 </List>
             </Drawer>
         </>    

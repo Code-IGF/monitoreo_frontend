@@ -8,6 +8,9 @@ import SideBAr from './components/sidebar';
 import Equipos from './Views/dashboard/Equipos';
 import PerfilUsuario from './Views/dashboard/PerfilUsuario';
 import Dashboard from './Views/dashboard/Dashboard';
+import Areas from './Views/dashboard/Areas';
+import GestionDeUsuario from './Views/dashboard/GestionDeUsuario';
+import GestionDeEquipo from './Views/dashboard/roles/GestionDeEquipo';
 
 function App() {
   return (
@@ -18,7 +21,13 @@ function App() {
           <Route path='/' element={<Login></Login>} ></Route>
           <Route path='/equipos' element={<Equipos/>}></Route>
           <Route path='/inicio' element={<Dashboard></Dashboard>}></Route>
+
           <Route path='/perfil' element={<PerfilUsuario/>}></Route>
+
+          <Route path='/areas' element={<Areas></Areas>}></Route>
+          <Route path='/usuarios' element={<GestionDeUsuario></GestionDeUsuario>}></Route>
+          <Route path='/gestionDeEquipo' element={<GestionDeEquipo></GestionDeEquipo>}></Route>
+
         </Routes>
     </div>
   );
