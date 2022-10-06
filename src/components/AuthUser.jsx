@@ -31,7 +31,7 @@ export default function AuthUser(){
     }
 
     const http = axios.create({
-        baseURL: "https://code-rm.tk/api/",
+        baseURL: "http://localhost:8000/api/",
         headers:{
             "content-type":"application/json",
             "Authorization": `bearer ${token}`
