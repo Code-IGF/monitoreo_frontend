@@ -1,5 +1,4 @@
 import React from 'react';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
 import { useEffect } from "react";
 import AuthUser from "../../components/AuthUser";
@@ -7,10 +6,17 @@ import AuthUser from "../../components/AuthUser";
 //Icono
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import CloseIcon from '@mui/icons-material/Close';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 //
-import { Button,TextField } from '@mui/material';
+import { 
+    Button,
+    TextField, 
+    Divider,
+    InputLabel,
+    MenuItem,
+    Select,
+    FormControl 
+ } from '@mui/material';
 import {
     MDBModal,
     MDBModalDialog,
@@ -18,73 +24,63 @@ import {
     MDBModalHeader,
     MDBModalTitle,
     MDBModalBody,
-    MDBModalFooter,
+    MDBModalFooter
   } from 'mdb-react-ui-kit';
+//Elmentos
+import Paginate from '../../components/paginacion';
+import TeblaUsuarios from './GestionDeUsuarios/TablaUsuarios';
 
-
- {/*_______________________________________________________________________________________________*/}
 function GestionDeUsuario(){
     //Variable
     const [usuarios, setUsuarios] =useState();
     const [nombreUsuario, setNombreUsuario]=useState();
     const [descripcionUsuario, setDescripcionUsuario]=useState();
+    const [rolUsuario, setRolUsuario] = useState('');
+
+    const handleChangeRol = (event) => {
+        setRolUsuario(event.target.value);
+    };
+
     const [basicModal, setBasicModal] =useState(false);
     const toggleShow = () => {setBasicModal(!basicModal);}
+
+     //Paginación
+     const [siguiente, setSiguiente]=useState();
+     const [anterior, setAnterior]=useState();
+     const [actual, setActual]=useState();
+     const [final, setFinal]=useState();
 
     //http
     const {http}=AuthUser();
  
     //Funcion para consultar usuario
-    const consultarUsuarios=()=>{
-        http.get('/usuarios').then(
+    const consultarUsuarios=(url)=>{
+        http.get(url).then(
             (res)=>{
-                console.log(res.data);
-                setUsuarios(res.data);
+                console.log("consultando")
+                setActual(res.data.current_page);
+                setAnterior(res.data.prev_page_url);
+                setSiguiente(res.data.next_page_url);
+                setFinal(res.data.last_page);
+                setUsuarios(res.data.data);
             }
         );
     }
-    //Ejecutando funciones
+    //Ejecutando funciones iniciales
     useEffect(()=>{
-        consultarUsuarios();
+        consultarUsuarios('/usuarios/paginacion');
+        // eslint-disable-next-line 
     },[]);
 
-
- {/*_______________________________________________________________________________________________*/}
-    //Renderizar elementos iniciales
-    function renderizarTabla(){
-        if(usuarios){
-            return(
-            <tbody>
-                {usuarios.map(x=>(
-                    <tr>
-                        <td>{x.id}</td>
-                        <td>{x.nombre}</td>
-                        <td>{x.created_at}</td>
-                        <td>
-                            <EditOutlinedIcon>
-                            </EditOutlinedIcon>
-                        </td>
-                    </tr>
-                ))}        
-            </tbody>
-            )
-        }else{
-            return(
-            <tbody>
-                <tr>
-                    <td colSpan={7}>
-                        <div className="spinner-border text-primary" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-            )
-        }
+    //-------------------------------------------------------------------------------------------*/
+    const [seletDato, setSeletDato]=useState(); //alamcena el objeto seleccionado
+    const setDeleteId = (dato)=>{
+        setSeletDato(dato);
+        //handleClickOpen();//Se abre el modal de confirmación
     }
 
+    //-------------------------------------------------------------------------------------------*/
 
- {/*_______________________________________________________________________________________________*/}
     return (
         <div>
             <div className="container pt-5" >
@@ -109,70 +105,25 @@ function GestionDeUsuario(){
  {/*_______________________________________________________________________________________________*/}
             {/* Tabla  */}
             <div className="container pt-5">
-                <table class="table table-hover table-bordered">
-                    <thead className='table-primary'>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col"> Nombre &nbsp; &nbsp; &nbsp; &nbsp; Apellido</th>
-                            <th scope="col">Area</th>
-                            <th scope="col">Equipo</th>
-                            <th scope="col">Supervisor</th>
-                            <th scope="col">Fecha de Registro</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    {/* invacando función */
-                        renderizarTabla()
-                    }
-                </table>
-            </div>
+                {/* invacando Componente */}
+                <TeblaUsuarios
+                    setDeleteId={setDeleteId}
+                    usuarios={usuarios}
+                    //handleClickOpen={handleClickOpen}
+                    //selectEditData={selectEditData}
+                />
 
- {/*_______________________________________________________________________________________________*/}
-               {/*
-                //Prueba de paginación 
-                <div className ="row">
-                    <dv className="col text-end">
-                        <Button
-                            variant="outlined"
-                            onClick={toggleShow}
-                        >
-                            <span aria-hidden="true">&lt; Prev</span>
-                        </Button>
-                       
-                        <Button
-                            variant="outlined"
-                            onClick={toggleShow}
-                        >
-                            <span aria-hidden="true"> Next &gt;</span>
-                        </Button>
-                        
-                    </dv>
-                </div>
-            */}
-            
- {/*_______________________________________________________________________________________________*/}
-                {/*Paginacion*/}
-                <div className="container pt-5" >
-                    <div className ="row">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&lt; Prev</span>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1 - 10</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true"> Next &gt;</span>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">of 233</a></li>
-                            </ul>
-                        </nav>
-                   </div>
-                </div>
-            
+                {/* Paginación*/}
+                <Paginate
+                    consultarData={consultarUsuarios}
+                    paginaActual={actual}
+                    paginaFinal={final}
+                    anterior={anterior}
+                    siguiente={siguiente}
+                    baseUrl={"/usuarios/paginacion?page="}
+                >
+                </Paginate>
+            </div>        
  {/*_______________________________________________________________________________________________*/}
             {/* Modal */}
             <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
@@ -192,22 +143,62 @@ function GestionDeUsuario(){
                         </MDBModalHeader>
                         <MDBModalBody>
                             <TextField 
-                                id="outlined-basic" 
+                                id="input-name" 
                                 fullWidth 
                                 label="Nombre" 
                                 variant="outlined" 
-                                onChange={e=>setUsuarios(e.target.value)} 
+                                onChange={e=>setNombreUsuario(e.target.value)} 
                                 />
                             <TextField 
-                                id="outlined-basic" 
+                                id="input_email" 
                                 fullWidth 
-                                label="Apellido" 
+                                label="Correo Electronico" 
+                                type="email"
                                 variant="outlined" 
-                                multiline
                                 margin="normal"
                                 onChange={e=>setDescripcionUsuario(e.target.value)} 
-                                rows={3}
                                 />
+                            <TextField 
+                                id="input-password" 
+                                fullWidth 
+                                label="Contraseña" 
+                                type="password"
+                                variant="outlined" 
+                                margin="normal"
+                                onChange={e=>setDescripcionUsuario(e.target.value)} 
+                                />
+                            <FormControl 
+                                fullWidth
+                                margin="normal"
+                                >
+                                <InputLabel  
+                                    id="label-select-rol"
+                                    >Rol del Empleado
+                                </InputLabel>
+                                <Select
+                                    fullWidth
+                                    labelId="label-select-rol"
+                                    id="select-rol"
+                                    value={rolUsuario}
+                                    label="Rol del Empleado"
+                                    onChange={handleChangeRol}
+
+                                    >
+                                    <MenuItem value={10}>Ten</MenuItem>
+                                    <MenuItem value={20}>Twenty</MenuItem>
+                                    <MenuItem value={30}>Thirty</MenuItem>
+                                </Select>
+                            </FormControl>                            
+                            {/* Input para subir imagen */}
+                            <div class="mb-3 mt-3">
+                                <label for="formFileSm" class="form-label">Foto del Empleado.</label>
+                                <Divider className='mb-3'/>
+                                <input 
+                                    class="form-control form-control-sm" 
+                                    id="formFileSm" 
+                                    type="file"
+                                />
+                            </div>
                         </MDBModalBody>
 
 
@@ -226,7 +217,6 @@ function GestionDeUsuario(){
                         </Button>
                         </MDBModalFooter>
     */}
-
 
                     </MDBModalContent>
                 </MDBModalDialog>
