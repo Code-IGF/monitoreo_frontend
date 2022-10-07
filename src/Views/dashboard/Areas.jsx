@@ -122,7 +122,7 @@ const Areas = ()=>{
 
     //Ejecutando Funciones
     useEffect(()=>{
-        consultarDepartamentos('/areas');
+        consultarDepartamentos('/areas/paginacion');
         // eslint-disable-next-line 
     },[]);
 
