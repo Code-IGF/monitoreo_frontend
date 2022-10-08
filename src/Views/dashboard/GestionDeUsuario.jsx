@@ -29,15 +29,23 @@ import {
 //Elmentos
 import Paginate from '../../components/paginacion';
 import TeblaUsuarios from './GestionDeUsuarios/TablaUsuarios';
+import AlertDialogSlide from '../../components/AlertEliminar';
 
-function GestionDeUsuario(){
+const fileInitial={
+    archivo:null,
+    archivoNombre:"",
+    archivoURL: ""
+}
+
+function GestionDeUsuario({baseURL}){
     //Variable
     const [usuarios, setUsuarios] =useState();
     const [nombreUsuario, setNombreUsuario]=useState();
     const [emailUsuario, setEmailUsuario]=useState();
     const [passwordUsuario, setPasswordUsuario]=useState();
     const [rolUsuario, setRolUsuario]=useState(0);
-    const [imagenUsuario, setImagenUsuario]=useState();
+    const [imagenUsuario, setImagenUsuario]=useState(fileInitial);
+    const [fechaNacimiento, setFechaNacimiento]=useState("");
 
     //Roles para consultar
     const [roles, setRoles]=useState();
@@ -88,34 +96,67 @@ function GestionDeUsuario(){
         // eslint-disable-next-line 
     },[]);
 
+    //Se ejecuta cuando se selecciona un archivo (imagen)
+    const fileSelect=(e)=>{
+        setImagenUsuario({
+            archivo: e.target.files[0],
+            archivoNombre:e.target.files[0].name
+        });
+    }
+
     const registrarUsuario=()=>{    
-        console.log(nombreUsuario);
-        console.log(emailUsuario);
-        console.log(passwordUsuario);
-        console.log(rolUsuario);
-        console.log(imagenUsuario);
-        console.log("enviar")
-        http.post("/register", 
-            {name: nombreUsuario, 
-             email:emailUsuario,
-             password:passwordUsuario,
-             rol:rolUsuario,
-             foto:imagenUsuario  
-            }).then((data)=>{
+        const formData=new FormData();
+        formData.append('imagen', imagenUsuario.archivo, imagenUsuario.archivoNombre)
+        formData.append('name', nombreUsuario)
+        formData.append('email', emailUsuario)
+        formData.append('password', passwordUsuario)
+        formData.append('rol', rolUsuario)
+        formData.append('fecha_nacimiento', fechaNacimiento)
+        console.log("enviando datos")
+        http.post("/register", formData).then((data)=>{
             console.log(data.data)
             setBasicModal(false);
-            /* const nuevoDepartamento=departamentos;
-            nuevoDepartamento.push(data.data);
-            console.log(nuevoDepartamento); */
+            const nuevoUsuario=usuarios;
+            nuevoUsuario.push(data.data);
         });
     }
 
     //-------------------------------------------------------------------------------------------*/
+    //Use state para confirmar eliminacion
+    const [acceptDelete, setAcceptDelete]=useState(false);
+    //Abrir dialog delete
+    const [open, setOpen] = useState(false);
+        const handleClickOpen = () => {
+            setOpen(true);
+        };
+    const eliminarData=()=>{
+        http.delete(`/user/delete/${seletDato.id}`).then(
+            (response)=>{
+                console.log(response.data)
+                handleClose()//Cerrar modal
+                setAcceptDelete(false)//Desactivar funcion de eliminacion
+                if(response.data === 'success'){
+                    const nuevosUsuarios=usuarios.filter((item) => item !== seletDato);
+                    setUsuarios(nuevosUsuarios);
+                }
+                
+            }
+            )
+    }
+    useEffect(()=>{
+        acceptDelete? eliminarData(): console.log("accept (false)");
+        // eslint-disable-next-line
+    },[acceptDelete]);
+
+    
     const [seletDato, setSeletDato]=useState(); //alamcena el objeto seleccionado
     const setDeleteId = (dato)=>{
         setSeletDato(dato);
-        //handleClickOpen();//Se abre el modal de confirmación
+        handleClickOpen();//Se abre el modal de confirmación
     }
+    const handleClose = () => {
+        setOpen(false);
+    }; 
 
     //-------------------------------------------------------------------------------------------*/
 
@@ -147,6 +188,7 @@ function GestionDeUsuario(){
                 <TeblaUsuarios
                     setDeleteId={setDeleteId}
                     usuarios={usuarios}
+                    baseURL={baseURL}
                     //handleClickOpen={handleClickOpen}
                     //selectEditData={selectEditData}
                 />
@@ -161,7 +203,15 @@ function GestionDeUsuario(){
                     baseUrl={"/usuarios/paginacion?page="}
                 >
                 </Paginate>
-            </div>        
+            </div>   
+            {/**Dialog eliminiar */}
+            <AlertDialogSlide
+                open={open}
+                handleClose={handleClose}
+                tipoElemento={"Usuario"}
+                setAcceptDelete={setAcceptDelete}
+            >
+            </AlertDialogSlide>     
  {/*_______________________________________________________________________________________________*/}
             {/* Modal */}
             <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
@@ -205,6 +255,15 @@ function GestionDeUsuario(){
                                 margin="normal"
                                 onChange={e=>setPasswordUsuario(e.target.value)} 
                                 />
+                            <input 
+                                className='mb-3 mt-3 pb-3 pt-3 form-control'
+                                type="date"
+                                value={fechaNacimiento}
+                                onChange={
+                                    (e)=>{setFechaNacimiento(e.target.value)}
+                                } 
+                            />
+                            {/*Select Roles --------------------------------------------------------------*/}
                             <FormControl 
                                 fullWidth
                                 margin="normal"
@@ -244,9 +303,7 @@ function GestionDeUsuario(){
                                     className="form-control form-control-sm" 
                                     id="formFileSm" 
                                     type="file"
-                                    onChange={(e)=>{
-                                        setImagenUsuario(e.target.files[0]);
-                                    }}
+                                    onChange={fileSelect}
                                 />
                             </div>
                         </MDBModalBody>

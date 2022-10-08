@@ -11,7 +11,7 @@ import GestionDeUsuario from './dashboard/GestionDeUsuario';
 import GestionDeEquipo from './dashboard/roles/GestionDeEquipo';
 import AuthUser from "../components/AuthUser";
 
-const DashboardNavigate = ()=>{
+const DashboardNavigate = ({baseURL})=>{
     const {token, logout}=AuthUser();
     const logoutUser = ()=>{
         /* console.log("Cerrando");
@@ -32,7 +32,7 @@ const DashboardNavigate = ()=>{
               <Route path='/perfil' element={<PerfilUsuario/>}></Route>
     
               <Route path='/areas' element={<Areas></Areas>}></Route>
-              <Route path='/usuarios' element={<GestionDeUsuario></GestionDeUsuario>}></Route>
+              <Route path='/usuarios' element={<GestionDeUsuario baseURL={baseURL}/>}></Route>
               <Route path='/gestionDeEquipo' element={<GestionDeEquipo></GestionDeEquipo>}></Route>
     
             </Routes>

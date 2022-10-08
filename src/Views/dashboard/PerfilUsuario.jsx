@@ -3,27 +3,12 @@ import LockIcon from '@mui/icons-material/Lock';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import img from '../../img/profile.png';
 
-  import React, { useState } from 'react';
   import {
     MDBBtn,
-    MDBModal,
-    MDBModalDialog,
-    MDBModalContent,
-    MDBModalHeader,
-    MDBModalTitle,
-    MDBModalBody,
-    MDBModalFooter,
-    MDBInput,
-    MDBInputGroup,
-    MDBListGroupItem,
+    MDBInputGroup
   } from 'mdb-react-ui-kit';
-import { border, margin } from '@mui/system';
-import { AlignHorizontalCenterOutlined } from '@mui/icons-material';
-  const styleRow = {
-    "display": "block",
-    "overflow-y": "scroll",
-    "max-height": "160px"
-}
+
+
 
 function PerfilUsuario() {
     return (
@@ -89,7 +74,7 @@ function PerfilUsuario() {
                                     </div> 
                                     <div className="col-4 bg d-none d-md-block" >
                                         <div className='img-holder'align="center">
-                                            <img src={img} width="150" height="150"/>
+                                            <img src={img} width="150" height="150"alt='Imagen de Perfil'/>
                                         </div>
                                     
                                         <div className='w-100  py-4 ' align="center" >

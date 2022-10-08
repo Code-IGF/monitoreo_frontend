@@ -1,6 +1,6 @@
 import RowUsuarios from "./RowUsuarios";
 
-const TeblaUsuarios=({usuarios, setDeleteId, selectEditData})=>{
+const TeblaUsuarios=({usuarios, setDeleteId, selectEditData, baseURL})=>{
     if(usuarios){
         return(
         <table className="table table-hover table-bordered text-center">
@@ -20,6 +20,7 @@ const TeblaUsuarios=({usuarios, setDeleteId, selectEditData})=>{
                         setDeleteId={setDeleteId}
                         dato={dato}
                         selectEditData={selectEditData}
+                        baseURL={baseURL}
                     >
                     </RowUsuarios>
                 ))}
