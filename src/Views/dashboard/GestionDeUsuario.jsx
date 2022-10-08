@@ -34,8 +34,13 @@ function GestionDeUsuario(){
     //Variable
     const [usuarios, setUsuarios] =useState();
     const [nombreUsuario, setNombreUsuario]=useState();
-    const [descripcionUsuario, setDescripcionUsuario]=useState();
-    const [rolUsuario, setRolUsuario] = useState('');
+    const [emailUsuario, setEmailUsuario]=useState();
+    const [passwordUsuario, setPasswordUsuario]=useState();
+    const [rolUsuario, setRolUsuario]=useState(0);
+    const [imagenUsuario, setImagenUsuario]=useState();
+
+    //Roles para consultar
+    const [roles, setRoles]=useState();
 
     const handleChangeRol = (event) => {
         setRolUsuario(event.target.value);
@@ -57,7 +62,7 @@ function GestionDeUsuario(){
     const consultarUsuarios=(url)=>{
         http.get(url).then(
             (res)=>{
-                console.log("consultando")
+                console.log("consultando Usuarios")
                 setActual(res.data.current_page);
                 setAnterior(res.data.prev_page_url);
                 setSiguiente(res.data.next_page_url);
@@ -66,11 +71,44 @@ function GestionDeUsuario(){
             }
         );
     }
+    //Función para consultar Roles
+    const consultarRoles=()=>{
+        http.get('/rol').then(
+            (res)=>{
+                console.log("consultando Roles");
+                setRoles(res.data);
+            }
+        );
+    }
+
     //Ejecutando funciones iniciales
     useEffect(()=>{
         consultarUsuarios('/usuarios/paginacion');
+        consultarRoles();
         // eslint-disable-next-line 
     },[]);
+
+    const registrarUsuario=()=>{    
+        console.log(nombreUsuario);
+        console.log(emailUsuario);
+        console.log(passwordUsuario);
+        console.log(rolUsuario);
+        console.log(imagenUsuario);
+        console.log("enviar")
+        http.post("/register", 
+            {name: nombreUsuario, 
+             email:emailUsuario,
+             password:passwordUsuario,
+             rol:rolUsuario,
+             foto:imagenUsuario  
+            }).then((data)=>{
+            console.log(data.data)
+            setBasicModal(false);
+            /* const nuevoDepartamento=departamentos;
+            nuevoDepartamento.push(data.data);
+            console.log(nuevoDepartamento); */
+        });
+    }
 
     //-------------------------------------------------------------------------------------------*/
     const [seletDato, setSeletDato]=useState(); //alamcena el objeto seleccionado
@@ -156,7 +194,7 @@ function GestionDeUsuario(){
                                 type="email"
                                 variant="outlined" 
                                 margin="normal"
-                                onChange={e=>setDescripcionUsuario(e.target.value)} 
+                                onChange={e=>setEmailUsuario(e.target.value)} 
                                 />
                             <TextField 
                                 id="input-password" 
@@ -165,7 +203,7 @@ function GestionDeUsuario(){
                                 type="password"
                                 variant="outlined" 
                                 margin="normal"
-                                onChange={e=>setDescripcionUsuario(e.target.value)} 
+                                onChange={e=>setPasswordUsuario(e.target.value)} 
                                 />
                             <FormControl 
                                 fullWidth
@@ -184,25 +222,37 @@ function GestionDeUsuario(){
                                     onChange={handleChangeRol}
 
                                     >
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
+                                    {/*Llenando el select de Roles*/}
+                                    {roles? 
+                                        roles.map(rol=>(
+                                            <MenuItem 
+                                                key={rol.id} 
+                                                value={rol.id}
+                                            >{rol.name}
+                                            </MenuItem>
+                                        ))
+                                        :
+                                        <MenuItem value={0}>{"No se Registraron Roles"}</MenuItem>
+                                    }
                                 </Select>
                             </FormControl>                            
                             {/* Input para subir imagen */}
-                            <div class="mb-3 mt-3">
-                                <label for="formFileSm" class="form-label">Foto del Empleado.</label>
+                            <div className="mb-3 mt-3">
+                                <label htmlFor="formFileSm" className="form-label">Foto del Empleado.</label>
                                 <Divider className='mb-3'/>
                                 <input 
-                                    class="form-control form-control-sm" 
+                                    className="form-control form-control-sm" 
                                     id="formFileSm" 
                                     type="file"
+                                    onChange={(e)=>{
+                                        setImagenUsuario(e.target.files[0]);
+                                    }}
                                 />
                             </div>
                         </MDBModalBody>
 
 
-    {/* 
+
                         <MDBModalFooter>
                         <Button 
                             variant="text" 
@@ -212,11 +262,11 @@ function GestionDeUsuario(){
                         </Button>
                         <Button 
                             variant="text" 
-                            onClick={almacenarDepartamento}
+                            onClick={registrarUsuario}
                         >Enviar
                         </Button>
                         </MDBModalFooter>
-    */}
+
 
                     </MDBModalContent>
                 </MDBModalDialog>
