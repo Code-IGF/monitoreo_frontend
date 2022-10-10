@@ -9,6 +9,7 @@ const PublicNavigate=()=>{
         <div className="">
           <Routes>
               <Route path='/' element={<Login></Login>} ></Route>
+              <Route path='/login' element={<Login></Login>} ></Route>
             </Routes>
         </div>
       );

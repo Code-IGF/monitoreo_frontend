@@ -2,57 +2,42 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from "react";
 import AuthUser from "../../components/AuthUser";
+import { useRef } from 'react';
 
 //Icono
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import CloseIcon from '@mui/icons-material/Close';
 
 //
 import { 
-    Button,
-    TextField, 
-    Divider,
-    InputLabel,
-    MenuItem,
-    Select,
-    FormControl 
+    Button
  } from '@mui/material';
-import {
-    MDBModal,
-    MDBModalDialog,
-    MDBModalContent,
-    MDBModalHeader,
-    MDBModalTitle,
-    MDBModalBody,
-    MDBModalFooter
-  } from 'mdb-react-ui-kit';
+
 //Elmentos
 import Paginate from '../../components/paginacion';
 import TeblaUsuarios from './GestionDeUsuarios/TablaUsuarios';
 import AlertDialogSlide from '../../components/AlertEliminar';
+import RegistroUsuario from './GestionDeUsuarios/RegistroUsuario';
 
 const fileInitial={
     archivo:null,
-    archivoNombre:"",
-    archivoURL: ""
+    archivoNombre:""
 }
 
 function GestionDeUsuario({baseURL}){
     //Variable
     const [usuarios, setUsuarios] =useState();
-    const [nombreUsuario, setNombreUsuario]=useState();
-    const [emailUsuario, setEmailUsuario]=useState();
-    const [passwordUsuario, setPasswordUsuario]=useState();
+    const [nombreUsuario, setNombreUsuario]=useState("");
+    const [emailUsuario, setEmailUsuario]=useState("");
+    const [passwordUsuario, setPasswordUsuario]=useState("");
     const [rolUsuario, setRolUsuario]=useState(0);
     const [imagenUsuario, setImagenUsuario]=useState(fileInitial);
     const [fechaNacimiento, setFechaNacimiento]=useState("");
 
+    //file Ref
+    const fileRef = useRef(null)
+
     //Roles para consultar
     const [roles, setRoles]=useState();
-
-    const handleChangeRol = (event) => {
-        setRolUsuario(event.target.value);
-    };
 
     const [basicModal, setBasicModal] =useState(false);
     const toggleShow = () => {setBasicModal(!basicModal);}
@@ -83,7 +68,6 @@ function GestionDeUsuario({baseURL}){
     const consultarRoles=()=>{
         http.get('/rol').then(
             (res)=>{
-                console.log("consultando Roles");
                 setRoles(res.data);
             }
         );
@@ -100,8 +84,9 @@ function GestionDeUsuario({baseURL}){
     const fileSelect=(e)=>{
         setImagenUsuario({
             archivo: e.target.files[0],
-            archivoNombre:e.target.files[0].name
+            archivoNombre:e.target.files[0].name,
         });
+
     }
 
     const registrarUsuario=()=>{    
@@ -114,10 +99,16 @@ function GestionDeUsuario({baseURL}){
         formData.append('fecha_nacimiento', fechaNacimiento)
         console.log("enviando datos")
         http.post("/register", formData).then((data)=>{
-            console.log(data.data)
             setBasicModal(false);
             const nuevoUsuario=usuarios;
             nuevoUsuario.push(data.data);
+            setNombreUsuario("");
+            setEmailUsuario("");
+            setPasswordUsuario("");
+            setRolUsuario(0);
+            setFechaNacimiento("");
+            setImagenUsuario(fileInitial);
+            fileRef.current.value="";
         });
     }
 
@@ -129,15 +120,18 @@ function GestionDeUsuario({baseURL}){
         const handleClickOpen = () => {
             setOpen(true);
         };
+    const setDeleteId = (dato)=>{
+        setSelectDato(dato);
+        handleClickOpen();//Se abre el modal de confirmación
+    }
     const eliminarData=()=>{
-        http.delete(`/user/delete/${seletDato.id}`).then(
+        http.delete(`/user/delete/${selectDato.id}`).then(
             (response)=>{
                 console.log(response.data)
                 handleClose()//Cerrar modal
                 setAcceptDelete(false)//Desactivar funcion de eliminacion
                 if(response.data === 'success'){
-                    const nuevosUsuarios=usuarios.filter((item) => item !== seletDato);
-                    setUsuarios(nuevosUsuarios);
+                    consultarUsuarios('/usuarios/paginacion');
                 }
                 
             }
@@ -148,12 +142,52 @@ function GestionDeUsuario({baseURL}){
         // eslint-disable-next-line
     },[acceptDelete]);
 
-    
-    const [seletDato, setSeletDato]=useState(); //alamcena el objeto seleccionado
-    const setDeleteId = (dato)=>{
-        setSeletDato(dato);
-        handleClickOpen();//Se abre el modal de confirmación
+    //-------------------------------------------------------------------------------------    
+    //Editar datos
+    const [selectDato, setSelectDato]=useState(); //alamcena el objeto seleccionado
+    const [habilitarEdicion, setHabilitarEdicion]=useState(false);
+    const selectEditData = (data)=>{
+        setHabilitarEdicion(true);
+        setSelectDato(data);
+        setNombreUsuario(data.name)
+        setEmailUsuario(data.email)
+        setFechaNacimiento(data.fecha_nacimiento)
+        //Si existe el rol
+        data.roles[0]? 
+            setRolUsuario(data.roles[0].id)
+            :
+            setRolUsuario(0)
+        //habilitando la edición
+
+        console.log("abrir edit")
+        toggleShow();
     }
+
+    const editarUsuario=()=>{    
+        console.log("editando datos")
+        const formData=new FormData();
+        formData.append('name', nombreUsuario)
+        formData.append('email', emailUsuario)
+        formData.append('password', passwordUsuario)
+        formData.append('rol', rolUsuario)
+        formData.append('fecha_nacimiento', fechaNacimiento)
+        imagenUsuario.archivo?
+        formData.append('imagen', imagenUsuario.archivo, imagenUsuario.archivoNombre)
+        :
+        formData.append('imagen','')
+        http.post(`/user/edit/${selectDato.id}`, formData).then((data)=>{
+            setBasicModal(false);
+            consultarUsuarios('/usuarios/paginacion');
+            setNombreUsuario("");
+            setEmailUsuario("");
+            setPasswordUsuario("");
+            setRolUsuario(0);
+            setFechaNacimiento("");
+            setImagenUsuario(fileInitial);
+            fileRef.current.value="";
+        });
+    }
+
     const handleClose = () => {
         setOpen(false);
     }; 
@@ -172,7 +206,15 @@ function GestionDeUsuario({baseURL}){
                         <Button 
                             variant="outlined" 
                             startIcon={<PersonAddAltIcon />}
-                            onClick={toggleShow}
+                            onClick={()=>{
+                                toggleShow();
+                                setHabilitarEdicion(false);
+                                setNombreUsuario("");
+                                setEmailUsuario("");
+                                setPasswordUsuario("");
+                                setFechaNacimiento("");
+                                setRolUsuario(0);
+                            }}
                         >
                                 Crear Usuario
                         </Button>
@@ -190,7 +232,7 @@ function GestionDeUsuario({baseURL}){
                     usuarios={usuarios}
                     baseURL={baseURL}
                     //handleClickOpen={handleClickOpen}
-                    //selectEditData={selectEditData}
+                    selectEditData={selectEditData}
                 />
 
                 {/* Paginación*/}
@@ -214,120 +256,28 @@ function GestionDeUsuario({baseURL}){
             </AlertDialogSlide>     
  {/*_______________________________________________________________________________________________*/}
             {/* Modal */}
-            <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
-                {/*Atributo size indica el tamaño del modal opciones:
-                    "sm" "lg" "xl" (tamaño por defecto "medio" siempre que no se incluya la propiedad)
-                */}
-                <MDBModalDialog size="lg">
-                    <MDBModalContent>
-                        <MDBModalHeader>
-                            <MDBModalTitle>Formulario para Registro de Empleado</MDBModalTitle>
-                                <Button 
-                                    variant="text" 
-                                    startIcon={<CloseIcon />}
-                                    onClick={toggleShow}
-                                >
-                                </Button>
-                        </MDBModalHeader>
-                        <MDBModalBody>
-                            <TextField 
-                                id="input-name" 
-                                fullWidth 
-                                label="Nombre" 
-                                variant="outlined" 
-                                onChange={e=>setNombreUsuario(e.target.value)} 
-                                />
-                            <TextField 
-                                id="input_email" 
-                                fullWidth 
-                                label="Correo Electronico" 
-                                type="email"
-                                variant="outlined" 
-                                margin="normal"
-                                onChange={e=>setEmailUsuario(e.target.value)} 
-                                />
-                            <TextField 
-                                id="input-password" 
-                                fullWidth 
-                                label="Contraseña" 
-                                type="password"
-                                variant="outlined" 
-                                margin="normal"
-                                onChange={e=>setPasswordUsuario(e.target.value)} 
-                                />
-                            <input 
-                                className='mb-3 mt-3 pb-3 pt-3 form-control'
-                                type="date"
-                                value={fechaNacimiento}
-                                onChange={
-                                    (e)=>{setFechaNacimiento(e.target.value)}
-                                } 
-                            />
-                            {/*Select Roles --------------------------------------------------------------*/}
-                            <FormControl 
-                                fullWidth
-                                margin="normal"
-                                >
-                                <InputLabel  
-                                    id="label-select-rol"
-                                    >Rol del Empleado
-                                </InputLabel>
-                                <Select
-                                    fullWidth
-                                    labelId="label-select-rol"
-                                    id="select-rol"
-                                    value={rolUsuario}
-                                    label="Rol del Empleado"
-                                    onChange={handleChangeRol}
-
-                                    >
-                                    {/*Llenando el select de Roles*/}
-                                    {roles? 
-                                        roles.map(rol=>(
-                                            <MenuItem 
-                                                key={rol.id} 
-                                                value={rol.id}
-                                            >{rol.name}
-                                            </MenuItem>
-                                        ))
-                                        :
-                                        <MenuItem value={0}>{"No se Registraron Roles"}</MenuItem>
-                                    }
-                                </Select>
-                            </FormControl>                            
-                            {/* Input para subir imagen */}
-                            <div className="mb-3 mt-3">
-                                <label htmlFor="formFileSm" className="form-label">Foto del Empleado.</label>
-                                <Divider className='mb-3'/>
-                                <input 
-                                    className="form-control form-control-sm" 
-                                    id="formFileSm" 
-                                    type="file"
-                                    onChange={fileSelect}
-                                />
-                            </div>
-                        </MDBModalBody>
-
-
-
-                        <MDBModalFooter>
-                        <Button 
-                            variant="text" 
-                            color="error"
-                            onClick={toggleShow}
-                        >Cerrar
-                        </Button>
-                        <Button 
-                            variant="text" 
-                            onClick={registrarUsuario}
-                        >Enviar
-                        </Button>
-                        </MDBModalFooter>
-
-
-                    </MDBModalContent>
-                </MDBModalDialog>
-            </MDBModal>
+            <RegistroUsuario
+                verModal={toggleShow} 
+                setNombreUsuario={setNombreUsuario}
+                setEmailUsuario={setEmailUsuario} 
+                setPasswordUsuario={setPasswordUsuario}
+                setFechaNacimiento={setFechaNacimiento}
+                setRolUsuario={setRolUsuario}
+                fileSelect={fileSelect}
+                registrarUsuario={registrarUsuario}
+                rolUsuario={rolUsuario}
+                roles={roles}
+                fechaNacimiento={fechaNacimiento}
+                PasswordUsuario={passwordUsuario}
+                emailUsuario={emailUsuario}
+                nombreUsuario={nombreUsuario}
+                basicModal={basicModal}
+                setBasicModal={setBasicModal}
+                habilitarEdicion={habilitarEdicion}
+                editarUsuario={editarUsuario}
+                fileRef={fileRef}
+            >
+            </RegistroUsuario>
 
         </div>
     );
