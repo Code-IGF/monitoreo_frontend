@@ -1,18 +1,13 @@
-import {
-  Routes,
-  Route,
-} from "react-router-dom";
 import SideBAr from './../components/sidebar';
-import Equipos from './dashboard/Equipos';
-import PerfilUsuario from './dashboard/PerfilUsuario';
-import Dashboard from './dashboard/Dashboard';
-import Areas from './dashboard/Areas';
-import GestionDeUsuario from './dashboard/GestionDeUsuario';
-import GestionDeEquipo from './dashboard/roles/GestionDeEquipo';
+
 import AuthUser from "../components/AuthUser";
+import DashboarEmpleado from "./DashboardEmpleado";
+import DashboarSupervisor from "./DashboardSupervisor";
+import DashboardAdmin from "./DashboardAdmin";
 
 const DashboardNavigate = ({baseURL})=>{
-    const {token, logout}=AuthUser();
+    const {token, logout, user}=AuthUser();
+    const {roles}=user;
     const logoutUser = ()=>{
         /* console.log("Cerrando");
         console.log(token) */
@@ -24,18 +19,26 @@ const DashboardNavigate = ({baseURL})=>{
     return (
         <div className="">
             {/*Paso la función de cerrar sesión como propiedad*/}
-          <SideBAr logoutUser={logoutUser}></SideBAr>
-          <Routes>
-              <Route path='/equipos' element={<Equipos/>}></Route>
-              <Route path='/inicio' element={<Dashboard></Dashboard>}></Route>
+          <SideBAr 
+            logoutUser={logoutUser}
+            idRol={roles[0].id}
+            ></SideBAr>
+            {/** ID=1 -> Usuarios administrador */}
+            {roles[0].id===1?
+              <DashboardAdmin 
+                baseURL={baseURL}
+                />
+              :
+               roles[0].id===2?
+               <DashboarSupervisor
+                baseURL={baseURL}
+                />
+                :
+                <DashboarEmpleado
+                baseURL={baseURL}
+                />
+            }
     
-              <Route path='/perfil' element={<PerfilUsuario/>}></Route>
-    
-              <Route path='/areas' element={<Areas></Areas>}></Route>
-              <Route path='/usuarios' element={<GestionDeUsuario baseURL={baseURL}/>}></Route>
-              <Route path='/gestionDeEquipo' element={<GestionDeEquipo></GestionDeEquipo>}></Route>
-    
-            </Routes>
         </div>
       );
 }
