@@ -11,6 +11,7 @@ const TeblaUsuarios=({usuarios, setDeleteId, selectEditData, baseURL})=>{
                     <th scope="col">Nombre</th>
                     <th scope="col">Email</th>
                     <th scope="col">Fecha de Nacimiento</th>
+                    <th scope="col">Rol</th>
                     <th scope="col">Actiones</th>
                 </tr>
             </thead>

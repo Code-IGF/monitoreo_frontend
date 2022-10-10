@@ -3,7 +3,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import { IconButton } from '@mui/material';
 
 const RowUsuarios=({dato, setDeleteId, selectEditData, baseURL})=>{
-    const {id, name, email, imagen, fecha_nacimiento}=dato
+    const {id, name, email, imagen, fecha_nacimiento, roles}=dato
     return(
         <tr>
             <td>{id}</td>
@@ -18,6 +18,7 @@ const RowUsuarios=({dato, setDeleteId, selectEditData, baseURL})=>{
             <td>{name}</td>
             <td>{email}</td>
             <td>{fecha_nacimiento}</td>
+            <td>{roles[0]? roles[0].name: "Indefinido"}</td>
             <td>
                 <IconButton
                     onClick={()=>selectEditData(dato)}    

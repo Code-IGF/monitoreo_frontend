@@ -37,6 +37,16 @@ export default function AuthUser(){
             "Authorization": `bearer ${token}`
         }
     });
+    //Ocupo para interceptar el erro 401 (Ocurre cuando el usuario no esta loggeado o no tiene el nievel de acceso necesario)
+    http.interceptors.response.use(function (response) {
+        return response;
+    }, function (error) {
+        if (401 === error.response.status) {
+            logout();
+        } else {
+            return Promise.reject(error);
+        }
+    });
 
     //Función para cerrar sesión, solo borra el token y el user
     const logout = () =>{

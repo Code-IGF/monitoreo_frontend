@@ -105,6 +105,7 @@ const GestionDeEquipo = ()=>{
 
     useEffect(()=>{
         acceptDelete? eliminarData(): console.log("accept (false)")
+        // eslint-disable-next-line 
     },[acceptDelete]);
 
     //Ejecutando Funciones
