@@ -2,36 +2,30 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import AuthUser from "../../../components/AuthUser";
-import TablaRoles from "./TablaRoles";
+import TablaEquipos from "./TablaEquipos";
 import AlertDialogSlide from "../../../components/AlertEliminar";
+import FormEquipos from "./FormEquipos";
 //
 import { Button, 
-    TextField
+    
  } from "@mui/material";
-
-import {
-    MDBModal,
-    MDBModalDialog,
-    MDBModalContent,
-    MDBModalHeader,
-    MDBModalTitle,
-    MDBModalBody,
-    MDBModalFooter,
-  } from 'mdb-react-ui-kit';
 
 //Iconos
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import CloseIcon from '@mui/icons-material/Close';
 
 const GestionDeEquipo = ()=>{
     //Variables
-    const [roles, setRoles]=useState();
-    const [nombreRol, setNombreRol]=useState("");
-    const [descripcionRol, setDescripcionRol]=useState("");
+    const [nombreEquipo, setNombreEquipo]=useState("");
+    const [descripcionEquipo, setDescripcionEquipo]=useState("");
+    const [areaEquipo, setAreaEquipo]=useState("");
     //Use state para confirmar eliminacion
     const [acceptDelete, setAcceptDelete]=useState(false);
     //use State para confirmar que es edición
     const [acceptEdit, setAcceptEdit]=useState(false);
+
+    //Consultas iniciales
+    const [roles, setRoles]=useState();
+    const [areas, setAreas]=useState();
 
     const [basicModal, setBasicModal] = useState();
     const toggleShow = () => {
@@ -45,23 +39,36 @@ const GestionDeEquipo = ()=>{
     const handleClose = () => {
         setOpen(false);
     }; 
-       //http
-       const {http}=AuthUser();
+    //http
+    const {http}=AuthUser();
 
-       //Función para consultar rol de la empresa
-       const consultarRoles=()=>{
-           http.get('/gestionDeEquipo').then(
-               (res)=>{
-                   setRoles(res.data);
-               }
-           );
-       }
+    //Función para consultar rol de la empresa
+    const consultarAreas=()=>{
+        http.get('/areas').then(
+            (res)=>{
+                setAreas(res.data);
+            }
+        );
+    }
+
+
+
+
+
+
+    //Función para consultar rol de la empresa
+    const consultarRoles=()=>{
+        http.get('/gestionDeEquipo').then(
+            (res)=>{
+                setRoles(res.data);
+            }
+        );
+    }
        //Función para crear datos
        const almacenarRoles=()=>{    
-        console.log(nombreRol);
-        console.log(descripcionRol);
+
         console.log("enviar")
-        http.post("/gestionDeEquipo", {nombre: nombreRol, descripcion:descripcionRol}).then((data)=>{
+        http.post("/gestionDeEquipo", {nombre: "", descripcion:""}).then((data)=>{
             console.log(data.data)
             setBasicModal(false);
             const nuevoRol=roles;
@@ -71,10 +78,9 @@ const GestionDeEquipo = ()=>{
     }
       //Función editar datos
       const editarRol=()=>{    
-        console.log(nombreRol);
-        console.log(descripcionRol);
+
         console.log("editar")
-        http.put(`/EquipoDeEquipo/${seletDato.id}`, {nombre: nombreRol, descripcion:descripcionRol}).then((data)=>{
+        http.put(`/EquipoDeEquipo/${seletDato.id}`, {nombre: "", descripcion:""}).then((data)=>{
             console.log(data.data)
             setBasicModal(false);
             setAcceptEdit(false);
@@ -110,7 +116,7 @@ const GestionDeEquipo = ()=>{
 
     //Ejecutando Funciones
     useEffect(()=>{
-        consultarRoles();
+        consultarAreas();
         // eslint-disable-next-line 
     },[]);
 
@@ -119,8 +125,7 @@ const GestionDeEquipo = ()=>{
         setAcceptEdit(true)//habilitar edicion
         setSeletDato(dato);//select dato
         console.log(dato.id);
-        setNombreRol(dato.nombre);
-        setDescripcionRol(dato.descripcion);
+        
         toggleShow();
        
     }
@@ -128,7 +133,7 @@ const GestionDeEquipo = ()=>{
         <div className="container pt-5">
           <div className="row">
               <div className="col">
-                  <h2>Administración de Roles</h2>
+                  <h2>Administración de Equipos</h2>
               </div>
               <div className="col text-end">
                   {/*Boton para abrir modal*/}
@@ -137,33 +142,19 @@ const GestionDeEquipo = ()=>{
                       startIcon={<GroupAddIcon/>}
                       onClick={toggleShow}
                       >
-                      Registrar Rol
+                      Crear nuevo Equipo
                   </Button>
               </div>
           </div>
-          {/*Tabla*/}
-          <div className="pt-5">
-              {/*Tabla*/}
-              <table className="table table-hover table-bordered text-center">
-                  <thead className='table-primary'>
-                      <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Nombre Rol</th>
-                      <th scope="col">Descripción Rol</th>
-                      <th scope="col">Fecha de Creación</th>
-                      <th scope="col">Opciones</th>
-                      </tr>
-                  </thead>         
-                  <TablaRoles
-                    setDeleteId={setDeleteId}
-                    roles={roles}
-                    handleClickOpen={handleClickOpen}
-                    selectEditData={selectEditData}
-                >
-                </TablaRoles>
-                </table>
-        </div>
-
+        {/*Tabla*/}    
+        <TablaEquipos
+            setDeleteId={setDeleteId}
+            roles={roles}
+            handleClickOpen={handleClickOpen}
+            selectEditData={selectEditData}
+            http={http}
+        >
+        </TablaEquipos>
         {/**Dialog eliminiar */}
         <AlertDialogSlide
             open={open}
@@ -174,63 +165,21 @@ const GestionDeEquipo = ()=>{
         </AlertDialogSlide>
 
         {/*Modal*/}
-        <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
-            {/*Atributo size indica el tamaño del modal opciones:
-                "sm" "lg" "xl" (tamaño por defecto "medio" siempre que no se incluya la propiedad)
-            */}
-            <MDBModalDialog size="lg">
-                <MDBModalContent>
-                <MDBModalHeader>
-                    <MDBModalTitle>Registrar nuevo Rol de Equipo</MDBModalTitle>
-                    <Button 
-                    variant="text" 
-                    startIcon={<CloseIcon />}
-                    onClick={toggleShow}
-                    >
-                    </Button>
-                    </MDBModalHeader>
-                <MDBModalBody>
-                    <TextField 
-                        id="outlined-basic" 
-                        fullWidth 
-                        label="Nombre del Rol" 
-                        variant="outlined" 
-                        onChange={e=>setNombreRol(e.target.value)} 
-                        value={nombreRol}
-                        />
-                    <TextField 
-                        id="outlined-basic" 
-                        fullWidth 
-                        label="Descripción del Rol" 
-                        variant="outlined" 
-                        multiline
-                        margin="normal"
-                        onChange={e=>setDescripcionRol(e.target.value)} 
-                        value={descripcionRol}
-                        rows={3}
-                        />
-                </MDBModalBody>
+        <FormEquipos
+            verModal={toggleShow} 
+            basicModal={basicModal}
+            setBasicModal={setBasicModal}
+            nombreEquipo={nombreEquipo}
+            setNombreEquipo={setNombreEquipo}
+            descripcionEquipo={descripcionEquipo}
+            setDescripcionEquipo={setDescripcionEquipo}
+            areas={areas}
+            areaEquipo={areaEquipo}
+            setAreaEquipo={setAreaEquipo}
 
-                <MDBModalFooter>
-                    <Button 
-                        variant="text" 
-                        color="error"
-                        onClick={()=>{
-                            setAcceptEdit(false)
-                            toggleShow()
-                        }}
-                        >Cerrar
-                        </Button>
-                        <Button 
-                            variant="text" 
-                            onClick={acceptEdit? editarRol: almacenarRoles}
-                        >Enviar
-                        </Button>
-                    </MDBModalFooter>
-    
-                    </MDBModalContent>
-                </MDBModalDialog>
-            </MDBModal>
+        >
+
+        </FormEquipos>
             
     
           </div>  
