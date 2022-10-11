@@ -1,4 +1,4 @@
-import RowRoles from "./RowRoles";
+import RowEquipo from "./RowEquipo";
 import { useState } from "react";
 import { useEffect } from "react";
 import Paginate from "../../../components/paginacion";
@@ -26,7 +26,7 @@ const TablaEquipos=({roles, setDeleteId, selectEditData, http})=>{
     }
 
     useEffect(()=>{
-        consultarEquipos('/equipos/paginacion');
+        consultarEquipos('/equipos/paginate');
         // eslint-disable-next-line 
     },[]);
 
@@ -46,12 +46,12 @@ const TablaEquipos=({roles, setDeleteId, selectEditData, http})=>{
                 </thead>  
                 <tbody>
                     {equipos.map(dato=>(
-                        <RowRoles key={dato.id}
+                        <RowEquipo key={dato.id}
                             setDeleteId={setDeleteId}
                             dato={dato}
                             selectEditData={selectEditData}
                         >
-                        </RowRoles>
+                        </RowEquipo>
                     ))}
                 </tbody>
             </table>

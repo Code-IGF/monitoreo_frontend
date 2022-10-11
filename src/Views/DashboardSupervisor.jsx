@@ -14,6 +14,7 @@ import {
             <Routes>
                 <Route path='/equipos' element={<GestionDeEquipo/>}></Route>
                 <Route path='/equipos/nuevo' element={<NuevoEquipo/>}></Route>
+                <Route path='/equipos/:idEquipo' element={<NuevoEquipo/>}></Route>
                 <Route path='/inicio' element={<Dashboard></Dashboard>}></Route>
                 <Route path='/perfil' element={<PerfilUsuario/>}></Route>
             </Routes>
