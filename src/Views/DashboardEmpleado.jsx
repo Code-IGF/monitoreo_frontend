@@ -11,7 +11,7 @@ import {
       return (
             <Routes>
                 <Route path='/inicio' element={<Dashboard></Dashboard>}></Route>
-                <Route path='/perfil' element={<PerfilUsuario/>}></Route>
+                <Route path='/perfil' element={<PerfilUsuario baseURL={baseURL}/>}></Route>
             </Routes>
         );
   }

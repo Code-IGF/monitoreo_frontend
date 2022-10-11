@@ -30,8 +30,6 @@ const Login=()=> {
                 setInvalidData(true);
             }
         );
-        console.log(email);
-        console.log(password);
     }
 
     return (

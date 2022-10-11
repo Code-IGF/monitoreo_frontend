@@ -72,12 +72,6 @@ function SideBAr({logoutUser, idRol}){
                             <ListItemText primary="Inicio" />
                         </ListItem>
                     </NavLink>
-                    <NavLink to="/mi-equipo" className="nav-link">
-                            <ListItem button>
-                                <ListItemIcon><GroupsIcon color="primary" ></GroupsIcon></ListItemIcon>
-                                <ListItemText primary="Mi Equipo" />
-                            </ListItem>
-                        </NavLink>
                     {idRol===2?
                         <>
                         <NavLink to="/equipos" className="nav-link">
