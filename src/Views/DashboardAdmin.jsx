@@ -19,7 +19,7 @@ import {
                 <Route path='/areas' element={<Areas></Areas>}></Route>
                 <Route path='/usuarios' element={<GestionDeUsuario baseURL={baseURL}/>}></Route>
                 <Route path='/inicio' element={<Dashboard></Dashboard>}></Route>
-                <Route path='/perfil' element={<PerfilUsuario/>}></Route>
+                <Route path='/perfil' element={<PerfilUsuario baseURL={baseURL}/>}></Route>
             </Routes>
         );
   }
