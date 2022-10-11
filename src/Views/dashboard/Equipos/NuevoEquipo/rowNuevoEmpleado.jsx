@@ -1,4 +1,4 @@
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { IconButton } from '@mui/material';
 
 const RowNuevoEmpleado=({dato, elminiarSeleccion})=>{
@@ -7,11 +7,14 @@ const RowNuevoEmpleado=({dato, elminiarSeleccion})=>{
         <tr>
             <td>{id}</td>
             <td>{name}</td>
-            <td>
+            <td 
+                title='Eliminar'
+            >
                 <IconButton
+                    color="error"
                     onClick={()=>elminiarSeleccion(dato)}
                 >
-                    <DeleteOutlineOutlinedIcon/>
+                    <PersonRemoveIcon/>
                 </IconButton>    
             </td> 
         </tr>

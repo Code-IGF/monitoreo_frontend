@@ -89,7 +89,7 @@ const NuevoEquipo=()=>{
                     </div>
                 </div>
             </div>
-            <div className="card mb-4">
+            <div className="card mb-5">
                 <div className="card-header fw-bold">
                     Datos del Equipo
                 </div>
