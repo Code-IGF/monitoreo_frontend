@@ -3,7 +3,7 @@ import AuthUser from './components/AuthUser';
 import DashboardNavigate from './Views/DashboardNavigate';
 import PublicNavigate from './Views/PublicNavigate';
 
-const baseURL = "http://localhost:8000";
+const baseURL = "https://code-rm.tk";
 
 
 function App() {
