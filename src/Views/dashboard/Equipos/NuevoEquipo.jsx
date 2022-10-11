@@ -4,7 +4,8 @@ import {
     Select,
     FormControl,
     InputLabel,
-    Button
+    Button,
+    Alert
 } from "@mui/material";
 import { 
     useState,
@@ -12,7 +13,7 @@ import {
  } from "react";
 import GroupAdd from "@mui/icons-material/GroupAdd";
 import AuthUser from "../../../components/AuthUser";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import TablaNuevoEquipo from "./NuevoEquipo/TablaNuevoEquipo";
 
 const NuevoEquipo=()=>{
@@ -21,11 +22,16 @@ const NuevoEquipo=()=>{
     const [areaEquipo, setAreaEquipo]=useState("");
     const [areas, setAreas]=useState();
     const [empleados, setEmpleados]=useState("");
-    const [equipoEmpleado, setEquipoEmpleado]=useState([]);
+    const [equipoEmpleados, setEquipoEmpleado]=useState([]);
     const [selectEmpleado, setSelectEmpleado]=useState("");
 
     //http
     const {http}=AuthUser();
+    const navigate=useNavigate();
+
+    //Si los datos son invalidos
+    const [invalidData, setInvalidData]=useState(false);
+    const [invalidMessage, setInvalidMessage]=useState("");    
 
     const handleChangeDepartamento = (event) => {
         setAreaEquipo(event.target.value);
@@ -33,7 +39,7 @@ const NuevoEquipo=()=>{
 
     const handleChangeEmpleado=(event)=>{
         setSelectEmpleado(event.target.value);
-        const listEmpleado= equipoEmpleado;
+        const listEmpleado= equipoEmpleados;
 
         empleados.map(element=> 
             element.id===event.target.value? //Busaca en el arrya empleados el objeto seleccionado
@@ -44,7 +50,7 @@ const NuevoEquipo=()=>{
             :
             ""
             );
-        console.log(listEmpleado);
+        //console.log(listEmpleado);
     }
 
     const consultarEmpleados=()=>{
@@ -70,6 +76,26 @@ const NuevoEquipo=()=>{
         consultarEmpleados();
         // eslint-disable-next-line 
     },[]);
+
+    //Crear Equipo
+    const CrearEquipo=()=>{
+
+        http.post('/equipos', {
+            nombre:nombreEquipo,
+            descripcion:descripcionEquipo,
+            area_id:areaEquipo,
+            integrantes:equipoEmpleados
+        }).then((data)=>{
+            //Si hay un dato invalido
+            if(data.data.type){
+                setInvalidData(true);
+                setInvalidMessage(data.data.message)
+            }
+            else{
+                navigate('/equipos')
+            }
+        })
+    }
 
     return(
         <div className="container pt-5">
@@ -184,13 +210,20 @@ const NuevoEquipo=()=>{
                         </Select>
                     </FormControl>  
                     <TablaNuevoEquipo
-                        empleados={equipoEmpleado}
+                        empleados={equipoEmpleados}
                         setEquipoEmpleado={setEquipoEmpleado}
                     />
                     <div className="text-end pt-3 pb-3">
+                    {invalidData? 
+                        <div className='pb-4'>
+                            <Alert severity="error">{invalidMessage}</Alert>
+                        </div>
+                        :
+                        ""}
                     <Button
                         variant="outlined" 
                         startIcon={<GroupAdd/>}
+                        onClick={CrearEquipo}
                     >
                         Crear Nuevo Equipo
                     </Button>
