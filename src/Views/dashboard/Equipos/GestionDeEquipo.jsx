@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import AuthUser from "../../../components/AuthUser";
 import TablaEquipos from "./TablaEquipos";
 import AlertDialogSlide from "../../../components/AlertEliminar";
+import { NavLink } from "react-router-dom";
 import FormEquipos from "./FormEquipos";
 //
 import { Button, 
@@ -47,20 +48,6 @@ const GestionDeEquipo = ()=>{
         http.get('/areas').then(
             (res)=>{
                 setAreas(res.data);
-            }
-        );
-    }
-
-
-
-
-
-
-    //Función para consultar rol de la empresa
-    const consultarRoles=()=>{
-        http.get('/gestionDeEquipo').then(
-            (res)=>{
-                setRoles(res.data);
             }
         );
     }
@@ -137,13 +124,15 @@ const GestionDeEquipo = ()=>{
               </div>
               <div className="col text-end">
                   {/*Boton para abrir modal*/}
-                  <Button 
-                      variant="outlined" 
-                      startIcon={<GroupAddIcon/>}
-                      onClick={toggleShow}
-                      >
-                      Crear nuevo Equipo
-                  </Button>
+                  <NavLink to="/equipos/nuevo" className="nav-link">
+                    <Button 
+                        variant="outlined" 
+                        startIcon={<GroupAddIcon/>}
+                        onClick={toggleShow}
+                        >
+                        Crear nuevo Equipo
+                    </Button>
+                  </NavLink>
               </div>
           </div>
         {/*Tabla*/}    
@@ -165,7 +154,7 @@ const GestionDeEquipo = ()=>{
         </AlertDialogSlide>
 
         {/*Modal*/}
-        <FormEquipos
+        {/* <FormEquipos
             verModal={toggleShow} 
             basicModal={basicModal}
             setBasicModal={setBasicModal}
@@ -179,7 +168,7 @@ const GestionDeEquipo = ()=>{
 
         >
 
-        </FormEquipos>
+        </FormEquipos> */}
             
     
           </div>  

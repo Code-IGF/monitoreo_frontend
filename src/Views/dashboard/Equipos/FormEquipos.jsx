@@ -69,7 +69,7 @@ const FormEquipos=(
                         <TextField 
                         id="outlined-basic" 
                         fullWidth 
-                        label="Descripción del Rol" 
+                        label="Descripción del Equipo" 
                         variant="outlined" 
                         multiline
                         margin="normal"
@@ -84,7 +84,7 @@ const FormEquipos=(
                             >
                             <InputLabel  
                                 id="label-select-rol"
-                                >Rol del Empleado
+                                >Departamento del Equipo
                             </InputLabel>
                             <Select
                                 fullWidth
@@ -108,7 +108,8 @@ const FormEquipos=(
                                     <MenuItem value={0}>{"Cargando ..."}</MenuItem>
                                 }
                             </Select>
-                        </FormControl>                            
+                        </FormControl>     
+                                               
                     </MDBModalBody>
                         <MDBModalFooter>
                         <Button 
