@@ -21,7 +21,7 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import BadgeIcon from '@mui/icons-material/Badge';
 
 
-function SideBAr(){
+function SideBAr({logoutUser, idRol}){
     //Función para ocultar sidebar
     const [isOpen, setIsOpern]=useState(false);
 
@@ -44,7 +44,13 @@ function SideBAr(){
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button 
+                        color="inherit"
+                        onClick={()=>{
+                            logoutUser();
+                        }}
+                    >Cerrar Sesión
+                    </Button>
                 </Toolbar>
             </AppBar>
             {/*SideBar*/}
@@ -59,48 +65,64 @@ function SideBAr(){
                 {/*Links*/}
                 <Divider />
                 <List>
-                    <NavLink to="/" className="text-body">
-                        <ListItem button>
-                            <ListItemIcon><LoginIcon color="primary"></LoginIcon></ListItemIcon>
-                            <ListItemText primary="Login" />
-                        </ListItem>
-                    </NavLink>
-                    <NavLink to="/equipos" className="text-body">
-                        <ListItem button>
-                            <ListItemIcon><GroupsIcon color="primary" ></GroupsIcon></ListItemIcon>
-                            <ListItemText primary="Equipos" />
-                        </ListItem>
-                    </NavLink>
-                    <NavLink to="/inicio" className="text-body">
+                    
+                    <NavLink to="/inicio" className="nav-link">
                         <ListItem button>
                             <ListItemIcon><HomeIcon color="primary" ></HomeIcon></ListItemIcon>
                             <ListItemText primary="Inicio" />
                         </ListItem>
                     </NavLink>
+                    {idRol===2?
+                        <>
+                        <NavLink to="/equipos" className="nav-link">
+                            <ListItem button>
+                                <ListItemIcon><GroupsIcon color="primary" ></GroupsIcon></ListItemIcon>
+                                <ListItemText primary="Equipos" />
+                            </ListItem>
+                        </NavLink>
+                        </>
+                        :
+                        <></>
+                    }   
+                    
+                    {/* ADMIN LINKS */}
+                    {idRol===1?
+                        <>
+                            <Divider />
+                            <NavLink to="/usuarios" className="nav-link">
+                                <ListItem button>
+                                    <ListItemIcon><BadgeIcon color="primary" ></BadgeIcon></ListItemIcon>
+                                    <ListItemText primary="Usuarios" />
+                                </ListItem>
+                            </NavLink>
+                            <NavLink to="/areas" className="nav-link">
+                                <ListItem button>
+                                    <ListItemIcon><BusinessCenterIcon color="primary" ></BusinessCenterIcon></ListItemIcon>
+                                    <ListItemText primary="Areas" />
+                                </ListItem>
+                            </NavLink>
+                        </>
+                        :
+                        <></>
+                    }
+                    
 
-                    <NavLink to="/perfil">
-                        <ListItem button>
-                            <ListItemIcon><PersonIcon></PersonIcon></ListItemIcon>
-                            <ListItemText primary="Perfil" />
-                        </ListItem>
-                    </NavLink>
-
-                    <NavLink to="/areas" className="text-body">
-                        <ListItem button>
-                            <ListItemIcon><BusinessCenterIcon color="primary" ></BusinessCenterIcon></ListItemIcon>
-                            <ListItemText primary="Areas" />
-                        </ListItem>
-                    </NavLink>
-                    <NavLink to="/usuarios" className="text-body">
-                        <ListItem button>
-                            <ListItemIcon><BadgeIcon color="primary" ></BadgeIcon></ListItemIcon>
-                            <ListItemText primary="Usuarios" />
-                        </ListItem>
-                    </NavLink>
-                    <NavLink to="/gestionDeEquipo" className="text-body">
-                        <ListItem button>
-                            <ListItemIcon><GroupsIcon color="primary" ></GroupsIcon></ListItemIcon>
-                            <ListItemText primary="GestionDeEquipo" />
+                    <Divider />
+                    <NavLink to="/perfil" className="nav-link">
+                                <ListItem button>
+                                    <ListItemIcon><PersonIcon color="primary"></PersonIcon></ListItemIcon>
+                                    <ListItemText primary="Perfil" />
+                                </ListItem>
+                            </NavLink>
+                    <NavLink to="login" className="nav-link">
+                        <ListItem 
+                            button
+                            onClick={()=>{
+                                logoutUser();
+                            }}
+                            >
+                            <ListItemIcon><LoginIcon color="primary"></LoginIcon></ListItemIcon>
+                            <ListItemText primary="Cerrar Sesión" />
                         </ListItem>
                     </NavLink>
                     

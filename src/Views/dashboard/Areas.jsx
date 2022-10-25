@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import AuthUser from "../../components/AuthUser";
 import TablaAreas from "./departamentos/TablaAreas";
 import AlertDialogSlide from "../../components/AlertEliminar";
+import Paginate from "../../components/paginacion";
 //
 import { Button, 
     TextField
@@ -26,6 +27,12 @@ import CloseIcon from '@mui/icons-material/Close';
 const Areas = ()=>{
     //Variables
     const [departamentos, setDepartamentos]=useState();
+    //Paginación
+    const [siguiente, setSiguiente]=useState();
+    const [anterior, setAnterior]=useState();
+    const [actual, setActual]=useState();
+    const [final, setFinal]=useState();
+
     const [nombreDepartamento, setNombreDepartamento]=useState("");
     const [descripcionDepartamento, setDescripcionDepartamento]=useState("");
     //Use state para confirmar eliminacion
@@ -50,10 +57,15 @@ const Areas = ()=>{
     const {http}=AuthUser();
 
     //Función para consultar departamentos de la empresa
-    const consultarDepartamentos=()=>{
-        http.get('/areas').then(
+    const consultarDepartamentos=(url)=>{
+        http.get(url).then(
             (res)=>{
-                setDepartamentos(res.data);
+                console.log("consultando")
+                setActual(res.data.current_page);
+                setAnterior(res.data.prev_page_url);
+                setSiguiente(res.data.next_page_url);
+                setFinal(res.data.last_page);
+                setDepartamentos(res.data.data);
             }
         );
     }
@@ -73,9 +85,7 @@ const Areas = ()=>{
     }
     //Función editar datos
     const editarDepartamento=()=>{    
-        console.log(nombreDepartamento);
-        console.log(descripcionDepartamento);
-        console.log("editar")
+
         http.put(`/areas/${seletDato.id}`, {nombre: nombreDepartamento, descripcion:descripcionDepartamento}).then((data)=>{
             console.log(data.data)
             setBasicModal(false);
@@ -106,12 +116,13 @@ const Areas = ()=>{
     }
 
     useEffect(()=>{
-        acceptDelete? eliminarData(): console.log("accept (false)")
+        acceptDelete? eliminarData(): console.log("accept (false)");
+        // eslint-disable-next-line
     },[acceptDelete]);
 
     //Ejecutando Funciones
     useEffect(()=>{
-        consultarDepartamentos();
+        consultarDepartamentos('/areas/paginacion');
         // eslint-disable-next-line 
     },[]);
 
@@ -138,7 +149,11 @@ const Areas = ()=>{
                 <Button 
                     variant="outlined" 
                     startIcon={<BusinessCenterIcon />}
-                    onClick={toggleShow}
+                    //Para asegurarme que no edite si presiona en crear nuevo departamento
+                    onClick={()=>{
+                        setAcceptEdit(false)
+                        toggleShow()
+                    }}
                     >
                     Registrar Departamento
                 </Button>
@@ -165,6 +180,16 @@ const Areas = ()=>{
                 >
                 </TablaAreas>
                 </table>
+                {/* Paginación*/}
+                <Paginate
+                    consultarData={consultarDepartamentos}
+                    paginaActual={actual}
+                    paginaFinal={final}
+                    anterior={anterior}
+                    siguiente={siguiente}
+                    baseUrl={"/areas?page="}
+                >
+                </Paginate>
         </div>
 
         {/**Dialog eliminiar */}
