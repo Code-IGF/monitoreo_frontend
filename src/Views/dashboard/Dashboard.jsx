@@ -22,7 +22,7 @@ import { PieChart } from './inicio/PieChart';
               <div className="col-3 text-center">
                 <div className="card">
                   <div className="card-body">
-                    <h5 class="card-title">Salas de Trabajo</h5>
+                    <h5 className="card-title">Salas de Trabajo</h5>
                     <div className="row align-items-center w-100">
                       <div className="col align-items-center">
                         <VideocamIcon color = "info" fontSize="large" />
@@ -39,7 +39,7 @@ import { PieChart } from './inicio/PieChart';
               <div className="col-3 text-center">
                 <div className="card">
                   <div className="card-body">
-                    <h5 class="card-title">Equipos Asignados</h5>
+                    <h5 className="card-title">Equipos Asignados</h5>
                     <div className="row align-items-center w-100">
                       <div className="col align-items-center">
                         <GroupIcon color = "info" fontSize="large" />
@@ -54,7 +54,7 @@ import { PieChart } from './inicio/PieChart';
               <div className="col-3 text-center">
                 <div className="card">
                   <div className="card-body">
-                    <h5 class="card-title">Fecha</h5>
+                    <h5 className="card-title">Fecha</h5>
                     <div className="row align-items-center w-100">
                       <div className="col align-items-center">
                         <CalendarMonthIcon color = "info" fontSize="large" />
@@ -69,7 +69,7 @@ import { PieChart } from './inicio/PieChart';
               <div className="col-3 text-center">
                 <div className="card">
                   <div className="card-body">
-                    <h5 class="card-title">Empleados en Linea</h5>
+                    <h5 className="card-title">Empleados en Linea</h5>
                     <div className="row align-items-center w-100">
                       <div className="col align-items-center">
                         <VideocamIcon color = "info" fontSize="large" />
@@ -117,7 +117,7 @@ import { PieChart } from './inicio/PieChart';
             <div className="row">
               {/**Tabla de usuarios Activos */}
               <div className="col-12 col-md-8">
-                <table class="table table-hover table-bordered">
+                <table className="table table-hover table-bordered">
                   <thead className='table-primary'>
                     <tr>
                       <th 

@@ -2,7 +2,11 @@ import img from '../../img/work.svg';
 import { useState } from 'react';
 import AuthUser from '../../components/AuthUser';
 
-import{MDBInput, MDBCheckbox, MDBBtn} from 'mdb-react-ui-kit'
+//import{MDBCheckbox} from 'mdb-react-ui-kit'
+import { Button, 
+    TextField
+} from "@mui/material";
+import Alert from '@mui/material/Alert';
 
 const Login=()=> {
     
@@ -10,18 +14,22 @@ const Login=()=> {
     const [email, setEmail]=useState();
     const [password, setPassword]=useState();
     const {http, setToken}=AuthUser();
+    //Si hay datos errones
+    const [invalidData, setInvalidData]=useState(false);
 
     //Eviar datos
     const submitForm=()=>{
         http.post('/login', {email:email, password: password}).then(
             (respuesta)=>{
-                console.log(respuesta.data);
+                /* console.log(respuesta.data); */
                 setToken(respuesta.data.user, respuesta.data.access_token);
             }
 
+        ).catch(
+            (response)=>{
+                setInvalidData(true);
+            }
         );
-        console.log(email);
-        console.log(password);
     }
 
     return (
@@ -41,30 +49,38 @@ const Login=()=> {
                         <div className='w-100 text-center py-4'>
                             <h2 className="fw-bold text-primary">Iniciar Sesión</h2>
                         </div>
-
-                       
-
-                            <MDBInput 
-                                wrapperClass='mb-5' 
-                                label='Correo Electronico' 
-                                id='formControlLg' 
-                                type='email' 
-                                size="lg"
-                                onChange={e=>setEmail(e.target.value)}
-                            />
-                            <MDBInput 
-                            wrapperClass='mb-5' label='Contraseña' id='formControlLg' type='password' size="lg"
+                        <TextField 
+                            id="outlined-basic" 
+                            fullWidth 
+                            label="Correo Electronico" 
+                            variant="outlined" 
+                            className='pb-5'
+                            onChange={e=>setEmail(e.target.value)} 
+                        />
+                        <TextField 
+                            id="outlined-basic" 
+                            fullWidth 
+                            label="Contraseña" 
+                            variant="outlined" 
+                            type="password"
+                            className='pb-5'
                             onChange={e=>setPassword(e.target.value)}
-                            />
+                        />
+                        {invalidData? <div className='pb-5'>
+                            <Alert severity="error">Correo o contraseña invalidos</Alert>
+                        </div>:""}
 
-                            <div className="d-flex justify-content-between mx-3 mb-4">
+                            {/* <div className="d-flex justify-content-between mx-3 mb-4">
                                 <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Recuérdame' />
-                            </div>
+                            </div> */}
 
-                            <div className="d-grid"> 
-                                <MDBBtn type="submit"
+                            <div className="d-grid">
+                                <Button 
+                                    variant="outlined" 
                                     onClick={submitForm}
-                                >Iniciar Sesión</MDBBtn>
+                                    >
+                                    Iniciar Sesión
+                                </Button> 
                                 <a className='pt-4 text-center' href="!#">¿Recuperar Contraseña?</a>
                             </div>
                             <div className='pt-5 d-flex flex-row justify-content-center'>
