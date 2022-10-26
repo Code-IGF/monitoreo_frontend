@@ -18,6 +18,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import BadgeIcon from '@mui/icons-material/Badge';
 
 
@@ -99,6 +100,12 @@ function SideBAr({logoutUser, idRol}){
                                 <ListItem button>
                                     <ListItemIcon><BusinessCenterIcon color="primary" ></BusinessCenterIcon></ListItemIcon>
                                     <ListItemText primary="Areas" />
+                                </ListItem>
+                            </NavLink>
+                            <NavLink to="/actividad" className="nav-link">
+                                <ListItem button>
+                                    <ListItemIcon><WorkHistoryIcon color="primary" ></WorkHistoryIcon></ListItemIcon>
+                                    <ListItemText primary="Log de actividades" />
                                 </ListItem>
                             </NavLink>
                         </>
