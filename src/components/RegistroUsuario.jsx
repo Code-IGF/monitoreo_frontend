@@ -23,11 +23,7 @@ const RegistroUsuario = () =>{
        <a href="#">Olvido su contraseña?</a>
  
       </form>
-     
-     
      </div>
-   
     )
- 
   }
   export default RegistroUsuario;
