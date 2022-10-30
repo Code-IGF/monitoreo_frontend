@@ -18,22 +18,7 @@ import { PieChart } from './inicio/PieChart';
               {/*  Tarjetas iniciales  */}
             <div className="row align-items-center pb-4">
               {/*Cards */}
-              {/*Salas de trabajo*/}
-              <div className="col-3 text-center">
-                <div className="card">
-                  <div className="card-body">
-                    <h5 className="card-title">Salas de Trabajo</h5>
-                    <div className="row align-items-center w-100">
-                      <div className="col align-items-center">
-                        <VideocamIcon color = "info" fontSize="large" />
-                      </div>
-                      <div className="col  row">
-                        <div>03</div>
-                      </div>
-                  </div>
-                </div>
-                
-                
+              
                 </div>
               </div>
               <div className="col-3 text-center">
