@@ -1,6 +1,7 @@
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { IconButton } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import AddIcon from '@mui/icons-material/Add';
 
 const RowEquipo=({dato, setDeleteId, selectEditData})=>{
     const {id, nombre, descripcion, area,created_at}=dato
@@ -14,7 +15,7 @@ const RowEquipo=({dato, setDeleteId, selectEditData})=>{
             <td>
                 <NavLink to={`/equipos/${id}`}>
                     <IconButton>
-                        <EditOutlinedIcon/>
+                        <AddIcon/>
                     </IconButton>
                 </NavLink>                
             </td> 
