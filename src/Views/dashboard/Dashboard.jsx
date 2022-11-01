@@ -14,13 +14,10 @@ import { PieChart } from './inicio/PieChart';
     return(
         <div>
           <div className="container pt-4" >  
-            <h2>Supervisión</h2>
+            <h2>Inicio</h2>
               {/*  Tarjetas iniciales  */}
             <div className="row align-items-center pb-4">
               {/*Cards */}
-              
-                </div>
-              </div>
               <div className="col-3 text-center">
                 <div className="card">
                   <div className="card-body">
@@ -65,7 +62,8 @@ import { PieChart } from './inicio/PieChart';
                     </div>
                   </div>  
                 </div>
-              </div>      
+              </div>  
+              </div>    
               {/* <div className="col">
                 <Button variant="outlined" color="primary">
                     Sala de trabajo
@@ -89,7 +87,7 @@ import { PieChart } from './inicio/PieChart';
                     <td><PersonIcon></PersonIcon></td>
                 </Button>  
               </div> */}
-            </div>
+
             {/** Grafico 1 */}
             <div className="row pb-4">
               <div className="col-12">
