@@ -21,8 +21,12 @@ import { useEffect, useState } from "react";
     //Fecha y Hora 
     const [fecha2, setFecha]=useState("");
     const [equiposAsignados, setEquiposAsignados]=useState();
-    const [salas, setSalas]=useState();
-    const [cantidadSalas, setCantidadSalas]=useState()
+    const [cantidadSalas, setCantidadSalas]=useState();
+
+    //Varibales que almacenan los datos de la grafica
+    const [etiquestas] = useState([]);
+    const [empleadosPorEquipo] = useState([]);
+    
 
     const fechas = ()=>{
       const nuevaFecha= new Date();
@@ -33,53 +37,32 @@ import { useEffect, useState } from "react";
       setFecha(`${day}/${month}/${fullYear}`);
     }
 
-    const fecha = () => {
-    const date = new Date();
-    setFecha(date);
 
-    /* 
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const fullYear = date.getFullYear();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    const clock = document.getElementById('clock');
-    clock.innerHTML = `${day}/${month}/${fullYear} ${hours}:${minutes}:${seconds}`; */
-
-    
-    //Sala de Trabajo
-      const equipo = [{"id":2,"empleados":5},{"id":1,"empleados":4},{"id":5,"empleados":4},{"id":4,"empleados":1},{"id":6,"empleados":3}]
-      let length = equipo.length;
-
-      document.getElementById("Equipo").innerHTML = length;
-    }
       //http
       const {http} = AuthUser();
 
-      // funcion para consultar los equipos asignados
-      // eslint-disable-next-line
       const consultarEquipos = (url) =>{ 
         http.get(url).then(
           (res)=>{
-            /* res.data.equipo.map(equipo=>{
-              console.log(equipo)
-            }) */
             setEquiposAsignados(res.data.equipo.length)
-
           }
         );
         }
 
-        const consultarSalas = (url) =>{ 
-          http.get(url).then(
-            (res)=>{
-              setSalas(res.data)
-              //console.log(res.data)
-              setCantidadSalas(res.data.length)
-            }
-          );
+      const consultarSalas = (url) =>{ 
+        http.get(url).then(
+          (res)=>{
+            //Llenando Etiquetas y datos de la grafica de pastel
+            res.data.map(sala=>{
+              //Llenando etiquetas
+              etiquestas.push(`Equipo ${sala.id}`)
+              empleadosPorEquipo.push(sala.empleados)
+            });
+
+            setCantidadSalas(res.data.length)
           }
+        );
+      }
 
       useEffect(()=>{
         consultarSalas('/equipos/cantidad');
@@ -258,9 +241,20 @@ import { useEffect, useState } from "react";
               {/*Grafico de Pastel*/}
               <div className="col-12 col-md-4">
                 <div className="card">
-                <PieChart
-                  salas={salas}
-                ></PieChart>
+                  {
+                    //La variable se asigna al finalizar la función "Consultar salas", 
+                    //La grafica se debe renderizar hasta que ya se hayan asignado las eqtiquetas y los empleados por etiqueta
+                    //Si se renderiza antes puede causar un error
+                    empleadosPorEquipo?
+                      <PieChart 
+                        etiquetas={etiquestas}
+                        empleadosPorEquipo={empleadosPorEquipo}
+                      ></PieChart>
+                      :
+                      <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                  }
                 </div>
               </div>
             </div>             
