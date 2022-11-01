@@ -27,25 +27,25 @@ const GestionDeEquipo = ()=>{
               <div className="col">
                   <h2>Administración de Equipos</h2>
               </div>
-              <div className="col text-end">
-                  {/*Boton para abrir modal*/}
-                  <NavLink to="/equipos/nuevo" className="nav-link">
-                    <Button 
-                        variant="outlined" 
-                        startIcon={<GroupAddIcon/>}
-                        onClick={toggleShow}
-                        >
-                        Crear nuevo Equipo
-                    </Button>
-                  </NavLink>
-              </div>
-          </div>
-        {/*Tabla*/}    
-        <TablaEquipos
-            http={http}
-        >
-        </TablaEquipos>
-          </div>  
+                    <div className="col text-end">
+                    {/*Boton para abrir modal*/}
+                        <NavLink to="/equipos/nuevo" className="nav-link">
+                            <Button 
+                             variant="outlined" 
+                             startIcon={<GroupAddIcon/>}
+                                onClick={toggleShow}
+                            >
+                                 Crear nuevo Equipo
+                            </Button>
+                        </NavLink>
+                     </div>
+         </div>
+                {/*Tabla*/}    
+                <TablaEquipos
+                 http={http}
+                >
+                 </TablaEquipos>
+        </div>  
         );
     }
     

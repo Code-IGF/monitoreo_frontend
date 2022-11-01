@@ -1,48 +1,38 @@
 import img from '../../img/profile.png';
 import {
-    MDBBtn,
-    MDBModal,
-    MDBModalDialog,
-    MDBModalContent,
-    MDBModalHeader,
-    MDBModalTitle,
-    MDBModalBody,
-    MDBModalFooter,
-    MDBInput,
+
     MDBInputGroup
   } from 'mdb-react-ui-kit';
-  import MoreVertIcon from '@mui/icons-material/MoreVert';
-  import GroupAddIcon from '@mui/icons-material/GroupAdd';
+
   import { 
-    Button,
-    Alert
+    Button
 } from '@mui/material';
   import React, { useState } from 'react';
-  const fileInitial={
+  /* const fileInitial={
     archivo:null,
     archivoNombre:""
-}
+} */
 function ActividadLog({baseURL}){
-    const [nombreUser, setNombreUser]=useState("");
+    //const [nombreUser, setNombreUser]=useState("");
     const [fechaUser, setFechaUser]=useState("");
-    const [emailUser, setEmail]=useState("");
-    const [imagenUsuario, setImagenUsuario]=useState(fileInitial);
-    const [imagenUrlUser, setImagenUrlUser]=useState("")
-    const [successEdit, setSuccessEdit]=useState(false);
-    const [invalidData, setInvalidData]=useState(false);
-    const [invalidMessage, setInvalidMessage]=useState(false);
+    //const [emailUser, setEmail]=useState("");
+    //const [imagenUsuario, setImagenUsuario]=useState(fileInitial);
+    const [imagenUrlUser]=useState("")
+    //const [successEdit, setSuccessEdit]=useState(false);
+    //const [invalidData, setInvalidData]=useState(false);
+    //const [invalidMessage, setInvalidMessage]=useState(false);
    
 
     //Se ejecuta cuando se selecciona un archivo (imagen)
-    const fileSelect=(e)=>{
+    /* const fileSelect=(e)=>{
         setImagenUsuario({
             archivo: e.target.files[0],
             archivoNombre:e.target.files[0].name,
         });
 
-    }
-    const [basicModal, setBasicModal] = useState(false);
-    const toggleShow = () => setBasicModal(!basicModal);
+    } */
+    //const [basicModal, setBasicModal] = useState(false);
+    //const toggleShow = () => setBasicModal(!basicModal);
 
     return(
         
