@@ -1,19 +1,33 @@
 import RowLog from "./RowLog";
 import { useEffect } from "react";
 import { useState } from "react";
+import Paginate from "../../components/paginacion";
 
 const TablaLog=({http})=>{
     const [log, setlog]=useState(
 
     );
     
+    //Paginación
+    const [equipos, setEquipos]=useState([]);
+    const [siguiente, setSiguiente]=useState();
+    const [anterior, setAnterior]=useState();
+    const [actual, setActual]=useState();
+    const [final, setFinal]=useState();
+
+    
+
     const consultarEquipos = (url)=>{
+
 
         http.get(url).then(
             (res)=>{
                 console.log(res.data.data)
                 setlog(res.data.data)
-                
+                setActual(res.data.current_page);
+                setAnterior(res.data.prev_page_url);
+                setSiguiente(res.data.next_page_url);
+                setFinal(res.data.last_page);
             }
         );
     }
@@ -49,8 +63,17 @@ const TablaLog=({http})=>{
 
             
             </tbody>
+
         </table>
-       
+        <Paginate
+                consultarData={consultarEquipos}
+                paginaActual={actual}
+                paginaFinal={final}
+                anterior={anterior}
+                siguiente={siguiente}
+                baseUrl={"/usuarios/paginacion?page="}   //cambiar  
+            >
+            </Paginate>
     </div>
         
         
