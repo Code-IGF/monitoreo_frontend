@@ -10,7 +10,8 @@ import LineChart from './inicio/LineChart';
 import { PieChart } from './inicio/PieChart';
 
 import AuthUser from "../../components/AuthUser";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
 
 
 
@@ -18,8 +19,25 @@ import { useEffect } from "react";
   const Dashboard = ()=>{
     
     //Fecha y Hora 
+    const [fecha2, setFecha]=useState("");
+    const [equiposAsignados, setEquiposAsignados]=useState();
+    const [salas, setSalas]=useState();
+    const [cantidadSalas, setCantidadSalas]=useState()
+
+    const fechas = ()=>{
+      const nuevaFecha= new Date();
+
+      const day = nuevaFecha.getDate();
+      const month = nuevaFecha.getMonth() + 1;
+      const fullYear = nuevaFecha.getFullYear();
+      setFecha(`${day}/${month}/${fullYear}`);
+    }
+
     const fecha = () => {
     const date = new Date();
+    setFecha(date);
+
+    /* 
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const fullYear = date.getFullYear();
@@ -27,7 +45,7 @@ import { useEffect } from "react";
     const minutes = date.getMinutes();
     const seconds = date.getSeconds();
     const clock = document.getElementById('clock');
-    clock.innerHTML = `${day}/${month}/${fullYear} ${hours}:${minutes}:${seconds}`;
+    clock.innerHTML = `${day}/${month}/${fullYear} ${hours}:${minutes}:${seconds}`; */
 
     
     //Sala de Trabajo
@@ -44,16 +62,35 @@ import { useEffect } from "react";
       const consultarEquipos = (url) =>{ 
         http.get(url).then(
           (res)=>{
-            console.log(res.data)
-            
+            /* res.data.equipo.map(equipo=>{
+              console.log(equipo)
+            }) */
+            setEquiposAsignados(res.data.equipo.length)
+
           }
         );
         }
+
+        const consultarSalas = (url) =>{ 
+          http.get(url).then(
+            (res)=>{
+              setSalas(res.data)
+              //console.log(res.data)
+              setCantidadSalas(res.data.length)
+            }
+          );
+          }
+
       useEffect(()=>{
-        consultarEquipos('/equipos/paginate');
+        consultarSalas('/equipos/cantidad');
+        consultarEquipos('usuario/miEquipo');
       },[]);
       
-      setInterval(fecha, 1000);
+      useEffect(()=>{
+        fechas()
+      },[])
+
+      //setInterval(fecha, 1000);
     return(
         <div>
           <div className="container pt-4" >  
@@ -71,7 +108,9 @@ import { useEffect } from "react";
                         <VideocamIcon color = "info" fontSize="large" />
                       </div>
                       <div className="col  row">
-                        <div id = "Equipo"></div>
+                        <div id = "Equipo">
+                          {cantidadSalas}
+                        </div>
                         </div>
                       </div>
                   </div>
@@ -86,7 +125,9 @@ import { useEffect } from "react";
                         <GroupIcon color = "info" fontSize="large" />
                       </div>
                       <div className="col row">
-                        <div id = "consultarEquipos"></div>
+                        <div id = "consultarEquipos">
+                          {equiposAsignados}
+                        </div>
                       </div>
                     </div>
                   </div>  
@@ -101,14 +142,17 @@ import { useEffect } from "react";
                         <CalendarMonthIcon color = "info" fontSize="large" />
                       </div>
                       <div className="col row">
-                        <div id = "clock"></div>
+                        <div id = "clock">
+                          {fecha2}
+                        </div>
                         <script>
                           fecha
                         </script>
-                    </div>
-                  </div>                  
+                      </div>
+                    </div>                  
+                  </div>
                 </div>
-              </div>
+              </div> 
               <div className="col-3 text-center">
                 <div className="card">
                   <div className="card-body">
@@ -118,14 +162,14 @@ import { useEffect } from "react";
                         <VideocamIcon color = "info" fontSize="large" />
                       </div>
                       <div>
-                      <div className="col row">
-                        </div>
+                        <div className="col row">
                         </div>
                       </div>
                     </div>
-                  </div>  
-                </div>
-              </div>  
+                  </div>
+                </div>  
+              </div>
+ 
               </div>    
               {/* <div className="col">
                 <Button variant="outlined" color="primary">
@@ -214,7 +258,9 @@ import { useEffect } from "react";
               {/*Grafico de Pastel*/}
               <div className="col-12 col-md-4">
                 <div className="card">
-                <PieChart></PieChart>
+                <PieChart
+                  salas={salas}
+                ></PieChart>
                 </div>
               </div>
             </div>             

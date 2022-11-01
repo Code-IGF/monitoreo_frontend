@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
+
+import AuthUser from "../../../components/AuthUser";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -9,7 +11,7 @@ export const data = {
   datasets: [
     {
       label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
+      data: [],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -46,6 +48,40 @@ const options = {
     },
   };
 
-export function PieChart() {
+
+export function PieChart({salas}) {
+  const {http}=AuthUser();
+
+  const consultarSalas = (url) =>{ 
+    http.get(url).then(
+      (res)=>{
+        res.data.map(sala=>{
+          data.datasets[0].data.push(sala.empleados)
+        })
+      }
+    );
+    }
+
+  const datos=()=>{
+    http.get('/equipos/cantidad').then(
+      (res)=>{
+        console.log(res.data)
+        res.data.map(sala=>{
+          console.log(sala.empleados)
+          data.datasets[0].data.push(sala.empleados)
+
+          console.log(data.datasets[0].data)
+        })
+      }
+    );
+  }
+
+  useEffect(()=>{
+    datos();
+
+    console.log(data.datasets[0].data)
+  },[])
+
   return <Pie data={data} options={options} />;
 }
+
