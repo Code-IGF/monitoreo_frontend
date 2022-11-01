@@ -53,7 +53,7 @@ import { useEffect, useState } from "react";
         http.get(url).then(
           (res)=>{
             //Llenando Etiquetas y datos de la grafica de pastel
-            res.data.map(sala=>{
+            res.data.forEach((sala)=>{
               //Llenando etiquetas
               etiquestas.push(`Equipo ${sala.id}`)
               empleadosPorEquipo.push(sala.empleados)
@@ -67,10 +67,12 @@ import { useEffect, useState } from "react";
       useEffect(()=>{
         consultarSalas('/equipos/cantidad');
         consultarEquipos('usuario/miEquipo');
+        // eslint-disable-next-line 
       },[]);
       
       useEffect(()=>{
         fechas()
+        // eslint-disable-next-line 
       },[])
 
       //setInterval(fecha, 1000);
