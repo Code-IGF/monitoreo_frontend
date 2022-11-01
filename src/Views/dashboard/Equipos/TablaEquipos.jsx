@@ -15,7 +15,7 @@ const TablaEquipos=({roles, setDeleteId, selectEditData, http})=>{
     const consultarEquipos = (url)=>{
         http.get(url).then(
             (res)=>{
-                console.log("consultando Equipos")
+                console.log(res.data.data)
                 setActual(res.data.current_page);
                 setAnterior(res.data.prev_page_url);
                 setSiguiente(res.data.next_page_url);
