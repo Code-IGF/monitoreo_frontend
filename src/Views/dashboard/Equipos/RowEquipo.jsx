@@ -9,7 +9,7 @@ const RowEquipo=({dato, setDeleteId, selectEditData})=>{
             <td>{id}</td>
             <td>{nombre}</td>
             <td>{descripcion}</td>
-            <td>{area.nombre}</td>
+            <td>{/**Reparar backend **/}</td>
             <td>{created_at}</td>
             <td>
                 <NavLink to={`/equipos/${id}`}>
