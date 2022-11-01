@@ -9,8 +9,51 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import LineChart from './inicio/LineChart';
 import { PieChart } from './inicio/PieChart';
 
+import AuthUser from "../../components/AuthUser";
+import { useEffect } from "react";
+
+
+
 <link rel="stylesheet" href="index.css"></link>  
   const Dashboard = ()=>{
+    
+    //Fecha y Hora 
+    const fecha = () => {
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const fullYear = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    const clock = document.getElementById('clock');
+    clock.innerHTML = `${day}/${month}/${fullYear} ${hours}:${minutes}:${seconds}`;
+
+    
+    //Sala de Trabajo
+      const equipo = [{"id":2,"empleados":5},{"id":1,"empleados":4},{"id":5,"empleados":4},{"id":4,"empleados":1},{"id":6,"empleados":3}]
+      let length = equipo.length;
+
+      document.getElementById("Equipo").innerHTML = length;
+    }
+      //http
+      const {http} = AuthUser();
+
+      // funcion para consultar los equipos asignados
+      // eslint-disable-next-line
+      const consultarEquipos = (url) =>{ 
+        http.get(url).then(
+          (res)=>{
+            console.log(res.data)
+            
+          }
+        );
+        }
+      useEffect(()=>{
+        consultarEquipos('/equipos/paginate');
+      },[]);
+      
+      setInterval(fecha, 1000);
     return(
         <div>
           <div className="container pt-4" >  
@@ -18,6 +61,22 @@ import { PieChart } from './inicio/PieChart';
               {/*  Tarjetas iniciales  */}
             <div className="row align-items-center pb-4">
               {/*Cards */}
+              {/*Salas de trabajo*/}
+              <div className="col-3 text-center">
+                <div className="card">
+                  <div className="card-body">
+                    <h5 className="card-title">Salas de Trabajo</h5>
+                    <div className="row align-items-center w-100">
+                      <div className="col align-items-center">
+                        <VideocamIcon color = "info" fontSize="large" />
+                      </div>
+                      <div className="col  row">
+                        <div id = "Equipo"></div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
               <div className="col-3 text-center">
                 <div className="card">
                   <div className="card-body">
@@ -27,7 +86,7 @@ import { PieChart } from './inicio/PieChart';
                         <GroupIcon color = "info" fontSize="large" />
                       </div>
                       <div className="col row">
-                        <div>03</div>
+                        <div id = "consultarEquipos"></div>
                       </div>
                     </div>
                   </div>  
@@ -42,10 +101,12 @@ import { PieChart } from './inicio/PieChart';
                         <CalendarMonthIcon color = "info" fontSize="large" />
                       </div>
                       <div className="col row">
-                        <div>03</div>
-                      </div>
+                        <div id = "clock"></div>
+                        <script>
+                          fecha
+                        </script>
                     </div>
-                  </div>  
+                  </div>                  
                 </div>
               </div>
               <div className="col-3 text-center">
@@ -56,8 +117,10 @@ import { PieChart } from './inicio/PieChart';
                       <div className="col align-items-center">
                         <VideocamIcon color = "info" fontSize="large" />
                       </div>
+                      <div>
                       <div className="col row">
-                        <div>03</div>
+                        </div>
+                        </div>
                       </div>
                     </div>
                   </div>  
