@@ -14,6 +14,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import HomeIcon from '@mui/icons-material/Home';
+import { Email } from "@mui/icons-material";
 
 import PersonIcon from '@mui/icons-material/Person';
 
@@ -112,9 +113,16 @@ function SideBAr({logoutUser, idRol}){
                         :
                         <></>
                     }
+
                     
 
                     <Divider />
+                    <NavLink to="/public-mensaje" className="nav-link">
+                            <ListItem button>
+                                <ListItemIcon><Email color="primary" ></Email></ListItemIcon>
+                                <ListItemText primary="Mensajes Publicos" />
+                            </ListItem>
+                    </NavLink>
                     <NavLink to="/perfil" className="nav-link">
                                 <ListItem button>
                                     <ListItemIcon><PersonIcon color="primary"></PersonIcon></ListItemIcon>
