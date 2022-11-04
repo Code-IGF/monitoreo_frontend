@@ -6,6 +6,7 @@ import {
   import PerfilUsuario from './dashboard/PerfilUsuario';
   import Dashboard from './dashboard/Dashboard';
   import ActividadLog from './dashboard/ActividadLog';
+  import PublicMessagesPage from "../components/PublicMessagesPage";
   const DashboarEmpleado = ({baseURL})=>{
 
       return (

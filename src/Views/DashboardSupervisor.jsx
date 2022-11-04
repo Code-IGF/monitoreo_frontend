@@ -9,6 +9,7 @@ import {
   import GestionDeEquipo from './dashboard/Equipos/GestionDeEquipo';
   import NuevoEquipo from "./dashboard/Equipos/NuevoEquipo";
   import LogDeUsuario from "./TablaLog/LogDeUsuario";
+  import PublicMessagesPage from "../components/PublicMessagesPage";
 
   const DashboarSupervisor = ({baseURL})=>{
 
