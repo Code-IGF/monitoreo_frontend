@@ -1,10 +1,11 @@
 import React, { useState, useEffect} from "react";
-import axios from "axios";
 import Echo from "laravel-echo";
 import "pusher-js";
 import Messagebox from "./MessageBox";
+import AuthUser from "./AuthUser";
 
 export default function PublicMessagesPage() {
+    const {http}=AuthUser();
     // 3
     const [user, setUser] = useState('');
     const [message, setMessage] = useState('');
@@ -25,7 +26,7 @@ export default function PublicMessagesPage() {
         }
         try {
             // 4
-            await axios.post('api/new-message', {
+            await http.post('/new-message', {
                 user: user,
                 message: message,
              });
@@ -38,8 +39,6 @@ export default function PublicMessagesPage() {
 
     // 1
     useEffect(() => {
-        // 2
-        axios.defaults.baseURL = "https://code-rm.tk";
         // 3
         const echo = new Echo({
             broadcaster: 'pusher',
