@@ -21,6 +21,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import BadgeIcon from '@mui/icons-material/Badge';
+import WorkIcon from '@mui/icons-material/Work';
 
 
 function SideBAr({logoutUser, idRol}){
@@ -74,6 +75,7 @@ function SideBAr({logoutUser, idRol}){
                             <ListItemText primary="Inicio" />
                         </ListItem>
                     </NavLink>
+                    {/**Supervisor LINKS */}
                     {idRol===2?
                         <>
                         <NavLink to="/equipos" className="nav-link">
@@ -111,7 +113,14 @@ function SideBAr({logoutUser, idRol}){
                             </NavLink>
                         </>
                         :
-                        <></>
+                        <>
+                            <NavLink to="/mis-Equipos" className="nav-link">
+                                <ListItem button>
+                                    <ListItemIcon><WorkIcon color="primary" ></WorkIcon></ListItemIcon>
+                                    <ListItemText primary="Mis Equipos" />
+                                </ListItem>
+                            </NavLink>
+                        </>
                     }
 
                     
