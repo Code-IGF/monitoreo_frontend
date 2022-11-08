@@ -9,12 +9,77 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import LineChart from './inicio/LineChart';
 import { PieChart } from './inicio/PieChart';
 
+import AuthUser from "../../components/AuthUser";
+import { useEffect, useState } from "react";
+
+
+
+
 <link rel="stylesheet" href="index.css"></link>  
   const Dashboard = ()=>{
+    
+    //Fecha y Hora 
+    const [fecha2, setFecha]=useState("");
+    const [equiposAsignados, setEquiposAsignados]=useState();
+    const [cantidadSalas, setCantidadSalas]=useState();
+
+    //Varibales que almacenan los datos de la grafica
+    const [etiquestas] = useState([]);
+    const [empleadosPorEquipo] = useState([]);
+    
+
+    const fechas = ()=>{
+      const nuevaFecha= new Date();
+
+      const day = nuevaFecha.getDate();
+      const month = nuevaFecha.getMonth() + 1;
+      const fullYear = nuevaFecha.getFullYear();
+      setFecha(`${day}/${month}/${fullYear}`);
+    }
+
+
+      //http
+      const {http} = AuthUser();
+
+      const consultarEquipos = (url) =>{ 
+        http.get(url).then(
+          (res)=>{
+            setEquiposAsignados(res.data.equipo.length)
+          }
+        );
+        }
+
+      const consultarSalas = (url) =>{ 
+        http.get(url).then(
+          (res)=>{
+            //Llenando Etiquetas y datos de la grafica de pastel
+            res.data.forEach((sala)=>{
+              //Llenando etiquetas
+              etiquestas.push(`Equipo ${sala.id}`)
+              empleadosPorEquipo.push(sala.empleados)
+            });
+
+            setCantidadSalas(res.data.length)
+          }
+        );
+      }
+
+      useEffect(()=>{
+        consultarSalas('/equipos/cantidad');
+        consultarEquipos('usuario/miEquipo');
+        // eslint-disable-next-line 
+      },[]);
+      
+      useEffect(()=>{
+        fechas()
+        // eslint-disable-next-line 
+      },[])
+
+      //setInterval(fecha, 1000);
     return(
         <div>
           <div className="container pt-4" >  
-            <h2>Supervisión</h2>
+            <h2>Inicio</h2>
               {/*  Tarjetas iniciales  */}
             <div className="row align-items-center pb-4">
               {/*Cards */}
@@ -28,12 +93,12 @@ import { PieChart } from './inicio/PieChart';
                         <VideocamIcon color = "info" fontSize="large" />
                       </div>
                       <div className="col  row">
-                        <div>03</div>
+                        <div id = "Equipo">
+                          {cantidadSalas}
+                        </div>
+                        </div>
                       </div>
                   </div>
-                </div>
-                
-                
                 </div>
               </div>
               <div className="col-3 text-center">
@@ -45,7 +110,9 @@ import { PieChart } from './inicio/PieChart';
                         <GroupIcon color = "info" fontSize="large" />
                       </div>
                       <div className="col row">
-                        <div>03</div>
+                        <div id = "consultarEquipos">
+                          {equiposAsignados}
+                        </div>
                       </div>
                     </div>
                   </div>  
@@ -60,12 +127,17 @@ import { PieChart } from './inicio/PieChart';
                         <CalendarMonthIcon color = "info" fontSize="large" />
                       </div>
                       <div className="col row">
-                        <div>03</div>
+                        <div id = "clock">
+                          {fecha2}
+                        </div>
+                        <script>
+                          fecha
+                        </script>
                       </div>
-                    </div>
-                  </div>  
+                    </div>                  
+                  </div>
                 </div>
-              </div>
+              </div> 
               <div className="col-3 text-center">
                 <div className="card">
                   <div className="card-body">
@@ -74,13 +146,16 @@ import { PieChart } from './inicio/PieChart';
                       <div className="col align-items-center">
                         <VideocamIcon color = "info" fontSize="large" />
                       </div>
-                      <div className="col row">
-                        <div>03</div>
+                      <div>
+                        <div className="col row">
+                        </div>
                       </div>
                     </div>
-                  </div>  
-                </div>
-              </div>      
+                  </div>
+                </div>  
+              </div>
+ 
+              </div>    
               {/* <div className="col">
                 <Button variant="outlined" color="primary">
                     Sala de trabajo
@@ -104,7 +179,7 @@ import { PieChart } from './inicio/PieChart';
                     <td><PersonIcon></PersonIcon></td>
                 </Button>  
               </div> */}
-            </div>
+
             {/** Grafico 1 */}
             <div className="row pb-4">
               <div className="col-12">
@@ -168,7 +243,20 @@ import { PieChart } from './inicio/PieChart';
               {/*Grafico de Pastel*/}
               <div className="col-12 col-md-4">
                 <div className="card">
-                <PieChart></PieChart>
+                  {
+                    //La variable se asigna al finalizar la función "Consultar salas", 
+                    //La grafica se debe renderizar hasta que ya se hayan asignado las eqtiquetas y los empleados por etiqueta
+                    //Si se renderiza antes puede causar un error
+                    empleadosPorEquipo?
+                      <PieChart 
+                        etiquetas={etiquestas}
+                        empleadosPorEquipo={empleadosPorEquipo}
+                      ></PieChart>
+                      :
+                      <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                  }
                 </div>
               </div>
             </div>             
