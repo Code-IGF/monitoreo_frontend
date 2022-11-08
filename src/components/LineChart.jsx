@@ -68,5 +68,5 @@ export default function LineChart() {
     };
   }, []);
 
-  return <Line data={data} options={options} />;
+  return <Line data={data} options={options} style={{maxHeight:"50vh"}}/>;
 }
