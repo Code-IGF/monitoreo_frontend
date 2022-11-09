@@ -10,50 +10,66 @@ import LineChart from './inicio/LineChart';
 import { PieChart } from './inicio/PieChart';
 
 import AuthUser from "../../components/AuthUser";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 
 <link rel="stylesheet" href="index.css"></link>  
   const Dashboard = ()=>{
     
-    //Fecha y Hora 
-    const fecha = () => {
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const fullYear = date.getFullYear();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    const clock = document.getElementById('clock');
-    clock.innerHTML = `${day}/${month}/${fullYear} ${hours}:${minutes}:${seconds}`;
+    //Fecha, equipos asignados y sala de trabajo
+    const[fecha, setFecha]=useState("");
+    const [equiposAsignados, setEquiposAsignados]= useState();
+    const[cantidadSalas, setCantidadSalas]=useState();
 
-    
-    //Sala de Trabajo
-      const equipo = [{"id":2,"empleados":5},{"id":1,"empleados":4},{"id":5,"empleados":4},{"id":4,"empleados":1},{"id":6,"empleados":3}]
-      let length = equipo.length;
+    //variable para almacen de grafia de sala de trabajo
+    const [etiquetas]=useState([]);
+    const [empleadosPorEquipo]=useState([]);
 
-      document.getElementById("Equipo").innerHTML = length;
+    const fechas =()=> {
+      const nFecha = new Date();
+
+      const day = nFecha.getDate();
+      const month = nFecha.getMonth();
+      const fullyear = nFecha.getFullYear();
+      setFecha(`${day}/${month}/${fullyear}`);
     }
       //http
       const {http} = AuthUser();
 
       // funcion para consultar los equipos asignados
-      // eslint-disable-next-line
       const consultarEquipos = (url) =>{ 
         http.get(url).then(
           (res)=>{
-            console.log(res.data)
+            setEquiposAsignados(res.data.equipo.length)
             
           }
         );
         }
+        const consultarSalas = (url) =>{ 
+          http.get(url).then(
+            (res)=>{
+
+              res.data.forEach((sala)=>{
+                //Llenado de etiqueta
+                etiquetas.push(`Equipo ${sala.id}`)
+                empleadosPorEquipo.push(sala.empleados)
+              });
+
+              setCantidadSalas(res.data.length)
+            }
+          );
+          }
       useEffect(()=>{
-        consultarEquipos('/equipos/paginate');
+        consultarSalas('/equipos/cantidad');
+        consultarEquipos('/usuario/miEquipo');
       },[]);
       
-      setInterval(fecha, 1000);
+      useEffect(()=>{
+        fechas()
+
+      },[])
+
     return(
         <div>
           <div className="container pt-4" >  
@@ -72,6 +88,7 @@ import { useEffect } from "react";
                       </div>
                       <div className="col  row">
                         <div id = "Equipo"></div>
+                          {cantidadSalas}
                         </div>
                       </div>
                   </div>
@@ -87,6 +104,7 @@ import { useEffect } from "react";
                       </div>
                       <div className="col row">
                         <div id = "consultarEquipos"></div>
+                        {equiposAsignados}
                       </div>
                     </div>
                   </div>  
@@ -102,11 +120,10 @@ import { useEffect } from "react";
                       </div>
                       <div className="col row">
                         <div id = "clock"></div>
-                        <script>
-                          fecha
-                        </script>
-                    </div>
-                  </div>                  
+                        {fecha}
+                      </div>
+                    </div>                  
+                  </div>
                 </div>
               </div>
               <div className="col-3 text-center">
@@ -213,12 +230,24 @@ import { useEffect } from "react";
               {/*Grafico de Pastel*/}
               <div className="col-12 col-md-4">
                 <div className="card">
-                <PieChart></PieChart>
+                  {
+                    //La variable se asigna al finalizar la funcion "Consultar Salas"
+                    //La grafica se renderiza hasta que se hayan asignado las etiquetas y empleados
+                    //Si se renderiza antes causa un error
+                    empleadosPorEquipo?
+                      <PieChart
+                         etiquetas={etiquetas}
+                          empleadosPorEquipo={empleadosPorEquipo}
+                      ></PieChart>
+                :
+                <div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+                  }
                 </div>
               </div>
             </div>             
           </div>
-        </div>
     );
 }
 export default Dashboard;

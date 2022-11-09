@@ -4,8 +4,10 @@ import { Pie } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const data = {
-  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+  export function PieChart({etiquetas, empleadosPorEquipo}){
+
+  const data = {
+  labels: etiquetas,
   datasets: [
     {
       label: '# of Votes',
@@ -46,6 +48,12 @@ const options = {
     },
   };
 
-export function PieChart() {
-  return <Pie data={data} options={options} />;
+  return(
+    empleadosPorEquipo?
+    <Pie data ={data} options={options}/>
+    :
+    <div className="spinner-border text primary" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </div>
+  );
 }
