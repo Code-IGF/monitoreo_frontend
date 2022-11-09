@@ -79,14 +79,16 @@ function PerfilUsuario({baseURL}) {
     },[]);
 
     return (
+        <div
+      style={{
+        backgroundColor: '#F5F5F5',
+       
         
-            <div className="container mt-5" style={{
-                backgroundColor: '#E3ECEE'
-                
-                 ,  
-              }}>  
+      }}
+    >
+            <div className="container pt-5 d-grid gap-3 " >  
               
-                <div className="row shadow rounded align-items-center" id="cuadro_Datos_Usuario">
+                <div className=" align-items-center" id="cuadro_Datos_Usuario">
                         {/*Datos de usuario*/}
                         <div className='w-100 text-center py-4'>
                                 <h2 className="fw-normal ">Perfil de Usuario</h2>
@@ -96,7 +98,7 @@ function PerfilUsuario({baseURL}) {
                                 <div className="row">
                                     <div className="col-8 bg d-none d-md-block">
                                         <div className="m-3">
-                                            <MDBInputGroup   textBefore='Nombre:' noBorder label='' id='formControlLg' >
+                                            <MDBInputGroup   textBefore='Nombre:' textClass='bg-white' noBorder label='' id='formControlLg' >
                                                 <input 
                                                     className='form-control rounded '  
                                                     type='name' 
@@ -113,7 +115,7 @@ function PerfilUsuario({baseURL}) {
                                             </MDBInputGroup>
                                         </div> */}
                                         <div className="m-3">
-                                            <MDBInputGroup   textBefore='Fecha de nacimiento:' noBorder label='' id='formControlLg' >
+                                            <MDBInputGroup   textBefore='Fecha de nacimiento:' textClass='bg-white' noBorder label='' id='formControlLg' >
                                                 <input 
                                                     className='form-control rounded' 
                                                     type='date' 
@@ -126,7 +128,7 @@ function PerfilUsuario({baseURL}) {
                                         </div>
                                         
                                         <div className="m-3">
-                                            <MDBInputGroup   textBefore='Correo:' noBorder label='' id='formControlLg' >
+                                            <MDBInputGroup   textBefore='Correo:' textClass='bg-white' noBorder label='' id='formControlLg' >
                                                 <span className="input-group-text bg-white rounded" id="basic-addon1">@</span>
                                                 <input 
                                                     className='form-control rounded' 
@@ -203,7 +205,7 @@ function PerfilUsuario({baseURL}) {
                     
                  
             </div>
-
+            </div>                               
         
     );
 

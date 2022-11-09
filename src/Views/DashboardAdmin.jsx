@@ -4,11 +4,13 @@ import {
   } from "react-router-dom";
   
   import PerfilUsuario from './dashboard/PerfilUsuario';
+  import ActividadLog from './dashboard/ActividadLog';
   import Dashboard from './dashboard/Dashboard';
   import Areas from './dashboard/Areas';
   import GestionDeUsuario from './dashboard/GestionDeUsuario';
   import GestionDeEquipo from './dashboard/Equipos/GestionDeEquipo';
   import NuevoEquipo from "./dashboard/Equipos/NuevoEquipo";
+  import PublicMessagesPage from "../components/PublicMessagesPage";
 
   const DashboardAdmin = ({baseURL})=>{
 
@@ -20,6 +22,8 @@ import {
                 <Route path='/usuarios' element={<GestionDeUsuario baseURL={baseURL}/>}></Route>
                 <Route path='/inicio' element={<Dashboard></Dashboard>}></Route>
                 <Route path='/perfil' element={<PerfilUsuario baseURL={baseURL}/>}></Route>
+                <Route path='/actividad' element={<ActividadLog baseURL={baseURL}/>}></Route>
+                <Route path='/public-mensaje' element={<PublicMessagesPage/>}></Route>
             </Routes>
         );
   }
