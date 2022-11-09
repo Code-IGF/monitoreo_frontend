@@ -30,7 +30,7 @@ import { useEffect, useState } from "react";
       const nFecha = new Date();
 
       const day = nFecha.getDate();
-      const month = nFecha.getMonth();
+      const month = nFecha.getMonth() + 1;
       const fullyear = nFecha.getFullYear();
       setFecha(`${day}/${month}/${fullyear}`);
     }
