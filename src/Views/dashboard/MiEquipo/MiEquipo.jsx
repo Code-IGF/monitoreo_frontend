@@ -28,6 +28,7 @@ const MiEquipo=({baseURL})=>{
 
     useEffect(()=>{
         consultarMisEquipos();
+        // eslint-disable-next-line 
     },[])
 
     return (
