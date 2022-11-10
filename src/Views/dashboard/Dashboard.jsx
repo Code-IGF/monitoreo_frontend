@@ -6,6 +6,11 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ImageIcon from '@mui/icons-material/Image';
 import PersonIcon from '@mui/icons-material/Person';
 
+
+import CardHeader from '@mui/material/CardHeader';
+import Avatar from '@mui/material/Avatar';
+import { blue } from '@mui/material/colors';
+
 import LineChart from '../../components/LineChart';
 import { BarChart } from '../../components/BarChart';
 
@@ -26,7 +31,7 @@ import Card from '../../components/Card';
     //Varibales que almacenan los datos de la grafica
     const [etiquestas, setEtiquetas] = useState([]);
     const [empleadosPorEquipo, setEmpleadosPorEquipo] = useState([]);
-    
+
 
     const fechas = ()=>{
       const nuevaFecha= new Date();
@@ -95,7 +100,7 @@ import Card from '../../components/Card';
                 <Card Icon={CalendarMonthIcon} dato={fecha2} titulo={'Fecha'}/>  
               </div> 
               <div className="col-12 col-md-6 col-lg-3 text-center pb-3">
-                <Card Icon={PersonIcon} dato={""} titulo={'Personal en línea'}/>    
+                <Card Icon={PersonIcon} dato={""} titulo={'Personal en línea'}/> 
               </div>
             </div>    
       

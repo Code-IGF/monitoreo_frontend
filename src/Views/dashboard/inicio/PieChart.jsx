@@ -64,4 +64,3 @@ export function PieChart({etiquetas, empleadosPorEquipo}) {
     </div>
   );
 }
-
