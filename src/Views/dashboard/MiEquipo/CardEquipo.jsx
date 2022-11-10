@@ -1,23 +1,32 @@
-import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
-import TablaEmpleado from './TablaEmpleado';
-const CardEquipo = ({equipo, baseURL})=>{
+
+import { 
+    Card,
+    CardHeader,
+    Avatar,
+    Button,
+ } from "@mui/material";
+import { red } from '@mui/material/colors';
+import VideoCameraFront from "@mui/icons-material/VideoCameraFront";
+
+const CardEquipo = ({equipo})=>{
     return(
-        <div className="col-12">
-            <div className="card m-2">
-            <div className="badge bg-success rounded-0 fs-6" role="alert">
-                {equipo.nombre}
-            </div>
-                {equipo.usuarios?
-                    <TablaEmpleado
-                        empleados={equipo.usuarios}
-                        baseURL={baseURL}
-                    >
-                    </TablaEmpleado>
-                    :
-                    <>
-                    </>
-                }
-            </div>
+        <div>
+            <Card>
+                    <CardHeader 
+                        avatar={
+                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                            R
+                        </Avatar>
+                        }
+                        action={
+                            <Button aria-label="settings" startIcon={<VideoCameraFront/>}>
+                                Entrar en Sala
+                            </Button>
+                          }
+                        title={equipo.nombre}
+                        subheader={equipo.descripcion}
+                    />
+                </Card>
         </div>
     )
 }

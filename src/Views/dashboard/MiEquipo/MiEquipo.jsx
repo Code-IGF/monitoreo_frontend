@@ -4,6 +4,10 @@ import {
 } from "react";
 import AuthUser from "../../../components/AuthUser";
 import CardEquipo from "./CardEquipo";
+import { 
+    Paper
+ } from "@mui/material";
+import { blue } from '@mui/material/colors';
 
 const MiEquipo=({baseURL})=>{
 
@@ -27,24 +31,29 @@ const MiEquipo=({baseURL})=>{
 
     return (
         <div className="container-fluid p-5">
-            <div className="card">
-                <div className="badge bg-primary rounded-0 fs-6" role="alert">
+            <Paper
+                className="mb-3" 
+                square={true} 
+                elevation={3}
+                sx={{ 
+                    bgcolor: blue[600] 
+                }}
+                >
+                <div className="text-center text-white fw-bold fs-6">
                     Mis Equipos
                 </div>
-                <div className="row">
-                {
-                    misEquipos.map((equipo)=>(
-                        
-                        <CardEquipo
-                            key={equipo.id}
-                            equipo={equipo}
-                            baseURL={baseURL}
-                        >
-                        </CardEquipo>
-                    ))
-                }
-                </div>
-            </div>
+            </Paper>
+            {
+                misEquipos.map((equipo)=>(
+                    <CardEquipo 
+                        equipo={equipo}
+                    />
+                ))
+            }
+
+
+
+
         </div>
     )
 }
