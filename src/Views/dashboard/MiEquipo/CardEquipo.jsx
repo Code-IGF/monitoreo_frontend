@@ -1,6 +1,5 @@
 
 import { 
-    Card,
     CardHeader,
     Avatar,
     Button,
@@ -11,22 +10,20 @@ import VideoCameraFront from "@mui/icons-material/VideoCameraFront";
 const CardEquipo = ({equipo})=>{
     return(
         <div>
-            <Card>
-                    <CardHeader 
-                        avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                            R
-                        </Avatar>
-                        }
-                        action={
-                            <Button aria-label="settings" startIcon={<VideoCameraFront/>}>
-                                Entrar en Sala
-                            </Button>
-                          }
-                        title={equipo.nombre}
-                        subheader={equipo.descripcion}
-                    />
-                </Card>
+            <CardHeader 
+                avatar={
+                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                    R
+                </Avatar>
+                }
+                action={
+                    <Button aria-label="settings" startIcon={<VideoCameraFront/>}>
+                        Entrar en Sala
+                    </Button>
+                    }
+                title={equipo.nombre}
+                subheader={equipo.descripcion}
+            />
         </div>
     )
 }

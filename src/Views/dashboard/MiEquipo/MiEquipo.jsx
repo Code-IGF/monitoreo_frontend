@@ -5,7 +5,8 @@ import {
 import AuthUser from "../../../components/AuthUser";
 import CardEquipo from "./CardEquipo";
 import { 
-    Paper
+    Paper,
+    Card
  } from "@mui/material";
 import { blue } from '@mui/material/colors';
 
@@ -43,6 +44,7 @@ const MiEquipo=({baseURL})=>{
                     Mis Equipos
                 </div>
             </Paper>
+            <Card>
             {
                 misEquipos.map((equipo)=>(
                     <CardEquipo 
@@ -50,6 +52,7 @@ const MiEquipo=({baseURL})=>{
                     />
                 ))
             }
+            </Card>
 
 
 
