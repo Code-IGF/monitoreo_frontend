@@ -49,7 +49,10 @@ import Card from '../../components/Card';
       const consultarEquipos = (url) =>{ 
         http.get(url).then(
           (res)=>{
-            setEquiposAsignados(res.data.equipo.length)
+            res.data.equipo?
+              setEquiposAsignados(res.data.equipo.length)
+              :
+              setEquiposAsignados(res.data.length)
           }
         );
         }
@@ -94,7 +97,7 @@ import Card from '../../components/Card';
                 <Card Icon={VideocamIcon} dato={cantidadSalas} titulo={'Salas de Trabajo'}/>
               </div>
               <div className="col-12 col-md-6 col-lg-3 text-center pb-3">
-                <Card Icon={GroupIcon} dato={equiposAsignados} titulo={'Equipos'}/>
+                <Card Icon={GroupIcon} dato={equiposAsignados} titulo={'Mis Equipos'}/>
               </div>
               <div className="col-12 col-md-6 col-lg-3 text-center pb-3">
                 <Card Icon={CalendarMonthIcon} dato={fecha2} titulo={'Fecha'}/>  
