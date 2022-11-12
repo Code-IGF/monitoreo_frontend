@@ -21,7 +21,7 @@ import {
                 <Route path='/usuarios' element={<GestionDeUsuario baseURL={baseURL}/>}></Route>
                 <Route path='/inicio' element={<Dashboard></Dashboard>}></Route>
                 <Route path='/perfil' element={<PerfilUsuario baseURL={baseURL}/>}></Route>
-                <Route path='/actividad' element={<ActividadLog baseURL={baseURL}/>}></Route>
+                <Route path='/actividad/:idUsuario' element={<ActividadLog baseURL={baseURL}/>}></Route>
             </Routes>
         );
   }

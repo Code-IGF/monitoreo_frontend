@@ -81,6 +81,7 @@ function SideBAr({logoutUser, idRol}){
                                 <ListItemText primary="Equipos" />
                             </ListItem>
                         </NavLink>
+                        
                         </>
                         :
                         <></>
@@ -102,12 +103,7 @@ function SideBAr({logoutUser, idRol}){
                                     <ListItemText primary="Areas" />
                                 </ListItem>
                             </NavLink>
-                            <NavLink to="/actividad" className="nav-link">
-                                <ListItem button>
-                                    <ListItemIcon><WorkHistoryIcon color="primary" ></WorkHistoryIcon></ListItemIcon>
-                                    <ListItemText primary="Log de actividades" />
-                                </ListItem>
-                            </NavLink>
+                            
                         </>
                         :
                         <></>
@@ -119,6 +115,12 @@ function SideBAr({logoutUser, idRol}){
                                 <ListItem button>
                                     <ListItemIcon><PersonIcon color="primary"></PersonIcon></ListItemIcon>
                                     <ListItemText primary="Perfil" />
+                                </ListItem>
+                            </NavLink>
+                            <NavLink to="/actividad" className="nav-link">
+                                <ListItem button>
+                                    <ListItemIcon><WorkHistoryIcon color="primary" ></WorkHistoryIcon></ListItemIcon>
+                                    <ListItemText primary="Log de actividades" />
                                 </ListItem>
                             </NavLink>
                     <NavLink to="login" className="nav-link">

@@ -1,4 +1,6 @@
 import img from '../../img/profile.png';
+import AuthUser from "../../components/AuthUser";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import {
     MDBBtn,
     MDBModal,
@@ -11,27 +13,35 @@ import {
     MDBInput,
     MDBInputGroup
   } from 'mdb-react-ui-kit';
-  import MoreVertIcon from '@mui/icons-material/MoreVert';
-  import GroupAddIcon from '@mui/icons-material/GroupAdd';
+
   import { 
     Button,
-    Alert
+    Alert,
+    TextField
 } from '@mui/material';
-  import React, { useState } from 'react';
+  import React, { useState, useEffect } from 'react';
+import { CompressOutlined } from '@mui/icons-material';
+
   const fileInitial={
     archivo:null,
     archivoNombre:""
 }
+
 function ActividadLog({baseURL}){
+    
+    
     const [nombreUser, setNombreUser]=useState("");
+    const [imagenUrlUser, setImagenUrlUser]=useState("");
+    const [rolUser, setRolUser]=useState("");
+    const [equipoUser, setEquipoUser]=useState("");
     const [fechaUser, setFechaUser]=useState("");
-    const [emailUser, setEmail]=useState("");
     const [imagenUsuario, setImagenUsuario]=useState(fileInitial);
-    const [imagenUrlUser, setImagenUrlUser]=useState("")
-    const [successEdit, setSuccessEdit]=useState(false);
-    const [invalidData, setInvalidData]=useState(false);
-    const [invalidMessage, setInvalidMessage]=useState(false);
-   
+    
+    const [usuario, setUsuario]=useState("");
+    const {http}=AuthUser();
+    const navigate=useNavigate();
+    const {idUsuario}=useParams();
+  
 
     //Se ejecuta cuando se selecciona un archivo (imagen)
     const fileSelect=(e)=>{
@@ -41,8 +51,47 @@ function ActividadLog({baseURL}){
         });
 
     }
+    /*const consultarUsuario=()=>{
+      http.get(`/usuarios/${idUsuario}`).then((data)=>{
+          console.log(data.data)
+          setNombreUser(data.name);
+          setImagenUrlUser(data.imagen) 
+      });
+  }*/
+  const consultarUsuario=()=>{
+    http.get(`/usuarios/${idUsuario}`).then(
+        (res)=>{
+          console.log(res.data)
+            setUsuario(res.data);
+            setNombreUser(res.data.name);
+            setImagenUrlUser(res.data.imagen);
+            setRolUser(res.data.roles[0].name);
+            
+            if(res.data.equipo.length==0){
+              setEquipoUser('Sin grupo');
+            }
+            else{
+              setEquipoUser(res.data.equipo[0].nombre);
+              
+            }
+            
+        }
+    );
+}
+
+  
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
+    useEffect(()=>{
+      console.log("consultando")
+      if(idUsuario){
+          consultarUsuario();
+         
+      }
+      
+      
+  },[]);
+
 
     return(
         
@@ -86,17 +135,19 @@ function ActividadLog({baseURL}){
                     className='form-control rounded bg-white m-1'  
                     type='name' 
                     disabled={true}
+                    value={nombreUser}
                     
                     
                     
                 />
                 </MDBInputGroup>
+                
                 <MDBInputGroup   textBefore='Cargo:'  textClass='bg-white'noBorder label='' id='formControlLg' >
                   <input 
                     className='form-control rounded bg-white m-1'  
                     type='name' 
                     disabled={true}
-                    
+                    value={rolUser}
                 />
                 </MDBInputGroup>
                 <MDBInputGroup   textBefore='Equipo:' textClass='bg-white' noBorder label='' id='formControlLg' >
@@ -104,6 +155,8 @@ function ActividadLog({baseURL}){
                     className='form-control rounded bg-white m-1'  
                     type='name' 
                     disabled={true}
+                    value={equipoUser}
+                    
                 />
                 </MDBInputGroup>
                 
@@ -126,8 +179,11 @@ function ActividadLog({baseURL}){
                             className='form-control rounded' 
                             type='date' 
                             value={fechaUser}
-                            onChange={(event)=>{
+                            onChange={(event)=>{          
+                                           
                             setFechaUser(event.target.value)
+                             
+
                             }}
                         />
                     </MDBInputGroup>
@@ -136,9 +192,9 @@ function ActividadLog({baseURL}){
                     <Button
                         variant="outlined" 
                         color="primary"
-                        
-                        
-                        //onClick={}
+                        onClick={(event)=>{  
+                          console.log(fechaUser)
+                        }}
                         >
                         Buscar
                     </Button>
