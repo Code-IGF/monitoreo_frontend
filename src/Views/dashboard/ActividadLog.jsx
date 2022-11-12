@@ -68,7 +68,7 @@ function ActividadLog({baseURL}){
             setRolUser(res.data.roles[0].name);
             
             if(res.data.equipo.length==0){
-              setEquipoUser('Sin grupo');
+              setEquipoUser('Sin Equipo');
             }
             else{
               setEquipoUser(res.data.equipo[0].nombre);
