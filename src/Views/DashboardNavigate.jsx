@@ -1,11 +1,12 @@
-import SideBAr from './../components/sidebar';
 import AuthUser from "../components/AuthUser";
+import Box  from '@mui/material/Box';
 
 //Publico
 import PerfilUsuario from './dashboard/PerfilUsuario';
 import Dashboard from './dashboard/Dashboard';
 import PublicMessagesPage from "../components/PublicMessagesPage";
 import ActividadLog from './dashboard/ActividadLog';
+import SalaTabajo from './dashboard/SalaTrabajo/SalaTrabajo';
 //Empleado
 import MiEquipo from "./dashboard/MiEquipo/MiEquipo";
 //Supervisor
@@ -15,6 +16,8 @@ import LogDeUsuario from "./TablaLog/LogDeUsuario";
 //Administrador
 import Areas from './dashboard/Areas';
 import GestionDeUsuario from './dashboard/GestionDeUsuario';
+
+import MiniBar from '../components/MiniBar';
 
 import { Routes, Route } from 'react-router-dom';
 
@@ -30,17 +33,19 @@ const DashboardNavigate = ({baseURL})=>{
     }
 
     return (
-        <div className="">
+      <Box sx={{ display: 'flex' }}>
+        <MiniBar
+          logoutUser={logoutUser}
+          idRol={roles[0].id}
+        ></MiniBar>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
             {/*Paso la función de cerrar sesión como propiedad*/}
-          <SideBAr 
-            logoutUser={logoutUser}
-            idRol={roles[0].id}
-            ></SideBAr>
             <Routes>
               {/**Publico */}
               <>
               <Route path='/inicio' element={<Dashboard></Dashboard>}></Route>
               <Route path='/perfil' element={<PerfilUsuario baseURL={baseURL}/>}></Route>
+              <Route path='/sala-trabajo' element={<SalaTabajo/>}></Route>
               <Route path='/public-mensaje' element={<PublicMessagesPage/>}></Route>
               
               </>
@@ -79,7 +84,8 @@ const DashboardNavigate = ({baseURL})=>{
                 :""
               }
             </Routes>
-        </div>
+          </Box>
+      </Box>
       );
 }
 export default DashboardNavigate;

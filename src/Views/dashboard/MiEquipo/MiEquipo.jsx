@@ -48,7 +48,7 @@ const MiEquipo=({baseURL})=>{
             <Card>
             {
                 misEquipos.map((equipo)=>(
-                    <CardEquipo 
+                    <CardEquipo key={equipo.id}
                         equipo={equipo}
                     />
                 ))
