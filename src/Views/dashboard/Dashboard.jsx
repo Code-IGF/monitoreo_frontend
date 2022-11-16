@@ -88,7 +88,7 @@ import Card from '../../components/Card';
       //setInterval(fecha, 1000);
     return(
 
-        <div className="pt-4">  
+        <div className="container-fluid p-5">  
             {/*  Tarjetas iniciales  */}
           <div className="row align-items-center pb-4">
             {/*Cards */}

@@ -1,5 +1,5 @@
+import SideBAr from './../components/sidebar';
 import AuthUser from "../components/AuthUser";
-import Box  from '@mui/material/Box';
 
 //Publico
 import PerfilUsuario from './dashboard/PerfilUsuario';
@@ -17,8 +17,6 @@ import LogDeUsuario from "./TablaLog/LogDeUsuario";
 import Areas from './dashboard/Areas';
 import GestionDeUsuario from './dashboard/GestionDeUsuario';
 
-import MiniBar from '../components/MiniBar';
-
 import { Routes, Route } from 'react-router-dom';
 
 const DashboardNavigate = ({baseURL})=>{
@@ -33,13 +31,12 @@ const DashboardNavigate = ({baseURL})=>{
     }
 
     return (
-      <Box sx={{ display: 'flex' }}>
-        <MiniBar
-          logoutUser={logoutUser}
-          idRol={roles[0].id}
-        ></MiniBar>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <div className="">
             {/*Paso la función de cerrar sesión como propiedad*/}
+          <SideBAr 
+            logoutUser={logoutUser}
+            idRol={roles[0].id}
+            ></SideBAr>
             <Routes>
               {/**Publico */}
               <>
@@ -84,8 +81,7 @@ const DashboardNavigate = ({baseURL})=>{
                 :""
               }
             </Routes>
-          </Box>
-      </Box>
+        </div>
       );
 }
 export default DashboardNavigate;
