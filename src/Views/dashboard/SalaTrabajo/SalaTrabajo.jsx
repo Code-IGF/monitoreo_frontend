@@ -34,8 +34,8 @@ const SalaTabajo= ()=>{
                 autoPlay
                 ref={videoRef}
                 style={{
-                    maxHeight:"40vh",
-                    maxWidth:"80vh"
+                    maxHeight:"60vh",
+
                 }}
             ></video>
         </div>
