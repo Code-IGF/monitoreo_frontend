@@ -6,6 +6,7 @@ import {
  } from "@mui/material";
 import { red } from '@mui/material/colors';
 import VideoCameraFront from "@mui/icons-material/VideoCameraFront";
+import { NavLink } from "react-router-dom";
 
 const CardEquipo = ({equipo})=>{
     return(
@@ -17,9 +18,11 @@ const CardEquipo = ({equipo})=>{
                 </Avatar>
                 }
                 action={
-                    <Button aria-label="settings" startIcon={<VideoCameraFront/>}>
-                        Entrar en Sala
-                    </Button>
+                    <NavLink to="/sala-trabajo">
+                        <Button aria-label="settings" startIcon={<VideoCameraFront/>}>
+                            Entrar en Sala
+                        </Button>
+                    </NavLink>
                     }
                 title={equipo.nombre}
                 subheader={equipo.descripcion}
