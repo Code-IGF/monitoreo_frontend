@@ -5,7 +5,6 @@ import {
 import Login from './public/login';
 import PublicMessagesPage from "../components/PublicMessagesPage";
 
-
 const PublicNavigate=()=>{
     return (
         <div className="">

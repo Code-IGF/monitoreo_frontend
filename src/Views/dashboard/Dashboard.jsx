@@ -7,9 +7,9 @@ import ImageIcon from '@mui/icons-material/Image';
 import PersonIcon from '@mui/icons-material/Person';
 
 
-import CardHeader from '@mui/material/CardHeader';
+/* import CardHeader from '@mui/material/CardHeader';
 import Avatar from '@mui/material/Avatar';
-import { blue } from '@mui/material/colors';
+import { blue } from '@mui/material/colors'; */
 
 import LineChart from '../../components/LineChart';
 import { BarChart } from '../../components/BarChart';
@@ -49,7 +49,10 @@ import Card from '../../components/Card';
       const consultarEquipos = (url) =>{ 
         http.get(url).then(
           (res)=>{
-            setEquiposAsignados(res.data.equipo.length)
+            res.data.equipo?
+              setEquiposAsignados(res.data.equipo.length)
+              :
+              setEquiposAsignados(res.data.length)
           }
         );
         }
@@ -84,113 +87,113 @@ import Card from '../../components/Card';
       },[])
       //setInterval(fecha, 1000);
     return(
-        <div>
-          <div className="container-fluid p-5">  
-              {/*  Tarjetas iniciales  */}
-            <div className="row align-items-center pb-4">
-              {/*Cards */}
-              {/*Salas de trabajo*/}
-              <div className="col-12 col-md-6 col-lg-3 text-center pb-3">
-                <Card Icon={VideocamIcon} dato={cantidadSalas} titulo={'Salas de Trabajo'}/>
-              </div>
-              <div className="col-12 col-md-6 col-lg-3 text-center pb-3">
-                <Card Icon={GroupIcon} dato={equiposAsignados} titulo={'Equipos'}/>
-              </div>
-              <div className="col-12 col-md-6 col-lg-3 text-center pb-3">
-                <Card Icon={CalendarMonthIcon} dato={fecha2} titulo={'Fecha'}/>  
-              </div> 
-              <div className="col-12 col-md-6 col-lg-3 text-center pb-3">
-                <Card Icon={PersonIcon} dato={""} titulo={'Personal en línea'}/> 
-              </div>
-            </div>    
-      
 
-            {/** Grafico 1 */}
-            <div className="row pb-4">
-              <div className="col-12 col-md-9">
-                <div className="card mb-4">
-                  <div className="badge bg-primary rounded-0 fs-6" role="alert">
-                    Registro semanal de asistencia
-                  </div>
-                  <LineChart></LineChart>
+        <div className="container-fluid p-5">  
+            {/*  Tarjetas iniciales  */}
+          <div className="row align-items-center pb-4">
+            {/*Cards */}
+            {/*Salas de trabajo*/}
+            <div className="col-12 col-md-6 col-lg-3 text-center pb-3">
+              <Card Icon={VideocamIcon} dato={cantidadSalas} titulo={'Salas de Trabajo'}/>
+            </div>
+            <div className="col-12 col-md-6 col-lg-3 text-center pb-3">
+              <Card Icon={GroupIcon} dato={equiposAsignados} titulo={'Mis Equipos'}/>
+            </div>
+            <div className="col-12 col-md-6 col-lg-3 text-center pb-3">
+              <Card Icon={CalendarMonthIcon} dato={fecha2} titulo={'Fecha'}/>  
+            </div> 
+            <div className="col-12 col-md-6 col-lg-3 text-center pb-3">
+              <Card Icon={PersonIcon} dato={""} titulo={'Personal en línea'}/> 
+            </div>
+          </div>    
+    
+
+          {/** Grafico 1 */}
+          <div className="row pb-4">
+            <div className="col-12 col-md-9">
+              <div className="card mb-4">
+                <div className="badge bg-primary rounded-0 fs-6" role="alert">
+                  Registro semanal de asistencia
                 </div>
-                <div className="card mb-4">
-                  <div className="badge bg-primary rounded-0 fs-6" role="alert">
-                    Distribución de personal por equipo
-                  </div>
-                {
-                  //La variable se asigna al finalizar la función "Consultar salas", 
-                  //La grafica se debe renderizar hasta que ya se hayan asignado las eqtiquetas y los empleados por etiqueta
-                  //Si se renderiza antes puede causar un error
-                  empleadosPorEquipo?
-                    <BarChart 
-                      etiquetas={etiquestas}
-                      empleadosPorEquipo={empleadosPorEquipo}
-                    ></BarChart>
-                  :
-                    <div className="spinner-border text-primary" role="status">
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
-                }
-                </div>
+                <LineChart></LineChart>
               </div>
-              
-              <div className="col-12 col-md-3">
-                {/**Tabla de usuarios Activos */}
-                <div className="table-responsive" >
-                  <table className="table table-hover table-bordered">
-                    <thead className='table-primary'>
-                      <tr>
-                        <th 
-                          colSpan={3} 
-                          className="text-center text-white bg-primary rounded-0 fs-6"
-                          >Empleados Activos
-                          </th>
-                      </tr>
-                      <tr>
-                        <th scope="col">Foto</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Equipo</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* primer persona */}
-                      <tr>
-                        <td><ImageIcon></ImageIcon></td>
-                        <td>Francisco Alfredo</td>
-                        <td>Equipo 2
-                        <MoreVertIcon></MoreVertIcon>
-                        </td>
-                      </tr>
-                      <tr>
-                          {/* segunda persona */}
-                        <td><ImageIcon></ImageIcon></td>
-                        <td>Rosa Amalia </td>
-                        <td>Equipo 2
-                        <MoreVertIcon></MoreVertIcon>
-                        </td>
-                      </tr>
-                      <tr>
-                          {/* tercera persona */}
-                        <td><ImageIcon></ImageIcon></td>
-                        <td>Kevin Daniel</td>
-                        <td>Equipo 2
-                        <MoreVertIcon></MoreVertIcon>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+              <div className="card mb-4">
+                <div className="badge bg-primary rounded-0 fs-6" role="alert">
+                  Distribución de personal por equipo
                 </div>
-              </div>
-              <div className="col-8">
-              
+              {
+                //La variable se asigna al finalizar la función "Consultar salas", 
+                //La grafica se debe renderizar hasta que ya se hayan asignado las eqtiquetas y los empleados por etiqueta
+                //Si se renderiza antes puede causar un error
+                empleadosPorEquipo?
+                  <BarChart 
+                    etiquetas={etiquestas}
+                    empleadosPorEquipo={empleadosPorEquipo}
+                  ></BarChart>
+                :
+                  <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+              }
               </div>
             </div>
-            {/** Tabla de usuarios activos y grafico de pastel */}
-            <div className="row">
-            </div>             
+            
+            <div className="col-12 col-md-3">
+              {/**Tabla de usuarios Activos */}
+              <div className="table-responsive" >
+                <table className="table table-hover table-bordered">
+                  <thead className='table-primary'>
+                    <tr>
+                      <th 
+                        colSpan={3} 
+                        className="text-center text-white bg-primary rounded-0 fs-6"
+                        >Empleados Activos
+                        </th>
+                    </tr>
+                    <tr>
+                      <th scope="col">Foto</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Equipo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* primer persona */}
+                    <tr>
+                      <td><ImageIcon></ImageIcon></td>
+                      <td>Francisco Alfredo</td>
+                      <td>Equipo 2
+                      <MoreVertIcon></MoreVertIcon>
+                      </td>
+                    </tr>
+                    <tr>
+                        {/* segunda persona */}
+                      <td><ImageIcon></ImageIcon></td>
+                      <td>Rosa Amalia </td>
+                      <td>Equipo 2
+                      <MoreVertIcon></MoreVertIcon>
+                      </td>
+                    </tr>
+                    <tr>
+                        {/* tercera persona */}
+                      <td><ImageIcon></ImageIcon></td>
+                      <td>Kevin Daniel</td>
+                      <td>Equipo 2
+                      <MoreVertIcon></MoreVertIcon>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="col-8">
+            
+            </div>
           </div>
+          {/** Tabla de usuarios activos y grafico de pastel */}
+          <div className="row">
+          </div>             
         </div>
+
     );
 }
 export default Dashboard;

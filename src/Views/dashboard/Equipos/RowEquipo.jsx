@@ -1,7 +1,7 @@
 
 import { IconButton } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
 
 const RowEquipo=({dato, setDeleteId, selectEditData})=>{
     const {id, nombre, descripcion, area,created_at}=dato
@@ -15,7 +15,7 @@ const RowEquipo=({dato, setDeleteId, selectEditData})=>{
             <td>
                 <NavLink to={`/equipos/${id}`}>
                     <IconButton>
-                        <AddIcon/>
+                        <EditIcon/>
                     </IconButton>
                 </NavLink>                
             </td> 

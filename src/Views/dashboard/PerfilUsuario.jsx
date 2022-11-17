@@ -79,25 +79,22 @@ function PerfilUsuario({baseURL}) {
     },[]);
 
     return (
-        <div
-      style={{
-        backgroundColor: '#F5F5F5',
-       
-        
-      }}
-    >
-            <div className="container pt-5 d-grid gap-3 " >  
-              
-                <div className=" align-items-center" id="cuadro_Datos_Usuario">
-                        {/*Datos de usuario*/}
-                        <div className='w-100 text-center py-4'>
-                                <h2 className="fw-normal ">Perfil de Usuario</h2>
-                        </div>
-                        <form className="p-4">  
-                            <div className="col-12 bg d-none d-md-block" >
-                                <div className="row">
-                                    <div className="col-8 bg d-none d-md-block">
-                                        <div className="m-3">
+        <div>
+            <div className="container-fluid p-5" >      
+                <div 
+                    className="row justify-content-center align-items-center text-center" 
+                    id="cuadro_Datos_Usuario"
+                    style={{height:"70vh"}}
+                    >
+                        <div className="card border g-0">
+                            <div className="badge bg-primary rounded-0 fs-6" role="alert">
+                                Perfil de Usuario
+                             </div>
+                            {/*Datos de usuario*/}
+                            <form className="">
+                                <div className="row py-4 px-4">
+                                    <div className="col-12 col-md-8">
+                                        <div className="my-3">
                                             <MDBInputGroup   textBefore='Nombre:' textClass='bg-white' noBorder label='' id='formControlLg' >
                                                 <input 
                                                     className='form-control rounded '  
@@ -111,10 +108,10 @@ function PerfilUsuario({baseURL}) {
                                         </div>
                                         {/* <div className="m-3">
                                             <MDBInputGroup   textBefore='Apellido:' noBorder label='' id='formControlLg'  >
-                                             <input className='form-control rounded' type='name' />
+                                                <input className='form-control rounded' type='name' />
                                             </MDBInputGroup>
                                         </div> */}
-                                        <div className="m-3">
+                                        <div className="my-3">
                                             <MDBInputGroup   textBefore='Fecha de nacimiento:' textClass='bg-white' noBorder label='' id='formControlLg' >
                                                 <input 
                                                     className='form-control rounded' 
@@ -127,7 +124,7 @@ function PerfilUsuario({baseURL}) {
                                             </MDBInputGroup>
                                         </div>
                                         
-                                        <div className="m-3">
+                                        <div className="my-3">
                                             <MDBInputGroup   textBefore='Correo:' textClass='bg-white' noBorder label='' id='formControlLg' >
                                                 <span className="input-group-text bg-white rounded" id="basic-addon1">@</span>
                                                 <input 
@@ -172,7 +169,7 @@ function PerfilUsuario({baseURL}) {
                                         } 
                                         
                                     </div> 
-                                    <div className="col-4 bg d-none d-md-block" >
+                                    <div className="col-12 col-md-4 bg d-none d-md-block" >
                                         <div className='img-holder'align="center">
                                             {imagenUrlUser?
                                                 <img src={`${baseURL}${imagenUrlUser}`} width="150" height="150"alt='Imagen de Perfil'/>
@@ -198,14 +195,13 @@ function PerfilUsuario({baseURL}) {
                                         </div>
                                     </div>  
                                 </div>
-                            </div>  
-                        </form>
-                                  
+                            </form>
+                        </div>       
                 </div>           
                     
                  
             </div>
-            </div>                               
+        </div>                               
         
     );
 
