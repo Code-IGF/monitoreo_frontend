@@ -4,18 +4,17 @@ import {
     Avatar,
     Button,
  } from "@mui/material";
-import { red } from '@mui/material/colors';
+//import { red } from '@mui/material/colors';
 import VideoCameraFront from "@mui/icons-material/VideoCameraFront";
 import { NavLink } from "react-router-dom";
 
-const CardEquipo = ({equipo})=>{
+
+const CardEquipo = ({usuario,equipo})=>{
     return(
         <div>
             <CardHeader 
                 avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                    R
-                </Avatar>
+                <Avatar image="img/profile.png" size="large" shape="circle" />  
                 }
                 action={
                     <NavLink to="/sala-trabajo">
@@ -24,8 +23,8 @@ const CardEquipo = ({equipo})=>{
                         </Button>
                     </NavLink>
                     }
-                title={equipo.nombre}
-                subheader={equipo.descripcion}
+                title={usuario.name}
+                subheader={usuario.roles}
             />
         </div>
     )

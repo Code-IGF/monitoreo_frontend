@@ -10,10 +10,12 @@ import {
  } from "@mui/material";
 import { blue } from '@mui/material/colors';
 
+
 const MiEquipo=({baseURL})=>{
 
     const {http}=AuthUser();
     const [misEquipos, setMisEquipos]=useState([]);
+    const [misUsuario, setMisUsuario] =useState([]);
 
     const consultarMisEquipos=()=>{
         http.get("usuario/miEquipo").then((data)=>{
@@ -25,12 +27,22 @@ const MiEquipo=({baseURL})=>{
                 setMisEquipos(data.data)
         });
     }
+    const consultarUsuario=()=>{
+        http.get('/me').then((data)=>{
+            data.data.usuario?
+
+            setMisUsuario(data.data.usuario)
+            :
+            setMisUsuario(data.data)
+        });
+    }
 
     useEffect(()=>{
         consultarMisEquipos();
+        consultarUsuario();
         // eslint-disable-next-line 
     },[])
-
+    
     return (
         <div className="container-fluid p-5">
             <Paper
@@ -49,12 +61,20 @@ const MiEquipo=({baseURL})=>{
             {
                 misEquipos.map((equipo)=>(
                     <CardEquipo key={equipo.id}
-                        equipo={equipo}
+                        equipo={equipo}                                         
                     />
                 ))
+                
             }
+            {
+            misUsuario.map(usuario=>(
+                    <CardEquipo key={usuario.id}
+                        usuario={usuario}
+                    />
+                ))
+                }
             </Card>
-
+            
 
 
 
