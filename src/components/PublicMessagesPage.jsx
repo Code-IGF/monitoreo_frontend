@@ -3,6 +3,10 @@ import Echo from "laravel-echo";
 import "pusher-js";
 import Messagebox from "./MessageBox";
 import AuthUser from "./AuthUser";
+import { 
+    Paper
+ } from "@mui/material";
+import { blue } from '@mui/material/colors';
 
 export default function PublicMessagesPage() {
     const {http}=AuthUser();
@@ -76,34 +80,55 @@ export default function PublicMessagesPage() {
         <div>
             <div>
                 <div>
-                    <h1>Public Space</h1>
-                    <p>Post your random thoughts for the world to see</p>
+                    <hr/>
+                    <Paper
+                        className="mb-3" 
+                        square={true} 
+                        elevation={3}
+                        sx={{ 
+                            bgcolor: blue[600] 
+                        }}
+                    >
+                        <div className="text-center text-white fw-bold fs-6">
+                            <h2>Sala de Mensajeria</h2>
+                        </div>
+                    </Paper>
+                        <center><p>Escribe tu mensaje para que todos los demas miembros lo vean</p></center>
                 </div>
+
                 <div>
                     {messages.map((message) => (
                         <Messagebox key={message.id} message={message} />
                     ))}
                 </div>
+
                 <div>
-                    <form onSubmit={(e) => handleSendMessage(e)}>
-                        <input
-                            type="text"
-                            placeholder="Set your username"
-                            value={user}
-                            onChange={(e) => setUser(e.target.value)}
-                            required
-                        />
-                        <div>
-                            <input
-                                type="text"
-                                placeholder="Type your message..."
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                required
-                            />
-                            <button onClick={(e) => handleSendMessage(e)}>Send</button>
-                        </div>
-                    </form>
+
+                    <div>
+                        <center>
+                            <form onSubmit={(e) => handleSendMessage(e)}>
+                                <label>Usuario:&nbsp;</label>
+                                <input
+                                    type="text"
+                                    placeholder="Ingresa tu usuario"
+                                    value={user}
+                                    onChange={(e) => setUser(e.target.value)}
+                                    required     
+                                />
+                                <label>&nbsp;&nbsp;</label>
+                                <input
+                                    type="text"
+                                    placeholder="Mensaje..."
+                                    size="60"
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    required
+                                />
+                                <label>&nbsp;&nbsp;&nbsp;</label>
+                                <button  onClick={(e) => handleSendMessage(e)}>&nbsp;Enviar&nbsp;</button>
+                            </form>
+                        </center>
+                    </div>
                 </div>
             </div>
         </div>
