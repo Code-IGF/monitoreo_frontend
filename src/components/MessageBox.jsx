@@ -11,7 +11,7 @@ export default function Messagebox({ message }) {
                 <p>
                     <b>{message.user}</b>
                 </p>
-                <p>&nbsp;&nbsp;&nbsp;{message.message}</p>
+                <p>&nbsp;&nbsp;NombreU: {message.message}</p>
                 <p>{formatDate(message.createdAt)}</p>
             </div>
         </div>
