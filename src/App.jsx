@@ -3,6 +3,8 @@ import AuthUser from './components/AuthUser';
 import DashboardNavigate from './Views/DashboardNavigate';
 import PublicNavigate from './Views/PublicNavigate';
 
+const baseURL = "https://code-rm.tk";
+
 
 function App() {
   const {getToken}=AuthUser();
@@ -10,7 +12,7 @@ function App() {
     return <PublicNavigate/>
   }
   return (
-    <DashboardNavigate/>
+    <DashboardNavigate baseURL={baseURL}/>
 
   );
 }

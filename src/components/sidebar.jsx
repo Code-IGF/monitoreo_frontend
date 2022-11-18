@@ -12,16 +12,19 @@ import { NavLink } from "react-router-dom";
 //Icons
 import GroupsIcon from '@mui/icons-material/Groups';
 import MenuIcon from '@mui/icons-material/Menu';
-import LoginIcon from '@mui/icons-material/Login';
-import HomeIcon from '@mui/icons-material/Home';
 
+import HomeIcon from '@mui/icons-material/Home';
+import { Email } from "@mui/icons-material";
+import LoginIcon from '@mui/icons-material/Login';
 import PersonIcon from '@mui/icons-material/Person';
 
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import BadgeIcon from '@mui/icons-material/Badge';
+import WorkIcon from '@mui/icons-material/Work';
 
 
-function SideBAr({logoutUser}){
+function SideBAr({logoutUser, idRol}){
     //Función para ocultar sidebar
     const [isOpen, setIsOpern]=useState(false);
 
@@ -65,7 +68,77 @@ function SideBAr({logoutUser}){
                 {/*Links*/}
                 <Divider />
                 <List>
-                    <NavLink to="/" className="text-body">
+                    
+                    <NavLink to="/inicio" className="nav-link">
+                        <ListItem button>
+                            <ListItemIcon><HomeIcon color="primary" ></HomeIcon></ListItemIcon>
+                            <ListItemText primary="Inicio" />
+                        </ListItem>
+                    </NavLink>
+                    {/**Supervisor LINKS */}
+                    {idRol===2?
+                        <>
+                        <NavLink to="/equipos" className="nav-link">
+                            <ListItem button>
+                                <ListItemIcon><GroupsIcon color="primary" ></GroupsIcon></ListItemIcon>
+                                <ListItemText primary="Equipos" />
+                            </ListItem>
+                        </NavLink>
+                        </>
+                        :
+                        <></>
+                    }   
+                    
+                    {/* ADMIN LINKS */}
+                    {idRol===1?
+                        <>
+                            <Divider />
+                            <NavLink to="/usuarios" className="nav-link">
+                                <ListItem button>
+                                    <ListItemIcon><BadgeIcon color="primary" ></BadgeIcon></ListItemIcon>
+                                    <ListItemText primary="Usuarios" />
+                                </ListItem>
+                            </NavLink>
+                            <NavLink to="/areas" className="nav-link">
+                                <ListItem button>
+                                    <ListItemIcon><BusinessCenterIcon color="primary" ></BusinessCenterIcon></ListItemIcon>
+                                    <ListItemText primary="Areas" />
+                                </ListItem>
+                            </NavLink>
+                            <NavLink to="/actividad" className="nav-link">
+                                <ListItem button>
+                                    <ListItemIcon><WorkHistoryIcon color="primary" ></WorkHistoryIcon></ListItemIcon>
+                                    <ListItemText primary="Log de actividades" />
+                                </ListItem>
+                            </NavLink>
+                        </>
+                        :
+                        <>
+                            <NavLink to="/mis-Equipos" className="nav-link">
+                                <ListItem button>
+                                    <ListItemIcon><WorkIcon color="primary" ></WorkIcon></ListItemIcon>
+                                    <ListItemText primary="Mis Equipos" />
+                                </ListItem>
+                            </NavLink>
+                        </>
+                    }
+
+                    
+
+                    <Divider />
+                    <NavLink to="/public-mensaje" className="nav-link">
+                            <ListItem button>
+                                <ListItemIcon><Email color="primary" ></Email></ListItemIcon>
+                                <ListItemText primary="Mensajes Publicos" />
+                            </ListItem>
+                    </NavLink>
+                    <NavLink to="/perfil" className="nav-link">
+                                <ListItem button>
+                                    <ListItemIcon><PersonIcon color="primary"></PersonIcon></ListItemIcon>
+                                    <ListItemText primary="Perfil" />
+                                </ListItem>
+                            </NavLink>
+                    <NavLink to="login" className="nav-link">
                         <ListItem 
                             button
                             onClick={()=>{
@@ -74,44 +147,6 @@ function SideBAr({logoutUser}){
                             >
                             <ListItemIcon><LoginIcon color="primary"></LoginIcon></ListItemIcon>
                             <ListItemText primary="Cerrar Sesión" />
-                        </ListItem>
-                    </NavLink>
-                    <NavLink to="/equipos" className="text-body">
-                        <ListItem button>
-                            <ListItemIcon><GroupsIcon color="primary" ></GroupsIcon></ListItemIcon>
-                            <ListItemText primary="Equipos" />
-                        </ListItem>
-                    </NavLink>
-                    <NavLink to="/inicio" className="text-body">
-                        <ListItem button>
-                            <ListItemIcon><HomeIcon color="primary" ></HomeIcon></ListItemIcon>
-                            <ListItemText primary="Inicio" />
-                        </ListItem>
-                    </NavLink>
-
-                    <NavLink to="/perfil">
-                        <ListItem button>
-                            <ListItemIcon><PersonIcon></PersonIcon></ListItemIcon>
-                            <ListItemText primary="Perfil" />
-                        </ListItem>
-                    </NavLink>
-
-                    <NavLink to="/areas" className="text-body">
-                        <ListItem button>
-                            <ListItemIcon><BusinessCenterIcon color="primary" ></BusinessCenterIcon></ListItemIcon>
-                            <ListItemText primary="Areas" />
-                        </ListItem>
-                    </NavLink>
-                    <NavLink to="/usuarios" className="text-body">
-                        <ListItem button>
-                            <ListItemIcon><BadgeIcon color="primary" ></BadgeIcon></ListItemIcon>
-                            <ListItemText primary="Usuarios" />
-                        </ListItem>
-                    </NavLink>
-                    <NavLink to="/gestionDeEquipo" className="text-body">
-                        <ListItem button>
-                            <ListItemIcon><GroupsIcon color="primary" ></GroupsIcon></ListItemIcon>
-                            <ListItemText primary="GestionDeEquipo" />
                         </ListItem>
                     </NavLink>
                     

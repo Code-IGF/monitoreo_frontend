@@ -1,11 +1,19 @@
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS,
+    ArcElement, 
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title);
 
 
 //Se reciben como parametro los datos de la consulta
-export function PieChart({etiquetas, empleadosPorEquipo}) {
+export function BarChart({etiquetas, empleadosPorEquipo}) {
 
 
 
@@ -15,7 +23,7 @@ export function PieChart({etiquetas, empleadosPorEquipo}) {
     labels: etiquetas,
     datasets: [
       {
-        label: '# of Votes',
+        label: 'Equipos',
         //Asignando datos
         data: empleadosPorEquipo,
         backgroundColor: [
@@ -57,10 +65,11 @@ export function PieChart({etiquetas, empleadosPorEquipo}) {
 
   return (
     empleadosPorEquipo?
-    <Pie data={data} options={options} />
+    <Bar data={data} options={options} style={{maxHeight:"50vh"}}/>
     :
     <div className="spinner-border text-primary" role="status">
       <span className="visually-hidden">Loading...</span>
     </div>
   );
 }
+

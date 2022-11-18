@@ -1,90 +1,199 @@
 import React from 'react';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
 import { useEffect } from "react";
 import AuthUser from "../../components/AuthUser";
+import { useRef } from 'react';
 
 //Icono
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import CloseIcon from '@mui/icons-material/Close';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 //
-import { Button,TextField } from '@mui/material';
-import {
-    MDBModal,
-    MDBModalDialog,
-    MDBModalContent,
-    MDBModalHeader,
-    MDBModalTitle,
-    MDBModalBody,
-    MDBModalFooter,
-  } from 'mdb-react-ui-kit';
+import { 
+    Button
+ } from '@mui/material';
 
+//Elmentos
+import Paginate from '../../components/paginacion';
+import TeblaUsuarios from './GestionDeUsuarios/TablaUsuarios';
+import AlertDialogSlide from '../../components/AlertEliminar';
+import RegistroUsuario from './GestionDeUsuarios/RegistroUsuario';
 
- {/*_______________________________________________________________________________________________*/}
-function GestionDeUsuario(){
+const fileInitial={
+    archivo:null,
+    archivoNombre:""
+}
+
+function GestionDeUsuario({baseURL}){
     //Variable
     const [usuarios, setUsuarios] =useState();
-    const [nombreUsuario, setNombreUsuario]=useState();
-    const [descripcionUsuario, setDescripcionUsuario]=useState();
+    const [nombreUsuario, setNombreUsuario]=useState("");
+    const [emailUsuario, setEmailUsuario]=useState("");
+    const [passwordUsuario, setPasswordUsuario]=useState("");
+    const [rolUsuario, setRolUsuario]=useState(0);
+    const [imagenUsuario, setImagenUsuario]=useState(fileInitial);
+    const [fechaNacimiento, setFechaNacimiento]=useState("");
+
+    //file Ref
+    const fileRef = useRef(null)
+
+    //Roles para consultar
+    const [roles, setRoles]=useState();
+
     const [basicModal, setBasicModal] =useState(false);
     const toggleShow = () => {setBasicModal(!basicModal);}
+
+     //Paginación
+     const [siguiente, setSiguiente]=useState();
+     const [anterior, setAnterior]=useState();
+     const [actual, setActual]=useState();
+     const [final, setFinal]=useState();
 
     //http
     const {http}=AuthUser();
  
     //Funcion para consultar usuario
-    const consultarUsuarios=()=>{
-        http.get('/usuarios').then(
+    const consultarUsuarios=(url)=>{
+        http.get(url).then(
             (res)=>{
-                console.log(res.data);
-                setUsuarios(res.data);
+                console.log("consultando Usuarios")
+                setActual(res.data.current_page);
+                setAnterior(res.data.prev_page_url);
+                setSiguiente(res.data.next_page_url);
+                setFinal(res.data.last_page);
+                setUsuarios(res.data.data);
             }
         );
     }
-    //Ejecutando funciones
-    useEffect(()=>{
-        consultarUsuarios();
-    },[]);
-
-
- {/*_______________________________________________________________________________________________*/}
-    //Renderizar elementos iniciales
-    function renderizarTabla(){
-        if(usuarios){
-            return(
-            <tbody>
-                {usuarios.map(x=>(
-                    <tr>
-                        <td>{x.id}</td>
-                        <td>{x.nombre}</td>
-                        <td>{x.created_at}</td>
-                        <td>
-                            <EditOutlinedIcon>
-                            </EditOutlinedIcon>
-                        </td>
-                    </tr>
-                ))}        
-            </tbody>
-            )
-        }else{
-            return(
-            <tbody>
-                <tr>
-                    <td colSpan={7}>
-                        <div className="spinner-border text-primary" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-            )
-        }
+    //Función para consultar Roles
+    const consultarRoles=()=>{
+        http.get('/rol').then(
+            (res)=>{
+                setRoles(res.data);
+            }
+        );
     }
 
+    //Ejecutando funciones iniciales
+    useEffect(()=>{
+        consultarUsuarios('/usuarios/paginacion');
+        consultarRoles();
+        // eslint-disable-next-line 
+    },[]);
 
- {/*_______________________________________________________________________________________________*/}
+    //Se ejecuta cuando se selecciona un archivo (imagen)
+    const fileSelect=(e)=>{
+        setImagenUsuario({
+            archivo: e.target.files[0],
+            archivoNombre:e.target.files[0].name,
+        });
+
+    }
+
+    const registrarUsuario=()=>{    
+        const formData=new FormData();
+        formData.append('imagen', imagenUsuario.archivo, imagenUsuario.archivoNombre)
+        formData.append('name', nombreUsuario)
+        formData.append('email', emailUsuario)
+        formData.append('password', passwordUsuario)
+        formData.append('rol', rolUsuario)
+        formData.append('fecha_nacimiento', fechaNacimiento)
+        console.log("enviando datos")
+        http.post("/register", formData).then((data)=>{
+            setBasicModal(false);
+            const nuevoUsuario=usuarios;
+            nuevoUsuario.push(data.data);
+            setNombreUsuario("");
+            setEmailUsuario("");
+            setPasswordUsuario("");
+            setRolUsuario(0);
+            setFechaNacimiento("");
+            setImagenUsuario(fileInitial);
+            fileRef.current.value="";
+        });
+    }
+
+    //-------------------------------------------------------------------------------------------*/
+    //Use state para confirmar eliminacion
+    const [acceptDelete, setAcceptDelete]=useState(false);
+    //Abrir dialog delete
+    const [open, setOpen] = useState(false);
+        const handleClickOpen = () => {
+            setOpen(true);
+        };
+    const setDeleteId = (dato)=>{
+        setSelectDato(dato);
+        handleClickOpen();//Se abre el modal de confirmación
+    }
+    const eliminarData=()=>{
+        http.delete(`/user/delete/${selectDato.id}`).then(
+            (response)=>{
+                console.log(response.data)
+                handleClose()//Cerrar modal
+                setAcceptDelete(false)//Desactivar funcion de eliminacion
+                if(response.data === 'success'){
+                    consultarUsuarios('/usuarios/paginacion');
+                }
+                
+            }
+            )
+    }
+    useEffect(()=>{
+        acceptDelete? eliminarData(): console.log("accept (false)");
+        // eslint-disable-next-line
+    },[acceptDelete]);
+
+    //-------------------------------------------------------------------------------------    
+    //Editar datos
+    const [selectDato, setSelectDato]=useState(); //alamcena el objeto seleccionado
+    const [habilitarEdicion, setHabilitarEdicion]=useState(false);
+    const selectEditData = (data)=>{
+        setHabilitarEdicion(true);
+        setSelectDato(data);
+        setNombreUsuario(data.name)
+        setEmailUsuario(data.email)
+        setFechaNacimiento(data.fecha_nacimiento)
+        //Si existe el rol
+        data.roles[0]? 
+            setRolUsuario(data.roles[0].id)
+            :
+            setRolUsuario(0)
+        //habilitando la edición
+
+        console.log("abrir edit")
+        toggleShow();
+    }
+
+    const editarUsuario=()=>{    
+        console.log("editando datos")
+        const formData=new FormData();
+        formData.append('name', nombreUsuario)
+        formData.append('email', emailUsuario)
+        formData.append('password', passwordUsuario)
+        formData.append('rol', rolUsuario)
+        formData.append('fecha_nacimiento', fechaNacimiento)
+        imagenUsuario.archivo?
+        formData.append('imagen', imagenUsuario.archivo, imagenUsuario.archivoNombre)
+        :
+        formData.append('imagen','')
+        http.post(`/user/edit/${selectDato.id}`, formData).then((data)=>{
+            setBasicModal(false);
+            consultarUsuarios('/usuarios/paginacion');
+            setNombreUsuario("");
+            setEmailUsuario("");
+            setPasswordUsuario("");
+            setRolUsuario(0);
+            setFechaNacimiento("");
+            setImagenUsuario(fileInitial);
+            fileRef.current.value="";
+        });
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    }; 
+
+    //-------------------------------------------------------------------------------------------*/
+
     return (
         <div>
             <div className="container pt-5" >
@@ -97,7 +206,15 @@ function GestionDeUsuario(){
                         <Button 
                             variant="outlined" 
                             startIcon={<PersonAddAltIcon />}
-                            onClick={toggleShow}
+                            onClick={()=>{
+                                toggleShow();
+                                setHabilitarEdicion(false);
+                                setNombreUsuario("");
+                                setEmailUsuario("");
+                                setPasswordUsuario("");
+                                setFechaNacimiento("");
+                                setRolUsuario(0);
+                            }}
                         >
                                 Crear Usuario
                         </Button>
@@ -109,128 +226,58 @@ function GestionDeUsuario(){
  {/*_______________________________________________________________________________________________*/}
             {/* Tabla  */}
             <div className="container pt-5">
-                <table class="table table-hover table-bordered">
-                    <thead className='table-primary'>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col"> Nombre &nbsp; &nbsp; &nbsp; &nbsp; Apellido</th>
-                            <th scope="col">Area</th>
-                            <th scope="col">Equipo</th>
-                            <th scope="col">Supervisor</th>
-                            <th scope="col">Fecha de Registro</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    {/* invacando función */
-                        renderizarTabla()
-                    }
-                </table>
-            </div>
+                {/* invacando Componente */}
+                <TeblaUsuarios
+                    setDeleteId={setDeleteId}
+                    usuarios={usuarios}
+                    baseURL={baseURL}
+                    //handleClickOpen={handleClickOpen}
+                    selectEditData={selectEditData}
+                />
 
- {/*_______________________________________________________________________________________________*/}
-               {/*
-                //Prueba de paginación 
-                <div className ="row">
-                    <dv className="col text-end">
-                        <Button
-                            variant="outlined"
-                            onClick={toggleShow}
-                        >
-                            <span aria-hidden="true">&lt; Prev</span>
-                        </Button>
-                       
-                        <Button
-                            variant="outlined"
-                            onClick={toggleShow}
-                        >
-                            <span aria-hidden="true"> Next &gt;</span>
-                        </Button>
-                        
-                    </dv>
-                </div>
-            */}
-            
- {/*_______________________________________________________________________________________________*/}
-                {/*Paginacion*/}
-                <div className="container pt-5" >
-                    <div className ="row">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&lt; Prev</span>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1 - 10</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true"> Next &gt;</span>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">of 233</a></li>
-                            </ul>
-                        </nav>
-                   </div>
-                </div>
-            
+                {/* Paginación*/}
+                <Paginate
+                    consultarData={consultarUsuarios}
+                    paginaActual={actual}
+                    paginaFinal={final}
+                    anterior={anterior}
+                    siguiente={siguiente}
+                    baseUrl={"/usuarios/paginacion?page="}
+                >
+                </Paginate>
+            </div>   
+            {/**Dialog eliminiar */}
+            <AlertDialogSlide
+                open={open}
+                handleClose={handleClose}
+                tipoElemento={"Usuario"}
+                setAcceptDelete={setAcceptDelete}
+            >
+            </AlertDialogSlide>     
  {/*_______________________________________________________________________________________________*/}
             {/* Modal */}
-            <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
-                {/*Atributo size indica el tamaño del modal opciones:
-                    "sm" "lg" "xl" (tamaño por defecto "medio" siempre que no se incluya la propiedad)
-                */}
-                <MDBModalDialog size="lg">
-                    <MDBModalContent>
-                        <MDBModalHeader>
-                            <MDBModalTitle>Formulario para Registro de Empleado</MDBModalTitle>
-                                <Button 
-                                    variant="text" 
-                                    startIcon={<CloseIcon />}
-                                    onClick={toggleShow}
-                                >
-                                </Button>
-                        </MDBModalHeader>
-                        <MDBModalBody>
-                            <TextField 
-                                id="outlined-basic" 
-                                fullWidth 
-                                label="Nombre" 
-                                variant="outlined" 
-                                onChange={e=>setUsuarios(e.target.value)} 
-                                />
-                            <TextField 
-                                id="outlined-basic" 
-                                fullWidth 
-                                label="Apellido" 
-                                variant="outlined" 
-                                multiline
-                                margin="normal"
-                                onChange={e=>setDescripcionUsuario(e.target.value)} 
-                                rows={3}
-                                />
-                        </MDBModalBody>
-
-
-    {/* 
-                        <MDBModalFooter>
-                        <Button 
-                            variant="text" 
-                            color="error"
-                            onClick={toggleShow}
-                        >Cerrar
-                        </Button>
-                        <Button 
-                            variant="text" 
-                            onClick={almacenarDepartamento}
-                        >Enviar
-                        </Button>
-                        </MDBModalFooter>
-    */}
-
-
-                    </MDBModalContent>
-                </MDBModalDialog>
-            </MDBModal>
+            <RegistroUsuario
+                verModal={toggleShow} 
+                setNombreUsuario={setNombreUsuario}
+                setEmailUsuario={setEmailUsuario} 
+                setPasswordUsuario={setPasswordUsuario}
+                setFechaNacimiento={setFechaNacimiento}
+                setRolUsuario={setRolUsuario}
+                fileSelect={fileSelect}
+                registrarUsuario={registrarUsuario}
+                rolUsuario={rolUsuario}
+                roles={roles}
+                fechaNacimiento={fechaNacimiento}
+                PasswordUsuario={passwordUsuario}
+                emailUsuario={emailUsuario}
+                nombreUsuario={nombreUsuario}
+                basicModal={basicModal}
+                setBasicModal={setBasicModal}
+                habilitarEdicion={habilitarEdicion}
+                editarUsuario={editarUsuario}
+                fileRef={fileRef}
+            >
+            </RegistroUsuario>
 
         </div>
     );

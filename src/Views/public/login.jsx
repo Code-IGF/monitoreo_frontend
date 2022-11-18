@@ -30,8 +30,6 @@ const Login=()=> {
                 setInvalidData(true);
             }
         );
-        console.log(email);
-        console.log(password);
     }
 
     return (
@@ -83,11 +81,11 @@ const Login=()=> {
                                     >
                                     Iniciar Sesión
                                 </Button> 
-                                <a className='pt-4 text-center' href="!#">¿Recuperar Contraseña?</a>
+                                <a hidden className='pt-4 text-center' href="!#">¿Recuperar Contraseña?</a>
                             </div>
-                            <div className='pt-5 d-flex flex-row justify-content-center'>
-                                <a href="#!" className="small text-muted me-1">Condiciones de Uso.</a>
-                                <a href="#!" className="small text-muted">Politíca de Privacidad</a>
+                            <div className='pt-5 d-flex flex-row justify-content-center' hidden>
+                                <a hidden href="#!" className="small text-muted me-1">Condiciones de Uso.</a>
+                                <a hidden href="#!" className="small text-muted">Politíca de Privacidad</a>
                             </div>
                 
                     </div>

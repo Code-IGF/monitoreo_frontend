@@ -25,7 +25,7 @@ code {
 *{
   margin:0;
   padding: 0;
-  box-sixing: border-box;
+  box-sizing: border-box;
 
 }
 .title_grafico{
@@ -76,6 +76,7 @@ code {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   line-height: 1.6;
 }
+
 
 
 
