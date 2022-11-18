@@ -34,26 +34,41 @@ const SalaTabajo= ()=>{
     }
     function tomarFoto(){
         //Pausar reproducción
-        videoRef.current.pause();
-        console.log(canvasRef.current.getContext("2d"))
-        console.log(videoRef.current.videoWidth)
+
+
+        let canvas = canvasRef.current;
+        let video = videoRef.current;;
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        let ctx = canvas.getContext('2d');
+        video.pause();
+        ctx.drawImage( video, 0, 0, canvas.width, canvas.height );
+
+        let image = canvas.toDataURL('image/jpeg');
+        /* video.pause();
+        //videoRef.current.pause();
+        //console.log(canvasRef.current.getContext("2d"))
+        //console.log(videoRef.current.videoWidth)
         //Obtener contexto del canvas y dibujar sobre él
         let contexto = canvasRef.current.getContext("2d");
         canvasRef.current.width = videoRef.current.videoWidth;
         canvasRef.current.height = videoRef.current.videoHeight;
         console.log(canvasRef.current.width)
         console.log(contexto.drawImage)
-        contexto.drawImage(videoRef.current, 0, 0, camaraRef.current.width, canvasRef.current.height);
+        let img=contexto.drawImage(video, 0, 0, camaraRef.current.width, canvasRef.current.height);
 
-        let foto = canvasRef.current.toDataURL(); //Esta es la foto, en base 64
-
+        let foto = canvasRef.current.toDataURL('image/png'); //Esta es la foto, en base 64
+        console.log(foto);
+        //console.log(img) */
         let enlace = document.createElement('a'); // Crear un <a>
         enlace.download = "foto_parzibyte.me.png";
-        enlace.href = foto;
+        enlace.href = image;
         console.log(enlace.href)
         enlace.click();
         //Reanudar reproducción
-        videoRef.current.play();
+        video.play();
     }
 
 
