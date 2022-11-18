@@ -61,6 +61,15 @@ const SalaTabajo= ()=>{
         <div className="container-fluid py-4 px-4">
             <div className="row">
                 <div className="col-6">
+                    
+                    <p></p>
+                    <button onClick={captureScreen}>
+                    Compartir Pantalla
+                    </button>
+                    <button onClick={tomarFoto}>
+                    Tomar Captura Pantalla
+                    </button>
+
                     <video 
                         id="local-video" 
                         muted 
@@ -69,15 +78,18 @@ const SalaTabajo= ()=>{
                         ref={videoRef}
 
                     ></video>
-                    <p></p>
-                    <button onClick={captureScreen}>
-                    Compartir Pantalla
-                    </button>
-                    <button onClick={tomarFoto}>
-                    Tomar Captura Pantalla
-                    </button>
+                    <br />
+                    <br />
                 </div>
                 <div className="col-4">
+                    
+                    <button onClick={abrirCamara}>
+                        Compartir Cámara
+                    </button>
+
+                    <button onClick={abrirCamara}>
+                        Cerrar camara
+                    </button>
                     <video 
                         id="vid"
                         muted 
@@ -85,14 +97,12 @@ const SalaTabajo= ()=>{
                         className="w-100"
                         ref={camaraRef}
                     ></video>
-                    <button onClick={abrirCamara}>
-                        Compartir Cámara
-                    </button>
                     <canvas id="canvas" ref={canvasRef} ></canvas>
                 </div>
                 <div className="col-2 bg-dark">
 
                 </div>
+                <h2>Usted estará siendo filmado</h2>
             </div>
         </div>
     );
