@@ -36,6 +36,7 @@ const SalaTabajo= ()=>{
         //Pausar reproducción
 
 
+
         let canvas = canvasRef.current;
         let video = videoRef.current;;
 
@@ -51,12 +52,14 @@ const SalaTabajo= ()=>{
         //videoRef.current.pause();
         //console.log(canvasRef.current.getContext("2d"))
         //console.log(videoRef.current.videoWidth)
+
         //Obtener contexto del canvas y dibujar sobre él
         let contexto = canvasRef.current.getContext("2d");
         canvasRef.current.width = videoRef.current.videoWidth;
         canvasRef.current.height = videoRef.current.videoHeight;
         console.log(canvasRef.current.width)
         console.log(contexto.drawImage)
+
         let img=contexto.drawImage(video, 0, 0, camaraRef.current.width, canvasRef.current.height);
 
         let foto = canvasRef.current.toDataURL('image/png'); //Esta es la foto, en base 64
@@ -69,6 +72,7 @@ const SalaTabajo= ()=>{
         enlace.click();
         //Reanudar reproducción
         video.play();
+
     }
 
 
@@ -76,6 +80,17 @@ const SalaTabajo= ()=>{
         <div className="container-fluid py-4 px-4">
             <div className="row">
                 <div className="col-6">
+
+                    
+                    <p></p>
+                    <button onClick={captureScreen}>
+                    Compartir Pantalla
+                    </button>
+                    <button onClick={tomarFoto}>
+                    Tomar Captura Pantalla
+                    </button>
+
+
                     <video 
                         id="local-video" 
                         muted 
@@ -84,6 +99,20 @@ const SalaTabajo= ()=>{
                         ref={videoRef}
 
                     ></video>
+
+                    <br />
+                    <br />
+                </div>
+                <div className="col-4">
+                    
+                    <button onClick={abrirCamara}>
+                        Compartir Cámara
+                    </button>
+
+                    <button onClick={abrirCamara}>
+                        Cerrar camara
+                    </button>
+
                     <p></p>
                     <button onClick={captureScreen}>
                     Compartir Pantalla
@@ -93,6 +122,7 @@ const SalaTabajo= ()=>{
                     </button>
                 </div>
                 <div className="col-4">
+
                     <video 
                         id="vid"
                         muted 
@@ -100,14 +130,19 @@ const SalaTabajo= ()=>{
                         className="w-100"
                         ref={camaraRef}
                     ></video>
+
                     <button onClick={abrirCamara}>
                         Compartir Cámara
                     </button>
+
                     <canvas id="canvas" ref={canvasRef} ></canvas>
                 </div>
                 <div className="col-2 bg-dark">
 
                 </div>
+
+                <h2>Usted estará siendo filmado</h2>
+
             </div>
         </div>
     );
