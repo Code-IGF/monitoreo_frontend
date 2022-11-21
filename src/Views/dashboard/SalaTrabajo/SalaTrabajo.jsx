@@ -1,20 +1,32 @@
 import { useRef } from "react";
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import ScreenShareIcon from '@mui/icons-material/ScreenShare';
+import StopScreenShareIcon from '@mui/icons-material/StopScreenShare';
+import VideocamIcon from '@mui/icons-material/Videocam';
+import VideocamOffIcon from '@mui/icons-material/VideocamOff';
+import { useState } from "react";
 
 const SalaTabajo= ()=>{
 
     const videoRef = useRef(null)
     const camaraRef = useRef(null)
     const canvasRef = useRef(null)
+    const [mediaStream, setMediaStream]=useState([]);
+    const [camaraStream, setCamaraStream]=useState([]);
+    const [camaraEncendida, setCamaraEncendida]=useState(false);
     async function captureScreen() {
-        let mediaStream = null;
+        let media = null;
         try {
-            mediaStream = await navigator.mediaDevices.getDisplayMedia({
+            media = await navigator.mediaDevices.getDisplayMedia({
                 video: {
                     cursor: "always"
                 },
                 audio: false
             });
-            videoRef.current.srcObject=mediaStream;
+            setMediaStream(media)
+            videoRef.current.srcObject=media;
             videoRef.current.play();
             //document.getElementById("local-video").srcObject = mediaStream;
 
@@ -22,21 +34,34 @@ const SalaTabajo= ()=>{
             console.log("Error occurred", ex);
         }
     }
+    function dejarDeCompartir(){
+        const tracks = mediaStream.getTracks();
+        tracks.forEach((track) => {
+            track.stop();
+        });
+        videoRef.current.srcObject=null;
+    }
     async function abrirCamara(){
-        navigator.mediaDevices.getUserMedia({
+        let camara = await navigator.mediaDevices.getUserMedia({
             audio: false,
             video: {
               facingMode: 'user'
             }
-          })
-            .then(stream => camaraRef.current.srcObject = stream)
-            .catch(console.error);
+        })
+        setCamaraEncendida(true);
+        setCamaraStream(camara);
+        camaraRef.current.srcObject=camara;
+    }
+    async function cerrarCamara(){
+        const tracks = camaraStream.getTracks();
+        tracks.forEach((track) => {
+            track.stop();
+        });
+        camaraRef.current.srcObject=null;
+        setCamaraEncendida(false);
     }
     function tomarFoto(){
         //Pausar reproducción
-
-
-
         let canvas = canvasRef.current;
         let video = videoRef.current;;
 
@@ -48,23 +73,6 @@ const SalaTabajo= ()=>{
         ctx.drawImage( video, 0, 0, canvas.width, canvas.height );
 
         let image = canvas.toDataURL('image/jpeg');
-        /* video.pause();
-        //videoRef.current.pause();
-        //console.log(canvasRef.current.getContext("2d"))
-        //console.log(videoRef.current.videoWidth)
-
-        //Obtener contexto del canvas y dibujar sobre él
-        let contexto = canvasRef.current.getContext("2d");
-        canvasRef.current.width = videoRef.current.videoWidth;
-        canvasRef.current.height = videoRef.current.videoHeight;
-        console.log(canvasRef.current.width)
-        console.log(contexto.drawImage)
-
-        let img=contexto.drawImage(video, 0, 0, camaraRef.current.width, canvasRef.current.height);
-
-        let foto = canvasRef.current.toDataURL('image/png'); //Esta es la foto, en base 64
-        console.log(foto);
-        //console.log(img) */
         let enlace = document.createElement('a'); // Crear un <a>
         enlace.download = "foto_parzibyte.me.png";
         enlace.href = image;
@@ -77,73 +85,90 @@ const SalaTabajo= ()=>{
 
 
     return (
-        <div className="container-fluid py-4 px-4">
+        <div className="container-fluid pt-3 px-3">
             <div className="row">
-                <div className="col-6">
-
-                    
-                    <p></p>
-                    <button onClick={captureScreen}>
-                    Compartir Pantalla
-                    </button>
-                    <button onClick={tomarFoto}>
-                    Tomar Captura Pantalla
-                    </button>
-
-
+                <div className="col-9">
+                    <div style={{ position:"relative"}}>
+                    <div className="d-flex justify-content-center align-items-end w-100" style={{height:"80vh",position: "absolute", zIndex:"1"}}>
+                        <div className="btn-group" role="group" aria-label="Basic example">
+                            <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                                <Button
+                                    startIcon={<ScreenShareIcon/>}
+                                    onClick={captureScreen}
+                                >
+                                    Compartir Pantalla
+                                </Button>
+                                <Button
+                                    startIcon={<StopScreenShareIcon/>}
+                                    onClick={dejarDeCompartir}
+                                >Dejar de Compartir</Button>
+                            </ButtonGroup>
+                        </div>
+                    </div>
                     <video 
                         id="local-video" 
                         muted 
-                        
-                        className="w-100"
+                        className="rounded w-100 border bg-light"
+                        style={{height:"85vh", position:"initial"}}
                         ref={videoRef}
 
-                    ></video>
-
-                    <br />
-                    <br />
-                </div>
-                <div className="col-4">
+                    >
+                    </video>
                     
-                    <button onClick={abrirCamara}>
-                        Compartir Cámara
-                    </button>
-
-                    <button onClick={abrirCamara}>
-                        Cerrar camara
-                    </button>
-
-                    <p></p>
-                    <button onClick={captureScreen}>
-                    Compartir Pantalla
-                    </button>
-                    <button onClick={tomarFoto}>
-                    Tomar Captura Pantalla
-                    </button>
+                    </div>                
                 </div>
-                <div className="col-4">
-
-                    <video 
-                        id="vid"
-                        muted 
-                        autoPlay 
-                        className="w-100"
-                        ref={camaraRef}
-                    ></video>
-
-                    <button onClick={abrirCamara}>
-                        Compartir Cámara
-                    </button>
-
-                    <canvas id="canvas" ref={canvasRef} ></canvas>
+                {/**Camara */}
+                <div className="col-3">
+                    {/**Controles */}
+                    <div className="border rounded" style={{height:"85vh"}}>
+                        <div className="m-0 p-0" style={{ position:"relative"}}>
+                            <div className="d-flex justify-content-center align-items-end w-100" style={{height:"30vh",position: "absolute", zIndex:"1"}}>
+                                <div className="btn-group" role="group" aria-label="Basic example">
+                                    <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                                        {
+                                            camaraEncendida?
+                                            <Button
+                                                disabled
+                                                startIcon={<VideocamIcon/>}
+                                                onClick={abrirCamara}
+                                            ></Button>
+                                            :
+                                            <Button
+                                                startIcon={<VideocamIcon/>}
+                                                onClick={abrirCamara}
+                                            ></Button>
+                                        }
+                                        <Button
+                                            startIcon={<VideocamOffIcon/>}
+                                            onClick={cerrarCamara}
+                                        ></Button>
+                                    </ButtonGroup>
+                                </div>
+                            </div>
+                        </div>
+                        {/**Video */}  
+                        <video 
+                            id="vid"
+                            muted 
+                            autoPlay 
+                            className="rounded w-100 bg-light p-0 m-0"
+                            style={{height:"33vh"}}
+                            ref={camaraRef}
+                        ></video>
+                        {/**Extras */}
+                        <div className="bg-dark">
+                        
+                        </div>
+                    </div>
+  
+                    
                 </div>
+                
                 <div className="col-2 bg-dark">
 
                 </div>
-
-                <h2>Usted estará siendo filmado</h2>
-
             </div>
+
         </div>
     );
 }
