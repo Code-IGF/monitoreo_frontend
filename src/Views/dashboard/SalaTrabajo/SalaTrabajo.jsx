@@ -1,14 +1,20 @@
 import { useRef } from "react";
 import * as React from 'react';
 import Button from '@mui/material/Button';
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab"
 import ButtonGroup from '@mui/material/ButtonGroup';
 import ScreenShareIcon from '@mui/icons-material/ScreenShare';
 import StopScreenShareIcon from '@mui/icons-material/StopScreenShare';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff';
+import PersonPinIcon from '@mui/icons-material/PersonPin';
+import MessageIcon from '@mui/icons-material/Message';
 import { useState } from "react";
+import CardUser from "../../../components/CardUser";
+import AuthUser from "../../../components/AuthUser";
 
-const SalaTabajo= ()=>{
+const SalaTabajo= ({baseURL})=>{
 
     const videoRef = useRef(null)
     const camaraRef = useRef(null)
@@ -16,6 +22,8 @@ const SalaTabajo= ()=>{
     const [mediaStream, setMediaStream]=useState([]);
     const [camaraStream, setCamaraStream]=useState([]);
     const [camaraEncendida, setCamaraEncendida]=useState(false);
+    const {user}=AuthUser();
+
     async function captureScreen() {
         let media = null;
         try {
@@ -41,6 +49,7 @@ const SalaTabajo= ()=>{
         });
         videoRef.current.srcObject=null;
     }
+    //Camara
     async function abrirCamara(){
         let camara = await navigator.mediaDevices.getUserMedia({
             audio: false,
@@ -80,7 +89,6 @@ const SalaTabajo= ()=>{
         enlace.click();
         //Reanudar reproducción
         video.play();
-
     }
 
 
@@ -91,17 +99,17 @@ const SalaTabajo= ()=>{
                     <div style={{ position:"relative"}}>
                     <div className="d-flex justify-content-center align-items-end w-100" style={{height:"80vh",position: "absolute", zIndex:"1"}}>
                         <div className="btn-group" role="group" aria-label="Basic example">
-                            <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                <Button
-                                    startIcon={<ScreenShareIcon/>}
+                            <ButtonGroup className="bg-white" variant="contained" aria-label="outlined primary button group">
+                                <Tab 
+                                    icon={<ScreenShareIcon color="primary"/>} 
                                     onClick={captureScreen}
-                                >
-                                    Compartir Pantalla
-                                </Button>
-                                <Button
-                                    startIcon={<StopScreenShareIcon/>}
+                                    label="Compartir Pantalla" />
+                                <Tab 
+                                    icon={<StopScreenShareIcon color="primary"/>} 
                                     onClick={dejarDeCompartir}
-                                >Dejar de Compartir</Button>
+                                    label="Dejar de Compartir" />
+                                <Tab icon={<PersonPinIcon color="primary"/>} label="Equipo" />
+                                <Tab icon={<MessageIcon color="primary"/>} label="Chat" />
                             </ButtonGroup>
                         </div>
                     </div>
@@ -156,8 +164,22 @@ const SalaTabajo= ()=>{
                             ref={camaraRef}
                         ></video>
                         {/**Extras */}
-                        <div className="bg-dark">
-                        
+                        <div className="border-top">
+                            <Tabs
+                                orientation="vertical"
+                                variant="scrollable"
+
+                                aria-label="Vertical  example"
+                                sx={{ borderRight: 1, borderColor: 'divider', height:"50vh" }}
+                            >
+                                <CardUser onClick={tomarFoto} baseURL={baseURL} user={user}></CardUser>
+                                <CardUser baseURL={baseURL} user={user}></CardUser>
+                                <CardUser baseURL={baseURL} user={user}></CardUser>
+                                <CardUser baseURL={baseURL} user={user}></CardUser>
+                                <CardUser baseURL={baseURL} user={user}></CardUser>
+                                <CardUser baseURL={baseURL} user={user}></CardUser>
+                                <CardUser baseURL={baseURL} user={user}></CardUser>
+                            </Tabs>
                         </div>
                     </div>
   

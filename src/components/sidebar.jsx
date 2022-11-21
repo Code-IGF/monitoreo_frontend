@@ -31,8 +31,9 @@ function SideBAr({logoutUser, idRol}){
     return(
         <>
             {/*NavBar*/}           
-            <AppBar position="static">
-                <Toolbar> 
+            <AppBar position="static" sx={{bgcolor:"#003155"}}>
+                <Toolbar
+                > 
                     {/*Boton Hamburguesa*/}
                     <IconButton
                         size="large"

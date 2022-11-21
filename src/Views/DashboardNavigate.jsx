@@ -42,7 +42,7 @@ const DashboardNavigate = ({baseURL})=>{
               <>
               <Route path='/inicio' element={<Dashboard></Dashboard>}></Route>
               <Route path='/perfil' element={<PerfilUsuario baseURL={baseURL}/>}></Route>
-              <Route path='/sala-trabajo' element={<SalaTabajo/>}></Route>
+              <Route path='/sala-trabajo' element={<SalaTabajo baseURL={baseURL}/>}></Route>
               <Route path='/public-mensaje' element={<PublicMessagesPage/>}></Route>
               
               </>
