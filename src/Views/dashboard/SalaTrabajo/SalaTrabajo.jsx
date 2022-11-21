@@ -11,8 +11,10 @@ import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import MessageIcon from '@mui/icons-material/Message';
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import CardUser from "../../../components/CardUser";
 import AuthUser from "../../../components/AuthUser";
+import Bienvenida from "./Bienvenida";
 
 const SalaTabajo= ({baseURL})=>{
 
@@ -22,7 +24,10 @@ const SalaTabajo= ({baseURL})=>{
     const [mediaStream, setMediaStream]=useState([]);
     const [camaraStream, setCamaraStream]=useState([]);
     const [camaraEncendida, setCamaraEncendida]=useState(false);
+    const [open, setOpen]=useState(true);
     const {user}=AuthUser();
+    const {idSala}=useParams();
+    
 
     async function captureScreen() {
         let media = null;
@@ -60,6 +65,7 @@ const SalaTabajo= ({baseURL})=>{
         setCamaraEncendida(true);
         setCamaraStream(camara);
         camaraRef.current.srcObject=camara;
+        setOpen(false);
     }
     async function cerrarCamara(){
         const tracks = camaraStream.getTracks();
@@ -72,7 +78,7 @@ const SalaTabajo= ({baseURL})=>{
     function tomarFoto(){
         //Pausar reproducción
         let canvas = canvasRef.current;
-        let video = videoRef.current;;
+        let video = camaraRef.current;;
 
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
@@ -103,13 +109,22 @@ const SalaTabajo= ({baseURL})=>{
                                 <Tab 
                                     icon={<ScreenShareIcon color="primary"/>} 
                                     onClick={captureScreen}
+                                    value={1}
                                     label="Compartir Pantalla" />
                                 <Tab 
                                     icon={<StopScreenShareIcon color="primary"/>} 
                                     onClick={dejarDeCompartir}
+                                    value={1}
                                     label="Dejar de Compartir" />
-                                <Tab icon={<PersonPinIcon color="primary"/>} label="Equipo" />
-                                <Tab icon={<MessageIcon color="primary"/>} label="Chat" />
+                                <Tab 
+                                    icon={<PersonPinIcon color="primary"/>} 
+                                    value={1}
+                                    label="Equipo" />
+                                <Tab 
+                                    icon={<MessageIcon color="primary"/>} 
+                                    onClick={tomarFoto}
+                                    value={1}
+                                    label="Chat" />
                             </ButtonGroup>
                         </div>
                     </div>
@@ -170,8 +185,9 @@ const SalaTabajo= ({baseURL})=>{
                                 variant="scrollable"
                                 aria-label="Vertical  example"
                                 sx={{ borderRight: 1, borderColor: 'divider', height:"50vh" }}
+                                value={1}
                             >
-                                <CardUser onClick={tomarFoto} baseURL={baseURL} user={user}></CardUser>
+                                <CardUser baseURL={baseURL} user={user}></CardUser>
                                 <CardUser baseURL={baseURL} user={user}></CardUser>
                                 <CardUser baseURL={baseURL} user={user}></CardUser>
                                 <CardUser baseURL={baseURL} user={user}></CardUser>
@@ -185,10 +201,14 @@ const SalaTabajo= ({baseURL})=>{
                     
                 </div>
                 
-                <div className="col-2 bg-dark">
-
-                </div>
+                <canvas id="canvas" ref={canvasRef} className="d-none"></canvas>
             </div>
+            <Bienvenida
+                open={open}
+                idSala={idSala}
+                abrirCamara={abrirCamara}
+            >
+            </Bienvenida>
 
         </div>
     );
