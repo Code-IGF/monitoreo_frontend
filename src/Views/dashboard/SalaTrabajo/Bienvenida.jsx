@@ -7,22 +7,18 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContentText from '@mui/material/DialogContentText';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import Slide from '@mui/material/Slide';
+import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
+import { useNavigate } from 'react-router-dom';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function Bienvenida({open, idSala, abrirCamara}) {
-    
-    
-  /* 
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };*/
-
-   
-  
+    const navigate = useNavigate();
+    const volver=()=>{
+        navigate('/equipos/usuario')
+    }
 
   return (
     <div>
@@ -45,6 +41,12 @@ export default function Bienvenida({open, idSala, abrirCamara}) {
         <DialogActions
             sx={{justifyContent:"center"}}
         >
+            <Button
+                startIcon={<DoNotDisturbIcon/>}
+                onClick={volver}
+            >
+                Regresar
+            </Button>
             <Button 
                 onClick={abrirCamara}
                 startIcon={<VideocamIcon/>}>
