@@ -20,7 +20,7 @@ export default function ConfiguracionSala({open, handleClose, horaInicio, setHor
   };*/
   const cerrarDialog = () => {
     actualizarConfiguracion();
-    console.log("Eliminando");
+    handleClose();
   }; 
   
 
