@@ -115,7 +115,7 @@ function SideBAr({logoutUser, idRol}){
                         </>
                         :
                         <>
-                            <NavLink to="/mis-Equipos" className="nav-link">
+                            <NavLink to="/equipos/usuario" className="nav-link">
                                 <ListItem button>
                                     <ListItemIcon><WorkIcon color="primary" ></WorkIcon></ListItemIcon>
                                     <ListItemText primary="Mis Equipos" />

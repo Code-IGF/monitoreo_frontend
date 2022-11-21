@@ -13,6 +13,7 @@ import MiEquipo from "./dashboard/MiEquipo/MiEquipo";
 import GestionDeEquipo from './dashboard/Equipos/GestionDeEquipo';
 import NuevoEquipo from "./dashboard/Equipos/NuevoEquipo";
 import LogDeUsuario from "./TablaLog/LogDeUsuario";
+import ConfiguracionSala from './dashboard/SalaTrabajo/Configuracion';
 //Administrador
 import Areas from './dashboard/Areas';
 import GestionDeUsuario from './dashboard/GestionDeUsuario';
@@ -42,7 +43,7 @@ const DashboardNavigate = ({baseURL})=>{
               <>
               <Route path='/inicio' element={<Dashboard></Dashboard>}></Route>
               <Route path='/perfil' element={<PerfilUsuario baseURL={baseURL}/>}></Route>
-              <Route path='/sala-trabajo' element={<SalaTabajo baseURL={baseURL}/>}></Route>
+              <Route path='/sala/:idSala' element={<SalaTabajo baseURL={baseURL}/>}></Route>
               <Route path='/public-mensaje' element={<PublicMessagesPage/>}></Route>
               
               </>
@@ -50,7 +51,7 @@ const DashboardNavigate = ({baseURL})=>{
               {
                 roles[0].id===3?
                 <>
-                  <Route path='/mis-Equipos' element={<MiEquipo baseURL={baseURL}></MiEquipo>}></Route>
+                  <Route path='/equipos/usuario' element={<MiEquipo baseURL={baseURL}></MiEquipo>}></Route>
                   <Route path='/actividad' element={<ActividadLog baseURL={baseURL}/>}></Route>
                 </>
                 :
@@ -59,11 +60,12 @@ const DashboardNavigate = ({baseURL})=>{
               {/**Supervisor */}
               {roles[0].id===2?
                 <>
+                  <Route path='/sala/:idSala/configuracion' element={<ConfiguracionSala baseURL={baseURL}/>}></Route>
                   <Route path='/equipos' element={<GestionDeEquipo/>}></Route>
                   <Route path='/log' element={<LogDeUsuario/>}></Route>
                   <Route path='/equipos/nuevo' element={<NuevoEquipo/>}></Route>
+                  <Route path='/equipos/usuario' element={<MiEquipo baseURL={baseURL}></MiEquipo>}></Route>
                   <Route path='/equipos/:idEquipo' element={<NuevoEquipo/>}></Route>
-                  <Route path='/mis-Equipos' element={<MiEquipo baseURL={baseURL}></MiEquipo>}></Route>
                   <Route path='/actividad' element={<ActividadLog baseURL={baseURL}/>}></Route>
                 </>
                 :

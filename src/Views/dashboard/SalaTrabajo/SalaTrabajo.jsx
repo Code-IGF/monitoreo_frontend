@@ -168,7 +168,6 @@ const SalaTabajo= ({baseURL})=>{
                             <Tabs
                                 orientation="vertical"
                                 variant="scrollable"
-
                                 aria-label="Vertical  example"
                                 sx={{ borderRight: 1, borderColor: 'divider', height:"50vh" }}
                             >
