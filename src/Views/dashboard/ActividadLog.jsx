@@ -5,6 +5,7 @@ import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import TablaLog from "../TablaLog/TablaLog";
 import ImagenLog from "../TablaLog/ImagenLog";
+import Echo from "laravel-echo";
 
 function ActividadLog({baseURL}){
     
@@ -64,6 +65,35 @@ function ActividadLog({baseURL}){
         consultaUsuario()
         :
         setUsuario(user)
+      
+        const echo = new Echo({
+          broadcaster: 'pusher',
+          key: "ASDASD2222",
+          cluster: "mt1",
+          forceTLS: false,
+          wsHost: "code-rm.tk",
+          auth: {
+              headers: {
+                // Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+              },
+            },
+          wsPort:443,
+          disableStats: true,
+          encrypted: false,
+        });
+        // 4
+        echo
+            .channel(`usuario-${idUsuario}`)
+            .subscribed(() => {
+            console.log('You are subscribed');
+        })
+        // 5
+        .listen('NuevoLog', (data) => {
+        // 6
+          consultarLogs('log/usuario', ahora);
+        });
+
       // eslint-disable-next-line       
   },[]);
 
