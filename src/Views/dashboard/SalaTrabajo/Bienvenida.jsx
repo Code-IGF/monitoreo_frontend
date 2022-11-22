@@ -14,10 +14,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function Bienvenida({open, idSala, abrirCamara}) {
+export default function Bienvenida({open, idSala, abrirCamara,captureScreen}) {
     const navigate = useNavigate();
     const volver=()=>{
         navigate('/equipos/usuario')
+    }
+    const iniciar=()=>{
+      abrirCamara();
+      captureScreen();
     }
 
   return (
@@ -33,9 +37,8 @@ export default function Bienvenida({open, idSala, abrirCamara}) {
         <DialogTitle>Bienvenido a sala {idSala}</DialogTitle>
         <DialogContent>
             <DialogContentText sx={{textAling:"justify"}}>
-                Para unirse a la sala es necesario que active su camara, 
-                recuerde que se registrara el momento en que encienda su camara y 
-                camparta su escritorio.
+                Para unirse a la sala es necesario que active su camara y comparta su escritorio,
+                registraremos cada cierto tiempo una imagen de su camara y escritorio.
             </DialogContentText>
         </DialogContent>
         <DialogActions
@@ -48,9 +51,9 @@ export default function Bienvenida({open, idSala, abrirCamara}) {
                 Regresar
             </Button>
             <Button 
-                onClick={abrirCamara}
+                onClick={iniciar}
                 startIcon={<VideocamIcon/>}>
-                Activar Camara
+                Entrar en sala
             </Button>
         </DialogActions>
       </Dialog>

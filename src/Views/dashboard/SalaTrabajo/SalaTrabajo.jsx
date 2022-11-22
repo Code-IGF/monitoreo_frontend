@@ -27,8 +27,38 @@ const SalaTabajo= ({baseURL})=>{
     const [open, setOpen]=useState(true);
     const {user}=AuthUser();
     const {idSala}=useParams();
-    
+ 
 
+    const {http}=AuthUser();
+
+    const hacerLog=(descripcion, imagen, tipo, nombreImagen)=>{
+        const formData=new FormData();
+        formData.append('descripcion', descripcion)
+        formData.append('tipo', tipo)
+        imagen?
+            formData.append('imagen', imagen, "imagen.jpeg")
+            :
+            formData.append('imagen','')
+        http.post(`/log`,formData).then((data)=>{
+            console.log(data.data)
+            //Toma foto del usuario
+            if(data.data.tipo===2){
+                console.log(imagen)
+                setTimeout(() => {
+                    tomarFoto(camaraRef, 2); 
+                }, 5000);
+            }
+            //Toma captura de pantalla 
+            if(data.data.tipo===3){
+
+                    setTimeout(() => {
+                        tomarFoto(videoRef, 3); 
+                    }, 6000)
+                    
+            }
+        })
+    }
+    
     async function captureScreen() {
         let media = null;
         try {
@@ -56,16 +86,21 @@ const SalaTabajo= ({baseURL})=>{
     }
     //Camara
     async function abrirCamara(){
-        let camara = await navigator.mediaDevices.getUserMedia({
+        await navigator.mediaDevices.getUserMedia({
             audio: false,
             video: {
               facingMode: 'user'
             }
-        })
-        setCamaraEncendida(true);
-        setCamaraStream(camara);
-        camaraRef.current.srcObject=camara;
-        setOpen(false);
+        }).then(
+            (camara)=>{
+                setOpen(false);
+                setCamaraEncendida(true);
+                setCamaraStream(camara);
+                camaraRef.current.srcObject=camara;
+                //1=texto, 2=foto, 3=captura  
+                hacerLog("Entro en la sala.",null,1) 
+            }
+        )
     }
     async function cerrarCamara(){
         const tracks = camaraStream.getTracks();
@@ -75,10 +110,10 @@ const SalaTabajo= ({baseURL})=>{
         camaraRef.current.srcObject=null;
         setCamaraEncendida(false);
     }
-    function tomarFoto(){
+    function tomarFoto(element, tipoDeAccion){
         //Pausar reproducción
         let canvas = canvasRef.current;
-        let video = camaraRef.current;;
+        let video = element.current;
 
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
@@ -87,16 +122,21 @@ const SalaTabajo= ({baseURL})=>{
         video.pause();
         ctx.drawImage( video, 0, 0, canvas.width, canvas.height );
 
-        let image = canvas.toDataURL('image/jpeg');
-        let enlace = document.createElement('a'); // Crear un <a>
-        enlace.download = "foto_parzibyte.me.png";
-        enlace.href = image;
-        console.log(enlace.href)
-        enlace.click();
+        //let image = canvas.toDataURL('image/jpeg');
+        
+        canvas.toBlob(function(blob){
+            hacerLog("Imagen", blob, tipoDeAccion, "imagen");
+            console.log("nuevo log")
+          }, 'image/jpeg');
+
+        //let enlace = document.createElement('a'); // Crear un <a>
+        //enlace.download = "foto_parzibyte.me.png";
+        //enlace.href = image;
+
+        //enlace.click();
         //Reanudar reproducción
         video.play();
     }
-
 
     return (
         <div className="container-fluid pt-3 px-3">
@@ -207,6 +247,7 @@ const SalaTabajo= ({baseURL})=>{
                 open={open}
                 idSala={idSala}
                 abrirCamara={abrirCamara}
+                captureScreen={captureScreen}
             >
             </Bienvenida>
 
