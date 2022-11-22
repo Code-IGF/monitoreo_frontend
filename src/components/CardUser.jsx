@@ -5,6 +5,7 @@ import {
  } from "@mui/material";
  import PreviewIcon from '@mui/icons-material/Preview';
  import Button  from "@mui/material/Button";
+ import { NavLink } from "react-router-dom";
 
 const CardUser=({user, baseURL, currentUser})=>{
     return(
@@ -20,11 +21,15 @@ const CardUser=({user, baseURL, currentUser})=>{
                 action=
                     {
                         currentUser.roles[0].name==="Supervisor"?
-                            <Button 
-                                aria-label="Ver Actividad" 
-                                startIcon={<PreviewIcon/>}
+                            <NavLink
+                                to={`/actividad/${user.id}`}
                             >
-                            </Button>
+                                <Button 
+                                    aria-label="Ver Actividad" 
+                                    startIcon={<PreviewIcon/>}
+                                >
+                                </Button>
+                            </NavLink>
                         :
                         ""
                     }

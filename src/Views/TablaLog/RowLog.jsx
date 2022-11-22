@@ -1,22 +1,33 @@
 import { IconButton } from '@mui/material';
-import { NavLink } from 'react-router-dom';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
-const RowLog=({dato, setDeleteId, selectEditData})=>{
+const RowLog=({dato, setImagenUrlUser, setOpen})=>{
     
-    const {id, Fecha, descripcion, Hora}=dato
+    const {id, descripcion, created_at}=dato
+    var now = new Date(created_at);
+
+    const selectImagen=()=>{
+        setImagenUrlUser(dato.archivo.url)
+        setOpen(true)
+    }
+
     return(
         <tr>
             <td>{id}</td>
-            <td>{Fecha}</td>
             <td>{descripcion}</td>
-            <td>{Hora}</td>
+            <td>{now.toLocaleDateString()}</td>
+            <td>{now.toLocaleTimeString()}</td>
             <td>
-                <NavLink to={`/LogDeUsuario/${id}`}>
-                    <IconButton>
-                        <AddAPhotoIcon/>
-                    </IconButton>
-                </NavLink>                
+                {
+                    dato.archivo?
+                        <IconButton
+                            onClick={selectImagen}
+                        >
+                            <AddAPhotoIcon/>
+                        </IconButton>
+                        :
+                        ""
+                }
             </td> 
         </tr>
     );

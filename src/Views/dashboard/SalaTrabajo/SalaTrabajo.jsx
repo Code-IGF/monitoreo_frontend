@@ -27,9 +27,9 @@ const SalaTabajo= ({baseURL})=>{
     const canvasRef = useRef(null)
     const [mediaStream, setMediaStream]=useState([]);
     const [camaraStream, setCamaraStream]=useState([]);
-    const [camaraEncendida, setCamaraEncendida]=useState(false);
+    const [camaraEncendida, setCamaraEncendida]=useState();
     const [equipoData, setEquipoData]=useState([]);
-    const [open, setOpen]=useState(true);
+    const [open, setOpen]=useState(false);
     const {user}=AuthUser();
     const {idSala}=useParams();
 
@@ -37,6 +37,10 @@ const SalaTabajo= ({baseURL})=>{
 
     //Socket conexión
     useEffect(() => {
+        if(user.roles[0].name==="Empleado"){
+            setOpen(true)
+        }
+
         // 3
         const echo = new Echo({
             broadcaster: 'pusher',

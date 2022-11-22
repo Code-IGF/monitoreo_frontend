@@ -67,6 +67,7 @@ const DashboardNavigate = ({baseURL})=>{
                   <Route path='/equipos/usuario' element={<MiEquipo baseURL={baseURL}></MiEquipo>}></Route>
                   <Route path='/equipos/:idEquipo' element={<NuevoEquipo/>}></Route>
                   <Route path='/actividad' element={<ActividadLog baseURL={baseURL}/>}></Route>
+                  <Route path='/actividad/:idUsuario' element={<ActividadLog baseURL={baseURL}/>}></Route>
                 </>
                 :
                 ""
