@@ -69,8 +69,7 @@ const SalaTabajo= ({baseURL})=>{
 
         //consultando datos de la sala
         consultarDatos()
-        // eslint-disable-next-line 
-
+        // eslint-disable-next-line
     }, []);
 
     const consultarDatos = ()=>{
@@ -107,6 +106,7 @@ const SalaTabajo= ({baseURL})=>{
             http.post('/new-log', {
                 tipo: "user",
                 nombreChannel: `usuario-${user.id}`,
+                // eslint-disable-next-line
              });
         });
     }
