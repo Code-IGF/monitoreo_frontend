@@ -85,6 +85,12 @@ function SideBAr({logoutUser, idRol}){
                                 <ListItemText primary="Equipos" />
                             </ListItem>
                         </NavLink>
+                        <NavLink to="/actividad" className="nav-link">
+                            <ListItem button>
+                                <ListItemIcon><WorkHistoryIcon color="primary" ></WorkHistoryIcon></ListItemIcon>
+                                <ListItemText primary="Log de actividades" />
+                            </ListItem>
+                        </NavLink>
                         </>
                         :
                         <></>
@@ -106,12 +112,7 @@ function SideBAr({logoutUser, idRol}){
                                     <ListItemText primary="Areas" />
                                 </ListItem>
                             </NavLink>
-                            <NavLink to="/actividad" className="nav-link">
-                                <ListItem button>
-                                    <ListItemIcon><WorkHistoryIcon color="primary" ></WorkHistoryIcon></ListItemIcon>
-                                    <ListItemText primary="Log de actividades" />
-                                </ListItem>
-                            </NavLink>
+
                         </>
                         :
                         <>
@@ -132,6 +133,12 @@ function SideBAr({logoutUser, idRol}){
                                 <ListItemIcon><Email color="primary" ></Email></ListItemIcon>
                                 <ListItemText primary="Mensajes Publicos" />
                             </ListItem>
+                    </NavLink>
+                    <NavLink to="/actividad" className="nav-link">
+                        <ListItem button>
+                            <ListItemIcon><WorkHistoryIcon color="primary" ></WorkHistoryIcon></ListItemIcon>
+                            <ListItemText primary="Log de actividades" />
+                        </ListItem>
                     </NavLink>
                     <NavLink to="/perfil" className="nav-link">
                                 <ListItem button>
