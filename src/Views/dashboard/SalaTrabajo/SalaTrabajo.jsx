@@ -28,6 +28,7 @@ const SalaTabajo= ({baseURL})=>{
     const [mediaStream, setMediaStream]=useState([]);
     const [camaraStream, setCamaraStream]=useState([]);
     const [camaraEncendida, setCamaraEncendida]=useState(false);
+    const [equipoData, setEquipoData]=useState([]);
     const [open, setOpen]=useState(true);
     const {user}=AuthUser();
     const {idSala}=useParams();
@@ -65,8 +66,17 @@ const SalaTabajo= ({baseURL})=>{
             console.log(data);
         });
         // eslint-disable-next-line 
+
+        //consultando datos de la sala
+        consultarDatos()
+
     }, []);
 
+    const consultarDatos = ()=>{
+        http.get(`sala/datales/${idSala}`).then((data)=>{
+            setEquipoData(data.data)
+        })
+    }
 
     const hacerLog=(descripcion, imagen, tipo, nombreImagen)=>{
         const formData=new FormData();
@@ -266,15 +276,22 @@ const SalaTabajo= ({baseURL})=>{
                                 variant="scrollable"
                                 aria-label="Vertical  example"
                                 sx={{ borderRight: 1, borderColor: 'divider', height:"50vh" }}
-                                value={1}
+                                value={0}
                             >
-                                <CardUser baseURL={baseURL} user={user}></CardUser>
-                                <CardUser baseURL={baseURL} user={user}></CardUser>
-                                <CardUser baseURL={baseURL} user={user}></CardUser>
-                                <CardUser baseURL={baseURL} user={user}></CardUser>
-                                <CardUser baseURL={baseURL} user={user}></CardUser>
-                                <CardUser baseURL={baseURL} user={user}></CardUser>
-                                <CardUser baseURL={baseURL} user={user}></CardUser>
+                                {
+                                    equipoData.usuarios?
+                                        equipoData.usuarios.map((userEquipo)=>(
+                                            
+                                            <CardUser 
+                                                key={userEquipo.id} 
+                                                baseURL={baseURL} 
+                                                user={userEquipo}
+                                                currentUser={user}
+                                            ></CardUser>
+                                        ))
+                                        :
+                                        <></>
+                                }
                             </Tabs>
                         </div>
                     </div>

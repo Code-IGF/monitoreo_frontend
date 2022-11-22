@@ -3,8 +3,10 @@ import {
     CardHeader,
     Avatar
  } from "@mui/material";
+ import PreviewIcon from '@mui/icons-material/Preview';
+ import Button  from "@mui/material/Button";
 
-const CardUser=({user, baseURL})=>{
+const CardUser=({user, baseURL, currentUser})=>{
     return(
         <div>
             <CardHeader 
@@ -15,7 +17,17 @@ const CardUser=({user, baseURL})=>{
                 >
                 </Avatar>
                 }
-                
+                action=
+                    {
+                        currentUser.roles[0].name==="Supervisor"?
+                            <Button 
+                                aria-label="Ver Actividad" 
+                                startIcon={<PreviewIcon/>}
+                            >
+                            </Button>
+                        :
+                        ""
+                    }
                 title={user.name}
                 subheader={user.roles[0].name}
             />
