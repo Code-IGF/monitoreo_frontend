@@ -15,6 +15,10 @@ import { useParams } from "react-router-dom";
 import CardUser from "../../../components/CardUser";
 import AuthUser from "../../../components/AuthUser";
 import Bienvenida from "./Bienvenida";
+import { useEffect } from "react";
+import Echo from "laravel-echo";
+//socket
+import "pusher-js";
 
 const SalaTabajo= ({baseURL})=>{
 
@@ -27,9 +31,42 @@ const SalaTabajo= ({baseURL})=>{
     const [open, setOpen]=useState(true);
     const {user}=AuthUser();
     const {idSala}=useParams();
- 
 
     const {http}=AuthUser();
+
+    //Socket conexión
+    useEffect(() => {
+        // 3
+        const echo = new Echo({
+            broadcaster: 'pusher',
+            key: "ASDASD2222",
+            cluster: "mt1",
+            forceTLS: false,
+            wsHost: "code-rm.tk",
+            auth: {
+                headers: {
+                  // Authorization: `Bearer ${token}`,
+                  Accept: 'application/json',
+                },
+              },
+            wsPort:443,
+            disableStats: true,
+            encrypted: false,
+        });
+        // 4
+        echo
+            .channel(`usuario-${user.id}`)
+            .subscribed(() => {
+            console.log('You are subscribed');
+        })
+        // 5
+        .listen('NuevoLog', (data) => {
+        // 6
+            console.log(data);
+        });
+        // eslint-disable-next-line 
+    }, []);
+
 
     const hacerLog=(descripcion, imagen, tipo, nombreImagen)=>{
         const formData=new FormData();
@@ -40,10 +77,10 @@ const SalaTabajo= ({baseURL})=>{
             :
             formData.append('imagen','')
         http.post(`/log`,formData).then((data)=>{
-            console.log(data.data)
+            //console.log(data.data)
             //Toma foto del usuario
             if(data.data.tipo===2){
-                console.log(imagen)
+                //console.log(imagen)
                 setTimeout(() => {
                     tomarFoto(camaraRef, 2); 
                 }, 5000);
@@ -53,10 +90,14 @@ const SalaTabajo= ({baseURL})=>{
 
                     setTimeout(() => {
                         tomarFoto(videoRef, 3); 
-                    }, 6000)
-                    
+                    }, 6000)       
             }
-        })
+        }).then(()=>{
+            http.post('/new-log', {
+                tipo: "user",
+                nombreChannel: `usuario-${user.id}`,
+             });
+        });
     }
     
     async function captureScreen() {
