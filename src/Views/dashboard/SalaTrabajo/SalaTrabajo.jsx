@@ -65,10 +65,11 @@ const SalaTabajo= ({baseURL})=>{
         // 6
             console.log(data);
         });
-        // eslint-disable-next-line 
+        
 
         //consultando datos de la sala
         consultarDatos()
+        // eslint-disable-next-line 
 
     }, []);
 
