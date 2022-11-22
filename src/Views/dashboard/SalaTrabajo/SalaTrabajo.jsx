@@ -30,6 +30,7 @@ const SalaTabajo= ({baseURL})=>{
     const [camaraEncendida, setCamaraEncendida]=useState();
     const [equipoData, setEquipoData]=useState([]);
     const [open, setOpen]=useState(false);
+    const [milisegundos, setMilisegundos]=useState(0);
     const {user}=AuthUser();
     const {idSala}=useParams();
 
@@ -79,6 +80,9 @@ const SalaTabajo= ({baseURL})=>{
     const consultarDatos = ()=>{
         http.get(`sala/datales/${idSala}`).then((data)=>{
             setEquipoData(data.data)
+            let time=data.data.sala_trabajo.intervalo_conexion;
+            setMilisegundos(time.slice(0,1)*3600000+(time.slice(4,5))*60000+(time.slice(6,7))*1000)
+            console.log(time.slice(0,1)*3600000+(time.slice(4,5))*60000+(time.slice(6,7))*1000)
         })
     }
 
@@ -104,7 +108,12 @@ const SalaTabajo= ({baseURL})=>{
 
                     setTimeout(() => {
                         tomarFoto(videoRef, 3); 
-                    }, 6000)       
+                    }, 6000).then(
+                        setTimeout(() => {
+                            tomarFoto(camaraRef, 2); 
+                        }, milisegundos)
+                    )
+                         
             }
         }).then(()=>{
             http.post('/new-log', {
