@@ -7,10 +7,6 @@ import ImageIcon from '@mui/icons-material/Image';
 import PersonIcon from '@mui/icons-material/Person';
 
 
-/* import CardHeader from '@mui/material/CardHeader';
-import Avatar from '@mui/material/Avatar';
-import { blue } from '@mui/material/colors'; */
-
 import LineChart from '../../components/LineChart';
 import { BarChart } from '../../components/BarChart';
 

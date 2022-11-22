@@ -137,7 +137,7 @@ function SideBAr({logoutUser, idRol}){
                     <NavLink to="/actividad" className="nav-link">
                         <ListItem button>
                             <ListItemIcon><WorkHistoryIcon color="primary" ></WorkHistoryIcon></ListItemIcon>
-                            <ListItemText primary="Log de actividades" />
+                            <ListItemText primary="Registro de actividades" />
                         </ListItem>
                     </NavLink>
                     <NavLink to="/perfil" className="nav-link">
